@@ -1,0 +1,329 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{etaremune}
+\usepackage{environ}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{setspace}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage{xparse}
+
+\NewDocumentCommand{\framecolorbox}{oommm}
+ {% #1 = width (optional)
+  % #2 = inner alignment (optional)
+  % #3 = frame color
+  % #4 = background color
+  % #5 = text
+  \IfValueTF{#1}
+   {\IfValueTF{#2}
+    {\fcolorbox{#3}{#4}{\makebox[#1][#2]{#5}}}
+    {\fcolorbox{#3}{#4}{\makebox[#1]{#5}}}%
+   }
+   {\fcolorbox{#3}{#4}{#5}}%
+ }
+
+\newcommand{\llimite}[3]{\limite{\substack{#1 \\ #2}}\left(#3\right)}
+\newcommand{\somme}[2]{\ensuremath{\sum\limits_{#2}^{#1}}}
+\newcommand{\produit}[2]{\ensuremath{\prod\limits_{#2}^{#1}}}
+\newcommand{\limite}{\lim\limits_}
+\newcommand{\evid}[1]{\textbf{\underline{#1}}}
+\newcommand{\ninf}{\ensuremath{n \to \infty}}
+\newcommand{\xinf}{\ensuremath{x \to \infty}}
+\newcommand{\xo}{\ensuremath{x \to 0} }
+\newcommand{\no}{\ensuremath{n \to 0} }
+\newcommand{\xx}{\ensuremath{x \to x} }
+\newcommand{\Xo}{\ensuremath{x_0} }
+\newcommand{\A}{\ensuremath{\mathbf{A}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}} }
+\newcommand{\N}{\ensuremath{\mathbb{N}} }
+\newcommand{\Z}{\ensuremath{\mathbb{Z}} }
+\newcommand{\Q}{\ensuremath{\mathbb{Q}} }
+\newcommand{\rtor}{\ensuremath{\R \to \R} }
+\newcommand{\pour}{\mbox{ pour }}
+\newcommand{\et}{\mbox{ et }}
+\newcommand{\Exemple}{\underline{Exemple} }
+\newcommand{\Theoreme}{\underline{Théorème} }
+\newcommand{\Remarque}{\underline{Remarque} }
+\newcommand{\Definition}{\underline{Définition} }
+\newcommand{\skinf}{\sum^{\infty}_{k=0}}
+\newcommand{\intx}[3]{\ensuremath{\int_{#1}^{#2} #3 \, \mathrm dx}}
+
+
+\NewEnviron{boiteV}[1]{
+\begin{center}
+\framecolorbox{red}{white}{\begin{minipage}{#1\textwidth}
+\BODY
+\end{minipage}}
+\end{center}}
+
+\NewEnviron{boite}{
+\begin{center}
+	\framecolorbox{red}{white}{
+		\begin{minipage}{0.9\textwidth}
+  			\BODY
+	\end{minipage}
+	}
+\end{center}
+}
+
+\title{Résumé - Explications Analyse I}
+\author{Olivier Cloux}
+
+
+\makeindex
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Règles utiles}
+\subsection{La Trigo c'est Rigolo}
+\begin{itemize}
+	\item $\sin^2(\alpha) + \cos^2(\alpha) = 1$
+	\item $1-\cos(\alpha) = 2\sin^2(\frac{\alpha}{2})$
+	\item $\cos(2\alpha) = \cos^2(\alpha) - \sin^2(\alpha) = 2\cos^2(\alpha)-1 = 1-2\sin^2(\alpha)$
+	\item $\sin(2\alpha) = 2\sin(\alpha)\cos(\alpha)$
+	\item $\sin(\alpha) - \sin(\beta) = 2\sin(\frac{\alpha-\beta}{2})\cos(\frac{\alpha+\beta}{2})$
+	\item $(\tan(x))' = 1+\tan^2(x) = \frac{1}{\cos^2(x)}$
+\end{itemize}
+\subsection{Identités remarquables}
+\begin{itemize}
+	\item $(a+b)^2 = a^2 + 2ab + b^2$
+	\item $(a-b)(a+b) = a^2-b^2$
+	\item $(a-b)(a^2 + ab + b^2)$
+	\item $(a+b)^3 = a^3 + 3a^2b+3ab^3+b^3$
+	\item $(a-b)^3 = a^3- 3a^2b+3ab^2-b^3$
+	\item $a^3-b^3 = (a-b)(a^2+ab+b^2)$
+\end{itemize}
+\subsection{Nombres complexes}
+\begin{itemize}
+	 \item Forme cartésienne : $z = a+bi$
+	 \item complexe conjugué : $\overline{z} = a-bi$
+	 \item Parties
+	 \begin{itemize}
+	 	\item Réelle : $\Re(z) = a = \frac{z+\overline{z}}{2}$
+	 	\item Imaginaire : $\Im(z) = b = \frac{z-\overline{z}}{2}$
+	 \end{itemize}
+	 \item module $|z| = \sqrt{z\cdot\overline{z}} = \sqrt{a^2 + b^2} \to z\cdot \overline{z} = |z|^2$
+	 \item valeur absolue : $|e^z| = |e^{a+bi}| = e^{\Re(z)}a = e^a$
+	 \item formule d'Euler/Moivre ($\varphi (= \theta) =$ argument
+	 \begin{itemize}
+	 	\item Euler : $e^{i\theta} = \cos(\theta) + i \sin (\theta) (=cis(\theta))$\\
+	 	avec : $\cos(\theta) = \Re(e^{i\theta}) = \frac{e^{i\theta}+e^{-i\theta}}{2}$ et $\sin(\theta) = \Im(e^{i\theta}) = \frac{e^{i\theta} - e^{-i\theta}}{2}$
+	 	\item Moivre : $(\cos(\theta) + i \sin(\theta))^n = \cos(n\theta) + i\sin(n\theta)$
+	 \end{itemize}
+	 \item Forme polaire : $z = |z|e^{i\theta} = \sqrt{a^2 + b^2}e^{i\theta} = \sqrt{a^2+b^2}cis(\theta$\\
+	 $\begin{array}{lll}
+	 0 & \vline \frac{\sqrt{0}}{2} & \frac{\sqrt{4}}{2}\\
+	 \frac{\pi}{6} &\vline  \frac{\sqrt{1}}{2} & \frac{\sqrt{3}}{2}\\
+	 \frac{\pi}{4} &\vline \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\\
+	 \frac{\pi}{3} &\vline \frac{\sqrt{3}}{2} & \frac{\sqrt{1}}{2}\\
+	 \frac{\pi}{2} &\vline \frac{\sqrt{4}}{2} & \frac{\sqrt{0}}{2}\\
+	& \sin & \cos
+	 \end{array}$
+	\item Racines : $z^n = w = |w|e^{i(\theta+2k\pi)}$\\
+	Les solutions de cette équations se trouvent en remplaçant k par $0,1,2,... n-1$ dans\\
+	$z_{k+1} = |w|^\frac{1}{2}e^{i(\frac{\theta}{n} + \frac{2k\pi}{n})}$
+\end{itemize}
+\section{Ensembles}
+\subsection{Définitions}
+\begin{itemize}
+	\item \evid{minorant} Tous les éléments plus petits ou égaux au plus petit élément de l'ensemble.\\
+	Les minorants de $[3,5[ =$ minorants de $]3,5[ = \{x : x \leq 3\} = ]-\infty,3]$
+	\item \evid{majorant} Pareil que le minorant, mais inversé. Les éléments qui sont plus grand ou égaux au plus grand élément de l'ensemble.
+	\item \evid{minoré/majoré} L'ensemble contient un minorant/majorant. Il est alors borné inférieurement/supérieurement.
+	\item \evid{infimum} Le plus grand des minorants. Peut être dans ou hors de l'ensemble.\\
+	$\inf([3,5]) = \inf(]3,5]) = 3$	
+	\item \evid{supremum} Pareil, le plus petit des minorants.
+	\item \evid{minimum} Le plus grand des minorants \underline{contenu dans l'ensemble}.\\
+	 $\min(]3,5]) = \emptyset, \min([3,5]) = 3$
+	\item \evid{maximum} Pareil que minimum
+	\item Points relatifs à un ensemble $E \subset \R$
+		\begin{itemize}
+		\item \evid{Point intérieur $\overset{\circ}{E}$} Tous les points dont à gauche et à droite c'est dans l'ensemble. On exclut donc les points isolés, et les bords. Dans la pratique, ça revient à réécrire l'ensemble, avec des crochets ouverts. 
+		\item \evid{Points isolés} Les points donc il n'y a rien directement à gauche et à droite. Par exemple, les points de \N sont tous isolés.
+		\item \evid{Points frontières} Tous les éléments tels que à gauche et à droite, on trouve des éléments dans \underline{et} hors de l'ensemble. 
+		\item \evid{Bord $\delta E$} L'ensemble qui contient tous les points frontières.
+		\item \evid{Points adhérents $\overline{E}$} Les points tels que autour (incluant lui-même), il y a des éléments de l'ensemble. Donc tous les éléments intérieurs, les points frontières et points isolés. Donc les points adhérents à [3] c'est juste 3
+		\item \evid{Points limites} Les points tels que autour, il y a des éléments de l'ensemble, mais sans compter lui-même. Comme les points adhérents, mais sans lui même (donc sans les points isolés par ex). $\to$ aucun point limite dans \N
+	\end{itemize}
+\end{itemize}
+\section{Suites}
+\subsection{Définitions}
+\begin{itemize}
+	\item (strictement)(dé)croissante $a_{n+1} \geq (\leq)(>)(<) a_n$
+	\item majorée (minorée): si $\{a_1,a_2,a_3,...\}$ admet un majorant (minorant)
+	\item bornée : si la suite est majorée et minorée
+	\item monotone : soit majorée soit croissante, soit décroissante
+\end{itemize}
+\subsection{Suite de Cauchy (récurrentes)}
+\Definition : une suite est de Cauchy $\iff$ elle est convergente\\
+Soit une suite $a_n = \ldots $ (par exemple $\frac{2}{3}a_{n-1} +2$). Pour déterminer si cette suite est "de Cauchy", suivre les points suivants :\\
+\begin{enumerate}
+	\item \evid{Calculer $|a_n|$} (en général donné)\\
+		($= \frac{2}{3}a_{n-1} + 2$)
+	\item \evid{Calculer $|a_{n+1}|$} \\
+		($=\frac{2}{3}a_n + 2$)
+	\item \evid{Calculer $|a_{n+1}-a_n|$}\\
+		$(=\frac{2}{3}(a_n-a_{n-1})$
+	\item \evid{Itérer n-1 fois} (pour avoir $|a_2-a_1| =$ facteur de n)\\
+	$|a_{n+1}-a_n| = \frac{2}{3}|a_n-a_{n-1}|  = \left(\frac{2}{3}\right)^{n-1}|a_2-a_1| = 2\cdot\left(\frac{2}{3}\right)^n $ Comme on connaît $a_2$ et $a_1$ on peut remplacer pour ne faire dépendre plus que de n, et plus de $a_{n-1}$ (enlever la notion de récursivité).
+	\item On cherche $|a_n -a_m| = |a_n - a_{n-1} + a_{n-1} - a_{n-1} + a_{n+2}-...+a_{m+1}-a_m|$ et par l'inégalité triangulaire $\to$
+	\begin{equation*}
+		a_n-a_m| \leq |a_n -a_{n-1}| + |a_{n-1} - a_{n-2}|+...+|a_{m+1}-a_m| = \fbox{$\somme{n-1}{k=m} |a_{k+1}-a_k|$}
+	\end{equation*}
+	\item On sait ce que vaut $a_{k+1}-a_k$ (c.f. 4). Donc remplacer avec ce qu'on sait
+	\item Mettre une puissance de m en évidence (afin de redescendre la somme à \somme{n-m-1}{k=0} (pour pouvoir utiliser les définitions qu'on connaît)
+	\item Effectuer. Et on saura que ce résultat sera $< \epsilon$.
+	\item De là, travailler pour trouver un m = [$\epsilon$ quelque chose] 
+\end{enumerate}
+\subsection{Trucs - astuces - théorèmes}
+\begin{itemize}
+	\item toute suite croissante et majorée (décroissante et minorée) converge. $\to$ toute suite monotone et bornée converge. $\to$ toute suite convergente est bornée
+	\item critère du quotient (équivaut a d'Alembert) ; $\limite{\ninf} \left|\frac{a_{n+1}}{a_n}\right| = \rho$ alors la limite vaut 0 si $\rho < 1$, diverge si $\rho > 1$ et on ne peut rien dire si $\rho = 1$
+\end{itemize}
+\section{Séries}
+\subsection{Critères de convergence d'une série ($\sum$)}
+\begin{itemize}
+	\item Critère d'Alembert : (analyser q)
+		\begin{equation*}
+			\limite{k \to \infty}\left|\frac{a_{k+1}}{a_k}\right| = q
+		\end{equation*}
+	\item Critère de Cauchy : (analyser q)
+		\begin{equation*}
+			\limite{k\to\infty}(|a_k|^{\frac{1}{k}} = \sqrt[k]{a_k} = q
+		\end{equation*}
+	\item Critère de Leibnitz (pour les suites alternées): 3 critères nécessaires :
+		\begin{itemize}
+			\item Si ($a_k$) est une suite alternée 
+			\item Si ($|a_k|$) est strictement décroissante  ($|a_{k+1}| < |a_k|$ pour tout k)
+			\item Si $\limite{k \to \infty} a_k = 0$
+		\end{itemize}
+			Alors la série converge
+	\item Critère nécessaire : Si la série $\somme{\infty}{k=1}a_k$ diverge, alors la limite de la suite ($\limite{k \to \infty} a_k$) est égale à 0. \\
+	Par contraposée, si $\limite{k\to\infty} a_k \neq 0$, alors la série $\somme{\infty}{k=1}a_k$ diverge.
+	\item critère de comparaison : Si $a_k \leq b_k \, \forall k$ et que $b_k$ converge, alors $a_k$ converge aussi\\
+	Par contraposée, si $b_k \leq a_k$ pour tout k, et que $b_k$ diverge, alors $a_k$ diverge aussi
+\end{itemize}
+\subsection{Suites/séries particulières}
+\begin{itemize}
+	\item La série $\somme{\infty}{k=1}\frac{1}{k}$ diverge. Tous les multiples (par exemple $\frac{7}{3}\somme{\infty}{k=1}\frac{1}{k}$) divergent aussi.
+	\item La série $\somme{\infty}{k=1}\frac{1}{k^2}$ converge. De manière générale, $\somme{\infty}{k=1}\frac{1}{k^\alpha}$ diverge si $0<\alpha\leq 1$ et converge si $\alpha > 1$
+\end{itemize}
+\subsection{Trucs - Astuces - Théorèmes}
+\begin{itemize}
+	\item avec une série d'une suite du type $\frac{\mbox{entier}}{\mbox{truc compliqué avec des n}}$, tenter d'extraire un $\frac{1}{n}$, ou de dire que ceci $>$ cela $>$ truc simple x $\frac{1}{n}$
+	\item Avec des racines \evid{carrées}, chercher le conjugué, et multiplier par $\frac{\mbox{conjugué}}{\mbox{conjugué}}$, pour mettre la racine du dessus au carré (donc l'enlever), et en garder une dessous. Après plus facile.
+	\item Avec des racines \evid{cubiques} ou plus, regarder dans les règles. 
+	\item Toute suite absolument convergente est convergente
+\end{itemize}
+\section{Fonctions}
+\subsection{Rappels}
+\begin{itemize}
+	\item Hyperbolique:
+		\begin{itemize}
+			\item $\sinh = \frac{e^x-e^{-x}}{2}$
+			\item $\cosh(x) = \frac{e^x+e^{-x}}{2}$
+		\end{itemize}
+	\item paire : $f(-x) = f(x)$, impaire $f(-x) = -f(x)$
+\end{itemize}
+\subsection{Continuité}
+il faut que la limite lorsque la fonction tend vers un point sensible, le résultat opposé soit le même. \\
+Par exemple : $f(x) = \left\{\begin{array}{ll}
+\frac{x^3-1}{x-1}, & x>1\\
+3, & x \leq 1
+\end{array}\right.$ Il faut que la $\llimite{x\to 1}{x>1}{\frac{x^3-1}{x-1}} = \llimite{x\to 1}{x < 1}{3} = f(1) (= 3)$. On fait tendre $\frac{x^3-1}{x-1}$ vers 1 (on voit que la fraction se simplifie en $x^2+x+1$), ça donne 3, on fait tendre 3 vers... 3, ça donne 3, et on regarde ce que vaut f(1), qui vaut 3, donc tout est égal, donc c'est continu.
+\subsection{Réciproque}
+Pour trouver la réciproque de $y=f(x)$, il faut triturer l'équation pour arriver à $x = g(y)$, puis remplacer les variables $x = g(y) \to y = g(x) = f^{-1}(x)$
+\subsection{Composition de fonctions définies par étapes}
+Exemple : calculer $f\circ g$ de $f(x) = 
+\left\{
+\begin{array}{ll}
+2x-3 & x\geq 0\\
+x & x < 0
+\end{array}\right.$
+et $g(x) = 
+\left\{
+\begin{array}{ll}
+x^2 & x \geq 1\\
+x+2 & x< 1
+\end{array}\right.$\\
+Il nous faut donc calculer dans quel cas $g(x)$ correspond aux critères de $f(x)$ (ici $>/< 0$) Donc on regarde, on voit que pour tout $x^2 \geq 0$ pour tout $x$. Le point de "coupure" entre $g(x) >/< 0$ se fait en $g(-2) = 0$. on va donc poser les bornes de $f(x)$ en $-2$, ce qui nous donnera quelque chose du type $(f\circ g)(x) = 
+\left\{
+\begin{array}{ll}
+2g(x) - 3 & x \geq -2\\
+g(x) & x<-2
+\end{array}\right.$ Pour $x \geq 1$  pas de problème, $g(x) = x^2$. Pour x entre -2 et 1, on reste $\geq 0$ mais $g(x) = x+2$. Et finalement pour x $< -2 \, g(x)$ redevient = x+2 et plus petit que 0.\\
+donc $f(g(x)) = 
+\left\{
+\begin{array}{ll}
+2x^2-3 & x \geq 1\\
+2x+1 & -2 \leq x < 1\\
+x+2 & x < -2
+\end{array}\right.$
+\section{Dérivées}
+\subsection{Trucs - Astuces - Théorèmes}
+\begin{itemize}
+	\item Dérivée de la réciproque $(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))}$
+	\item Fonction réciproque dérivable sur l'image de tout intervalle sur lequel f' ne s'annule pas
+	\item $f(x) = |x|$ continu (aussi en 0), mais pas dérivable en 0. dérivée de $|x| = \left\{
+	\begin{array}{ll}
+	-1 & x < 0\\
+	1 & x > 0
+	\end{array}\right.$
+	\item Fonction dérivable sur en tout point $x_o \in ]a,b[ \to$ fonction dérivable sur $]a,b[$
+	\item Fonction dérivable en \Xo$\to$ fonction continue en $x_0$
+	\item Fonction dérivable en \Xo $\iff$ fonction dérivable à gauche et à droite en \Xo  \underline{et} $d_+(\Xo) = d_-(\Xo) = d(\Xo)$
+	\item Pour les V/F, penser à :
+	\begin{itemize}
+		\item $|x|$. Continu partout, mais pas dérivable en 0, et dérivable à gauche et à droite en 0
+	\end{itemize}
+	\item $(f\circ g)'(x) = f'(f(x)) f'(x)$
+	\item $f'(\Xo) = \llimite{x\to \Xo}{x \neq \Xo}{\frac{f(x) - f(\Xo)}{x-\Xo}}$	
+\end{itemize}
+\subsection{Théorème des accroissements finis}
+Le théorème (ou plutôt le corollaire 1 qui en découle) est : 
+\begin{equation*}
+	f(x+h) = f(x) + f'(x+\vartheta h)h
+\end{equation*}
+Sert à approximer un chiffre de merde, genre $\tan\left(\frac{5\pi}{24}\right)$
+\begin{enumerate}[label=\roman*.]
+	\item chercher des "jolies" bornes au composant. Ici, on voit que \\
+	$\frac{\pi}{6} < \frac{5\pi}{24} = \frac{\pi}{6} + \frac{\pi}{24} < \frac{\pi}{4}$\\
+	Donc on va travailler sur $\tan(x)$ dans l'intervalle $[\frac{\pi}{6}, \frac{\pi}{4}]$
+	\item Vu que $\frac{5\pi}{24} = \frac{\pi}{6} + \frac{\pi}{24}$, alors on va utiliser le théorème avec $x = \frac{\pi}{6}$, et $h =\frac{\pi}{24}$
+	\item Donc $\tan\left(\frac{5\pi}{6}\right) = \tan(\frac{\pi}{6}) + \frac{\pi}{24}\cdot (\tan)'(\frac{\pi}{6} + \vartheta\frac{\pi}{24})$
+	\item On sait que $(\tan)' = \frac{1}{\cos^2}$
+	\item On cherche a encadrer le terme avec $\vartheta$, qui est $\frac{1}{\cos^2(\frac{\pi}{6} + \vartheta\frac{\pi}{24})}$
+	\item Sur cet intervalle, $\cos$ est décroissant, donc $\frac{1}{\cos^2}$ est croissant. On peut alors utiliser les bornes de l'intervalle comme bornes inf et sup, ce qui donne \\
+	$\frac{1}{\cos(\frac{\pi}{6})^2} < \frac{1}{\cos^2(\frac{\pi}{6} + \vartheta\frac{\pi}{24})} < \frac{1}{\cos(\frac{\pi}{4})^2}$
+	\item On connaît les deux bornes (respectivement $\frac{4}{3}$ et 2, donc on peut calculer précisément.
+	\item Ces bornes peuvent être injectées pour trouver les bornes 
+\end{enumerate}
+\section{Dérivée}
+\section{Intégrale}
+\subsection{Trucs - astuces - théorèmes}
+\begin{itemize}
+	\item $\intx{}{}{f'(x)f(x)} = \frac{1}{2}f^2(x) + C$
+	\item $\intx{}{}{a^x} = a^x\cdot \frac{1}{\ln(a)}$
+	\item intégrale de $\frac{f'(x)}{1+f^2(x)} = \arctan(f(x)) +C$
+	\item avec une fraction du type $\frac{g(x)}{f(x)}$, s'arranger (en mettant en évidence des constantes par exemple) pour que $g(x) = f'(x)$. Ensuite l'intégrale de $\frac{f'(x)}{f(x)} = \ln(|f(x)|)$
+\end{itemize}
+\subsection{valeur moyenne}
+Trouver un u tel que $\intx{a}{b}{f(x)} = f(u)(b-a)$. Il suffit de chercher $\frac{1}{b-a}\intx{a}{b}{f(x)}$. Par exemple, la valeur moyenne de $f(x) = \left\{
+\begin{array}{ll}
+3 & 0 \leq x \leq 1\\
+2 & 1 < x \leq 4
+\end{array}\right.$. L'intégrale de f(x) peut être décomposée entre 0 et 1, puis entre  1 et 4. faire les intégrales, puis multiplier par $\frac{1}{4}$. L'idée est de diviser l'aire moyenne (l'intégrale) par la taille de l'intervalle.
+\subsection{Changement de variable}
+Remplacer x par une fonction $\varphi(u)$ permet d'éviter des complications. Mais attention : si $F(x) = \intx{}{}{f(x)}$, et que l'on effectue le remplacement $x = \varphi(u) \to F(x) = \intx{}{}{f(\varphi(u))\varphi'(u)}$ De plus, les bornes changent.
+\end{document}

@@ -1,0 +1,55 @@
+\documentclass[12pt,a4paper]{article}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+\usepackage[tc]{titlepic}
+\usepackage{graphicx}
+\usepackage{blindtext}
+%\usepackage[a4paper]{geometry}
+%\setcounter{section}{-1}
+\date{Automne 2015}
+\title{	
+\normalfont \normalsize 
+\textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+\textsc{Note de cours en }\\ [0pt] %Name of the course
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Architecture des ordinateurs\\ % The assignment title<
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+%\includegraphics[width=8cm]{images/EPFL_logo}
+}
+\renewcommand{\contentsname}{Table des Matières}
+\begin{document}
+\setstretch{1}
+\maketitle
+\newpage
+\tableofcontents
+\setstretch{1.6}
+%\newcommand{\coss}[1]{\ensuremath{\cos\left(#1\))}}
+%\newcommand{\sinn}[1]{\ensuremath{\sin\left((#1\))}}
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\section{Week 1}
+\subsection*{Beginning}
+La puissance de calcul des processeurs est exponentielle depuis des décennies. On gagne environ 52\% par année en performances des processeurs. Notons qu'on gagne environ 20\% en technologie (donc en gros la vitesse des transistors). Mais le vrai gain est dans l'ingéniosité de l'architecture. Les CPU d'aujourd'hui sont très différents de ceux d'il y a 20 ans.
+
+Les processeurs sont dans tout aujourd'hui : téléphones, voitures, \ldots Tout appareil électronique ou presque possède un processeur.
+
+Ce qu'on apprendra en ArchOrd : comprendre le c\oe ur d'un ordinateur, comment les processeurs sont vraiment programmés,...
+
+La mémoire est finie, chère et lente. Il faudra simuler une infinité et savoir comment ne pas ralentir tout le système à cause de la mémoire.
+
+\evid{Organisation :}\setstretch{1}
+\begin{enumerate}
+	\item Processor architecture
+	\item Computer arithmetic
+	\item Memory hierarchy
+	\item Computer organisation
+	\item Increasing performance
+	\item Multiprocessing
+\end{enumerate}
+\setstretch{1.6}
+1-3 semestre 1, 4-6 semestre 2\\
+\evid{Livres :} VHDL : Ashenden, \textit{The VHDL Cookbook}, on the web. Wakerly, \textit{Digital Design}. Surtout, Patterson \& Hennessy \textit{Computer Organisation \& Design}, 5\ts{th} edition, MK 2013, older editions are ok.
+
+\evid{Organisation :} le mercredi, de 8-10 c'est "obligatoire", et de 10 à 12 les salles sont encore réservées et les assistants peuvent rester et c'est pour finir le tp, et le travail personnel.
+
+\evid{Évaluation :} labos "auto-évalués" chaque semaine, mais sans valeur sur la note finale. 100\% le dernier exam. Exam le 16.  décembre 8-12. Tout autorisé à l'exam final.
+\end{document}  

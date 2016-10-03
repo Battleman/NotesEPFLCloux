@@ -1,0 +1,2745 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+
+%opening
+\title{discrete structure}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\part{introduction}
+exercices: igp.epfl.ch
+
+\section{probabilités et conditions}
+
+introdution au discrétes structures. Comporte des probabilités. On parle également d'assutiations de conditions. Va nous servir au condition sen programmation.
+on résoud aussi des trucs logiques: $m+n < 2k$ alors c'est vrai si $m<k$ et $n<k$. Présentation de certains problèmes de logique.
+\subsection{exemple1}
+nous voyons plein d'exemples de logique:
+\newline
+ il existe un x pour tout y /= pour tout y il existe un x
+\subsection{commentaire}
+exemple de logique classique
+\newline
+la logique sera approfondie dans le cours
+\subsection{exemple2}
+f(x) root, x element of R
+\newline
+f(x) is continuous
+way to see why f(x) is contunous: if $|x-X| < \theta\\ than |f(x) -f(X)| < \theta$
+it exists $\varepsilon >0 if if |x-X| < \varepsilon\\ than |f(x) -f(X)| < \varepsilon$
+\subsection{commentaire}
+we can look at the graph but... that's a other exemple of logic(acording to a graph/function)
+
+\section{propositional logic}
+\begin{description}
+ \item proposition{statment that can be true or false}
+ \item compotitions of proposition{proposition put together}
+ 
+\end{description}
+logical operands:
+\begin{itemize}
+ \item and: p $\wedge$ q: si les deux sont les memes: it's a conjonction
+ \item or: p $\vee$ q: si un des deux est vrai:it's a disjonction
+ \item xor(exclusiv or):  poq: si les deux sont différents
+ \item not :if p not q: si le second est faux ou si les deux sont les mêmes
+ \item conditional operand: if/only if p than q
+\end{itemize}
+
+\section{truth tables}
+they are propostions that are true or false in function of the logical operands:
+\newline 
+with: p not q
+\newline
+if p is true, q is false and if p is false q is true
+\paragraph
+ to see how the operands works, look at logical operands' description. the xor operand is special: for p and q
+\newline
+if pt and qt:f
+\newline
+if pt and qf:t
+\newline
+if pf and qt:t
+\newline
+if pf and qf:f
+\paragraph{}
+we ca make assotiations of the operand!!!
+
+\begin{itemize}
+ \item totology $=>$ always true
+ \item contraditon $=>$ always false
+ \item contrigency $=>$ sometime true sometimes false
+\end{itemize}
+
+observation: these 2 comparands have the same truth table: p->q / $not\\p\vee q$
+\paragraph{}
+these two operation are voquivalent because they have the same truth table. We write:$p\equiv q$
+\newline
+if $ p->q\\ and\\ p\equiv q$ $p->q$ is a totology.
+
+\begin{tabular}{|c|c|c|c|c|c|}
+ p & q &not q& $not p \vee q $&$ p->q$ & $(not p \vee q) <-> (p->q)$\cr
+ \hline
+ T&T&F&T&T&T\cr
+ \hline
+ T&F&F&F&F&T\cr
+ \hline
+ F&T&T&T&T&T\cr
+ \hline
+ F&F&T&T&T&T\cr
+\end{tabular}
+We have here a good exemple of totology. The solution is always true. So $(p->q)\equiv (not\\ p \vee q)$
+\paragraph{exemple:}
+De Morgen's laws:
+\newline
+\[not\\ (p\vee q \equiv\\ not\\ p\vee not\\ q\]
+\[not\\ (p\vee q \equiv\\ not\\ p\wedge not\\ q\]
+\begin{tabular}{|c|c|c|c|c|c|c|}
+p&q&not p&not q &$ p \vee q$& $not(p\vee q$)&$ not p \wedge not q$\cr
+\hline
+T&T&F&F&T&F&F\cr
+\hline
+T&F&F&T&T&F&F\cr
+\hline
+F&T&T&F&T&F&F\cr
+\hline
+F&F&T&T&F&T&T\cr
+\end{tabular}
+
+\subsection{table of basic equivalences}
+domination laws:
+\newline
+$p\wedge q \equiv p$
+\newline
+$p \vee F \equiv p$
+\newline
+$p\wedge F \equiv F$
+\newline
+$p\vee T \equiv T$
+\paragraph{}
+idempatent laws:
+\begin{description}
+ \item $P \vee p \equiv p$
+ \item $p \wedge p \equiv p $
+\end{description}
+
+Double negation:
+\begin{description}
+ \item $P not ( not p) \equiv p$
+\end{description}
+
+commutative laws:
+\begin{description}
+ \item $P \vee p \equiv q \vee p$
+ \item $p \wedge p \equiv q \wedge p $
+\end{description}
+
+associative laws:
+\begin{description}
+ \item $ (p \vee p) \vee r \equiv p \vee (q \vee r)$
+ \item $ (p \wedge p) \wedge r  \equiv p \wedge ( q\wedge r) $
+\end{description}
+
+distributive laws:
+\begin{description}
+ \item $P \vee (q \wedge r) \equiv (p \vee q) \wedge (p \vee r)$
+ \item $P \wedge (q \vee r) \equiv (p \wedge q) \vee (p \wedge r)$
+\end{description}
+absorbtion laws:
+\begin{description}
+ \item $ p\vee (p\wedge q) \equiv p$
+ \item $ p \wedge (p\vee q) \equiv p$
+\end{description}
+negation laws:
+\begin{description}
+ \item $ p\wedge not p\equiv T$
+ \item $ p \vee not  p\equiv F$
+ \end{description}
+ 
+ implication law:
+ \begin{description}
+  \item $p\longrightarrow q\equiv notp\vee q$
+ \end{description}
+
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ not\\ p\wedge \\not\\ q\]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ not\\ p\wedge \\not\\ (not\\ p \wedge q)\]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ not \wedge ( \\not (not\\ p)\vee \\not\\ q)\]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ not\\ p \wedge(p \vee \\not\\ q)\]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ (not\\ p \wedge q) \vee (not\\ p \wedge not\\ q)\]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ F \vee (not(p \wedge \\not \]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ (not\\ p \wedge \\not\\ q) \vee F\]
+\[ not(p\vee (not\\ p \wedge)) \equiv\\ not\\ p \wedge \\not\\ q \]
+
+\paragraph{note}
+Disjonctive Nonnel form:
+\[(p_1\wedge p_2\wedge p_3)\vee (notp_1 \wedge p_2 \wedge ...)\vee (...)\]
+
+\section{predicats}
+\begin{description}
+ \item predicate:\\{ propositional function depending on some variables over a specified domain so that if we plug in specific calues for these variables we get propositions}
+\end{description}
+exemple:
+\begin{math}
+ P(x)=x>3, x \in R
+ \newline
+ P(x=2)= 2>3\->F
+ \newline
+ P(x=4)=4>3->T
+ \newline
+ P(x,y)=x>=3y^2
+ \newline
+ P(3,2)=3>=3*2^2->F
+\end{math}
+ we have to set a domain R(...,...)
+\section{quantifiers}
+\subsection{universal quantifiers}
+$\forall xP(x)$ P(x) predicate
+\newline
+$\exists xP(x)$ p(x) predicate
+
+True if for all x inthe domain
+\newline
+P(x) is ture
+\newline
+if the domain is finite then this is equivalence: $(Px_1) \wedge P(x_2 \wedge p(x_3)....$
+
+\subsection{existantial quantifiers}
+$\exists xP(x)$ P(x) predicate
+\newline
+This is true if and only if there exists an element x in the domain so that P(x) is true.
+\newline
+If the domain is finite than this is equivalent to $ P(x_1) \vee P(x_2),.... \vee p(x_n) $
+\paragraph{exemple}
+\begin{math}
+ P(x,y)=x>=3y^2\\ x,y\in R
+ \newline
+ \forall x \exists y /P(x,y)=\forall x \exists y x>=3y^2 \\ \\ F
+\end{math}
+counter exemple: x = -1
+\subsection{Negative quantifiers}
+not$\forall xP(x)\equiv \forall xnotP(x)$
+\newline
+\[not\exists xP(x)\equiv \forall xnotP(x)\]
+we say that 2 propositions involving predicate and quantifiers are equivalent if they have the same truth value irrespective if what predicate we insert irrespective of the domain of discours.
+\newline
+$not(\forall xP(x))$ is true if and only if $ \forall xP(x)$ is false. this is a predicate to say that there exist an $x \in D$ that P(X) is false equivalantly there exists an $x\in D$ that $notP(x)$ is true. But this is equivalent to $\exists xnotP(x)$.
+\paragraph{proof}
+if D was finite, than $\forall x(P(x)\wedge Q(x))\equiv (P(x_1)\wedge(Q(x_1)9\wedge P(x_2)\wedge(Q(x_2)\wedge...$
+\newline
+on joue avec les parentaises
+\newline
+$\equiv (\forall xP(x))\wedge (\forall xQ(x))$
+\paragraph{our strategy}
+show that whenever the left side has a truth value T than so does the right side and then show whenever the right side has a truth value T than so does the left side.
+
+\paragraph{}
+$\forall (x(P(x)\wedge Q(x))$: assume that true in words is true for all $x\in D$, hence P(x) is true for all x and so is Q(x).Hence ($\forall xP(x))$ is true and $(\forall xQ(x)$ is true Hence their conjunction,$ (\forall xP(x))\wedge (\forall x Q(x))$ is true.
+
+\subsection{rules of infernce}
+\paragraph{hypotheses assumption}
+proposition:If (I take the DS course)p, I (am smart)q.
+\newline
+proposition: I take the DS course
+\paragraph{argument form}
+$p\longrightarrow q$ is true
+\newline
+$p$ is true
+\newline
+this is named a modus pnens.
+\paragraph{}
+we can say that q is true: $((p\longrightarrow q)\wedge p)\longrightarrow q$: should be a totology (always true)
+\newline
+We say: if the 2 arguments are correct, q is correct. If this is a totology we say that the argument form is valid.
+\newline
+\begin{tabular}{|c|c|c|c|c|}
+ p&q&$p\longrightarrow q$&$(p\longrightarrow q\wedge p)\longrightarrow q$\cr
+ \hline
+ T&T&T&T&T\cr
+ \hline
+ T&F&F&F&T\cr
+ \hline
+ F&T&T&F&T\cr
+ \hline
+ F&F&T&F&T\cr
+\end{tabular}
+\paragraph{modus tollens}
+$p\longrightarrow q$ is true
+\newline
+$p$ is true
+\newline
+$notq$
+\newline
+$\equiv notq\longrightarrow notp$
+\paragraph{addition}
+p
+\newline
+$p\vee q$
+\paragraph{simplification}
+$p\wedge q$
+\newline
+p
+\paragraph{conjunction}
+p
+\newline
+q
+\newline
+$p\wedge q$
+
+\paragraph{hypothetic of syllogism}
+$p\longrightarrow q$
+\newline
+$p\longrightarrow r$
+\newline
+$p\longrightarrow r$
+
+\paragraph{resulution rule}
+$p\vee q$
+\newline
+$notp\vee r$
+\newline
+$q\vee r$
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+ p&q&r&$p\vee q$&$notp\vee r$&$(p\vee q)\wedge (notp\vee r)$&$()-> (notq\wedge r)$&tout\cr
+ \hline
+ T&T&T&T&T&T&T&T\cr
+ \hline
+ T&T&T&F&T&F&F&T\cr
+ \hline
+ T&T&F&T&T&T&T&T\cr
+ \hline
+ F&T&F&F&T&F&F&T\cr
+ \hline
+ T&F&T&T&T&T&T&T\cr
+ \hline
+ T&F&T&F&T&T&T&T\cr
+ \hline
+ T&F&F&T&F&T&F&T\cr
+ \hline
+ F&F&F&F&F&T&F&T\cr
+\end{tabular}
+\newline
+attention, il est fort probable que le tableau contienne une erreur!
+
+\paragraph{universal instatuation}
+$\forall xP(x)$
+\newline
+P(y) for $y\in D$
+
+\paragraph{universal generalisation}
+P(y) for every $y \in  D$
+\newline
+$\forall xP(x)$
+
+\paragraph{existencial instatutation}
+$\exists xP(x)$
+\newline
+P(y) for some $y\in D$
+
+\paragraph{existencial generalisation}
+P(y) fore some $y\in D$
+\newline
+$\exists xP(x)$
+
+\paragraph{hamburger proof}
+\begin{itemize}
+ \item someone in this class visited the US
+ \item anyone who visited the Us likes hammburger
+\end{itemize}
+(therefore) someone in this class likes hamburger.
+\newline
+D = people
+\newline
+C(x)= x is in this class.
+\newline
+V(x)= x has visited the US.
+\newline
+L(x) = x likes hamburger.
+\begin{enumerate}
+ \item $\exists x$ $C(x)\wedge V(x)$ 
+ \item $forall x$ $V(x)\longrightarrow L(x)$
+\end{enumerate}
+$\exists x$ $C(x)\wedge L(x)$
+\paragraph{demonstration}
+\begin{enumerate}
+ \item $\exists x$ $C(x)\wedge V(x)$
+ \item $\forall x$ $V(x)\longrightarrow L(x)$
+ \item C(y)$\wedge$V(y)
+ \item V(y)$\longrightarrow$ L(y)
+ \item V(y)
+ \item L(y)
+ \item C(y)
+ \item C(y)$\wedge$L(y)
+ \item $\exists x$ $C(x)\wedge L(x)$
+\end{enumerate}
+
+(1,2) Are the hypotheses of the proof.
+\newline
+(3,4) instantiation rule 
+\newline
+(5)simplification rule 
+\newline
+(6)modus ponens(4+5)
+\newline
+(7)simplifiaction(3)
+\newline
+(8)conjunciton(6+7)
+\newline
+(9)existencial generalisaiton(8)
+\paragraph{claim}
+Let n,m and k integer. If $m+n\geq$ or $n\geq k$
+\newline
+Proof:
+$p=\forall k:(n+m\geq 2k)\longrightarrow((m\geq k)\vee(n\geq k))$
+\newline
+Look at notp and show that its truth value is F...
+\paragraph{}
+$notp=not(not(n+m\geq 2k)\longrightarrow((m\geq k)\vee(n\geq k))\equiv \exists k$ $not((m+n\geq 2k)\vee(m\geq k\vee n\geq k))$
+\newline
+$\equiv \exists k$ $(not(m+n\geq 2k)\wedge not(m\geq k\vee n\geq k))$
+\newline
+$\equiv \exists k$ $((m+n\geq 2k)\wedge (not(m\geq k)\wedge not(n\geq k)))$
+\newline
+$\equiv \exists k$ $((m+n\geq 2k)\wedge ((m< k)\wedge (n< k)))$:contradition(m,n est plus petis que k, mais ils doivent être plus grands que 2k.)
+\paragraph{exemple}
+$\exists !xP(x)$= there is a unique xP(x)
+\newline
+Question:$not(\exists !xP(x))=$ there is either no x with property P(x) or there are at least two with this property.
+\paragraph{}
+Proof:
+\newline
+$\exists xP(x)\wedge \forall y((x\neq y)\longrightarrow notP(y)))$
+\newline
+$not(\exists xP(x)\wedge \forall y((x\neq y)\longrightarrow notP(y))))\equiv \forall x notP(x)\vee\exists ynot((x=y)\vee notP(y))$
+\newline
+$\equiv \forall x notP(x)\vee\exists y((x\neq y)\wedge P(y))$
+
+\subsection{different types of proof}
+\begin{description}
+ \item Direct proof:\\{$p\longrightarrow q$}
+ \item indirect proofs:\\{$notq\longrightarrow not p$ contraposition/contradiciton($p\longrightarrow notq)$}
+ \item non constructive proof:\\{view exemple}
+\end{description}
+
+\paragraph{claim(using comntraposition}
+if N and m are integers and mn is even then is n even or m even.
+\newline
+Proof:
+\newline
+p=mn is even
+\newline
+q= n is even
+\newline
+r =m is even
+\paragraph{}
+$p\longrightarrow q\vee r$
+\newline
+$not(q\vee r)\longrightarrow notp$
+\newline
+$notq \wedge notr \longrightarrow notp$
+\newline
+if q and r are both odd then their pruduct is odd (m=2a+1 and n=2b+1)
+\newline
+$mn=(2a+1)(2b+1)=4ab+2a+2b+1=2(2ab+a+b)+1$ there odd!!!
+\paragraph{exemple(non constructive)}
+There exist irrational number x and y so that $x^y$ is irrational
+\newline
+Proof: Non constructive
+\newline
+$\sqrt{2}$ is irrational
+\newline
+$x=y=\sqrt{2}$
+\newline
+the question is: $\sqrt{2}^{\sqrt{2}}$ irrational
+\newline
+P(x,y)=$x^y$ is rational: $P(\sqrt{2},\sqrt{2})\vee P(\sqrt{2},\sqrt{2})$ has a truth value T.
+\paragraph{pigeonhole principle}
+n boxes and n+1 pigeons. AT least two pigeons share a box.
+\newline
+Graph G=(V,E)
+\newline
+V=$\{v_1,v_1,...,V_n\}$ set of veatices
+\newline
+E= set of edges ($V_2,V_5$) unordered triple.
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema1.jpg}
+\newline
+Claim: In a simple graph there exists two veatrices of the same degree as long as $|V|\geq 2$(the degree is the number of connection)
+\newline
+Proof:
+\newline
+note: deg($v_i)\leq n-1$
+\newline
+$v_1$ n'a pa de degré/connection et $v_n$ en a n-1, nous notons donc un décalage.
+
+\section{Sets}
+\begin{description}
+ \item set:\\{is an unordered collection of objects}
+\end{description}
+\paragraph{exemple}
+A is a set of primes less than 13.
+\newline
+$A=\{3,2,7,5,11\}=\{7,11,1,3,2,5\}$
+\paragraph{exemple2}
+B is a set of non-negative integers less or equal to 100.
+\newline
+$B=\{12,9,54,87,19,23,...,100\}$
+\subsection{sete builder location}
+$S=\{x:P(x)\}$ P(x) is a predicate $=\{x|P(x)\}$
+\newline
+domain must be specified
+\newline
+Note:$S=\{x:P(x)\}$ {$\forall x(x\in S\Leftrightarrow P(x))$.
+\paragraph{exemple}
+domain:integers
+\newline
+$A=\{x:P(x)\}$ P(x)= x is prime and x is smaller than 13
+\newline
+P(2)=T
+\newline
+P(8)=F
+\paragraph{exemple2}
+domain:integers
+\newline
+$B=\{x:Q(x)\}$ Q(X)= x is non negative and x is not most of 100.
+\newline
+Q(99)=T
+\newline
+Q(321)=F
+\subsection{cordinality of a set}
+Recall set A from before
+\newline
+$|A|=\#A=$ number of objet contain in A.
+\paragraph{exemple}
+$|A|=5$ $|B|=|0|$
+\newline
+soit $A=\{1,2,3\}$ so $\#A=3$ and soit $B=\{1,6\}$ so $\#B=2$ $\#(AuB)=5$
+\newline
+$|N|=\infty$ not the same infiniy of $|R|=\infty$ for exemple
+\paragraph{}
+$\varnothing$ empty set $\varnothing=\{\}$
+\subsection{equality of sets}
+A=B
+\newline
+A=B means that $x\in B$ and vice versa $\forall x(x\in A\Leftrightarrow x\in B)$
+\newline
+subset
+\newline
+$A\subseteq B$ A is a subset or equal of B $\forall x(x\in A\Rightarrow x\in B)$
+\newline
+$A\subset B$ propre subset
+\newline
+if $A\subset B\wedge (\exists y$ $y\in B\wedge y \notin A)$
+\paragraph{theoreme}
+For every A,$\varnothing\subseteq\leq A$ so $ A \subseteq\leq A$
+\newline
+Proof: $\varnothing \subseteq$ $\forall x(x\in\varnothing \Rightarrow x\in A)$
+\subsection{power set}
+P(A) $A=\{1,2,3\}$ is th eset whose elements are the subset of A (not nessesery all)
+\newline
+P(A)=$\{\varnothing,\{1\},\{1,2,3\},\{1,2\},...\}$
+\newline
+|P(A)|=|A|!+2=$2^{|a|}$
+\newline
+$P(\varnothing)=\{\varnothing\} \varnothing\subseteq\varnothing$
+\newline
+$P(P(\varnothing))=P(\{\varnothing\})=\{\varnothing,\{\varnothing\}\}$
+\newline
+$P(P(P(\varnothing)))=\{\varnothing,\{\varnothing\},\{\{\varnothing\}\},\{\varnothing,\{\varnothing\}\}\}$
+\subsection{set operations}
+A$=\{x:P(x)\}$
+\={A} complements; this only makes sense if we have specified domain.
+\newline
+U is the universal set.
+\newline
+\={A}$=\{x:x\notin A\}=\{xnot(x\in A)\}$
+\newline
+AuB=$\{x:x\in A \vee x\in B\}$
+\newline
+AnB=$\{x:x\in A \wedge x\in B\}$
+\newline
+A/B=A-B=$\{x:x\in A \wedge x\notin B\}$
+\newline
+$A\vartriangle B=\{x:x\in A \oplus x\in B\}$
+\subsection{set identifies}
+\={AuB}=\={A}n\={B} de morgen's laws
+\paragraph{menbership table}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+A&B&AuB& \={AuB}&\={A}&\={B}& \={A}n\={B}\cr
+0&0&0&1&1&1&1\cr
+0&1&1&0&1&0&0\cr
+1&0&1&0&0&1&0\cr
+1&1&1&0&0&0&0\cr
+\end{tabular}
+so we can see that \={A}\={u}\={B}=\={A}n\={B}
+\newline
+\={AuB}$\subseteq$ \={A}n\={B}
+\newline
+\={AuB}$\supseteq$ \={A}n\={B}
+\paragraph{}
+proof:
+\={AuB}=\{x:not((x$\in$ A)$\vee$(x$\in$ B))\}=\{x:(not(x$\in$ A)$\wedge$ not(x$\in$ B)\}
+\newline
+=\{x:(x$\notin$ A)$\wedge$ $(x\notin B)\}=\{x:(x\in $\={A}$) \wedge(x\in $\={B})$\}= $\={A}n\={B}
+\paragraph{note}
+the best way to visualise the relationship between the set and the a subset is to make au schema. not a proof
+\subsection{inclusion -exclusion}
+
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema2.jpg}
+
+$|AuB|=|A|+|B|-|AnB|$
+\paragraph{exemple}
+A=$\{x\in Z:0\leq x\leq100;$ x is divisible by $7\}$
+\newline
+B=\{$x\in Z:0\leq x\leq100;$ x is divisible by 3\}
+\newline
+AuB=\{$x\in Z:0\leq x\leq 100,7/x\vee 3/x$\}
+\newline
+$|AuB|$=$|A|+|B|-|AnB|$
+\newline
+AuB=\{$x\in Z:0\leq x\leq 100,7/x\wedge 3/x$\}=\{$x\in Z:0\leq x\leq 100;21/x$\}
+\newline
+$|A|=15$, $|B|=34$, $|AuB|=44$
+\paragraph{}
+Proof:
+\newline
+
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema3.jpg}
+show that for disjoint sets A and B, the coordinality of the union is the sum of the coorinalities.
+\newline
+Claim:
+\newline
+AuB=(A/B)\r{u}(AnB)\r{u}(B/A)
+\newline
+(A/B)n(AnB)=$\varnothing$
+\newline
+/(A/B)m(B/A)=$\varnothing$
+\newline
+(AnB)(B/A)=$\varnothing$
+\newline
+\paragraph{Proof by membership table}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+ A&B&A/B&AnB&B/A&(A/B)u(AnB)u(B/A)&AuB\cr
+ \hline
+ 0&0&0&0&0&0&0\cr
+ \hline
+ 0&1&0&0&1&1&1\cr
+\hline
+ 1&0&1&0&0&1&1\cr
+ \hline
+ 1&1&0&1&0&1&1\cr
+\end{tabular}
+$|AuB|=|A/B|+|AnB|+|B/A|$
+\newline
+Using:$|A|=|A/B|+|AnB|$
+\newline
+we can see that:$|A|-|AnB|+|AnB|+|B|-|AnB|=|A|+|B|-|AnB|$
+\paragraph{an other demonstration}
+$|AuBuC|=|A|+|B|+|C|-|AnB|-|BnC|-|AnC|+|AnBnC|$
+
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema4.jpg}
+\newline
+we use:BuC=D
+\newline
+$|AuD|=|A|+|BuC|-|An(BuC)|=|A|+|B|+|C|-|BnC|-|(AnB)u(AnC)|=|A|+|B|+|C|-|BnC|-|AnB|-|AnC|+|AnBnC|$
+\paragraph{exemple}
+A=\{$x\in Z:0\leq x\leq 100, 7/x$\}$|A|=15$
+\newline
+B=\{$x\in Z:0\leq x\leq 100, 3/x$\}$|B|=34$
+\newline
+C=\{$x\in Z:0\leq x\leq 100, 5/x$\}$|C|=21
+$\newline
+$|AnB|=5,|BnC|=3,|AnC|=7,|AuBuC|=56$...
+\paragraph{recall}
+$|A$\r{u}$B|$=$|A|+|B|$ we call that a disjoint union (AnB=$\varnothing$)
+\paragraph{Function}
+$|A|=|B|$ if and only if there exists a bijection f:$A\longrightarrow B$
+\begin{itemize}
+ \item f:$A\longrightarrow\{1,2,3,..,n\}$
+ \item f:$A\longrightarrow\ N(countable)$
+\end{itemize}
+f assigns for every elements in A a unique element B.
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema5.jpg}
+\newline
+For the notation:
+\newline
+f(A) is the range of f
+\newline
+f(A)$=\{b\in B,\exists a\in A/f(a)=b\}$
+\newline
+$f(A)\subseteq B$
+\paragraph{}
+f:$R\longrightarrow R$ f:$A\longrightarrow B$
+\newline
+g:$R\longrightarrow R$
+\newline
+h=f+g with h:$R\longrightarrow R$
+\newline
+\begin{itemize}
+ \item f:$x\longrightarrow f(x)$
+ \item g:$x\longrightarrow g(x)$
+  \item h:$x\longrightarrow f(x)+g(x)$
+ \end{itemize}
+\paragraph{}
+h=fg
+\newline
+h:$x\longrightarrow g(x)f(x)$
+\paragraph{composition}
+ f:$A\longrightarrow B$
+ \newline
+ g:$B\longrightarrow C$
+\newline
+gof:$A\longrightarrow C$
+\newline
+gof:$x\longrightarrow g(f(x))$
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema6.jpg}
+\paragraph{}
+f can be increasing.
+\newline
+f:R$\longrightarrow$R
+\newline
+$\forall x_1\forall x_2,x_2>x_1\longrightarrow f(x_2)\geq f(x_1)$
+\newline
+f is strictly increasing
+\newline
+it also works with a decreasing f.
+\paragraph{}
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema7.jpg}
+\begin{description}
+ \item f is injectitve:\\{$f(a_1)=f(a_2)\longrightarrow a_1=a_2/a_1+a_2\longrightarrow f(a_1)\neq f(a_2)$}
+ \item f is surjective:\\{$f(a)=B/ every argument of B is hit at lest once/\forall b\in B,\exists a\in A/f(a)=b$}
+ \item f is bijective:\\{injective + surjective}
+\end{description}
+if f is bijective, we can define the inverse function $f^{-1}:B\longrightarrow A$ f(a)=b$\Leftrightarrow$ $f^{-1}(b)=a$ and $f^{-1}$ is also bijective.
+\newline
+$f^{-1}of:A\longrightarrow A$ $x\longrightarrow x,x\in A$
+$fof^{-1}:B\longrightarrow B$ $x\longrightarrow x,x\in B$
+\subsubsection{special functions}
+\begin{itemize}
+ \item rounding $\llcorner x\urcorner \in R$ who give the closest integer
+ \item Ceiling: $\ulcorner x\urcorner$ smalest integer$ \geq x$
+ \item Floor: $\llcorner x\lrcorner$ largest integer$\leq x$
+ \item factorial: n!=$\prod^n_{n=1}$
+\end{itemize}
+\paragraph{exemple}
+$\llcorner x\lrcorner=\llcorner x\lrcorner+\llcorner x+\frac{1}{3}\lrcorner+\llcorner\lrcorner x+\frac{2}{3}\lrcorner$
+\newline
+Proof:
+\newline
+$x=n+\varepsilon$ alors:$3x=3n+3\varepsilon$ $n\in Z,\varepsilon$ fractional part
+\newline
+$\llcorner 3x\lrcorner=\llcorner3n+3\varepsilon\lrcorner=3n$
+\newline
+$\llcorner x\lrcorner=\llcorner n+\varepsilon\lrcorner=n$
+\newline
+$\llcorner x+\frac{1}{3}\lrcorner=\llcorner n+\frac{1}{3}+\varepsilon\lrcorner=n$
+\newline
+$\llcorner x+\frac{2}{3}\lrcorner=\llcorner n+\frac{2}{3}+\varepsilon\lrcorner=n$
+\newline
+if $\frac{1}{3}\leq\varepsilon\leq\frac{2}{3},then$ $\llcorner 3x\lrcorner=3n+1$
+\newline
+else if $\frac{2}{3}\leq \varepsilon \leq 1$ $3n+2$
+\subsection{cardinality}
+\begin{description}
+ \item two sets A and B have the same cardinality:\\{if and only if $\exists$ a bijection f from A to B, the cardinality is the formal word to say the size of a set}
+ \end{description}
+
+\begin{itemize}
+ \item We say that the set A has a cardinality n,$n\in N$, if $\exists$ a bijection f between A and \{1,2,3,...,n\}
+ \item We say that A is countable if it is either finite or $\exists$ a bijection f between A and N=\{1,2,3,...,n\}
+ \item N is said to have cardinality: (aleph N:)$N_0$
+ \item if A is neither finite nor countable then we say that it is uncountable
+\end{itemize}
+\paragraph{exemples}
+A=\{0,1,2,3,....\}= $N_{>0}u\{0\}$
+\newline
+the cardinality $|A|=|N_{>0}|=N_0(aleph)$
+\paragraph{Hilbert's Hotel}
+We have an hotel with infinitive many room but it's full. A new client arrives and he can go into the hotel in the forst room. the man who was in the fisrt goes in the two,...
+\subsection{yeah}
+Let A and B be two finite set and let AnB=$\varnothing$. Then $|AuB|=|A|+|B|$
+\newline
+Proof:
+\newline
+Assume that $|A|=a and |B|=b$ a,b$\in N$
+\paragraph{}
+$f_a:A\rightarrow\{1,2,3,..,a\}$ f a bijection
+\newline
+$f_b:B\rightarrow\{1,2,3,..,a\}$ f a bijection
+\newline
+We need to proove that:
+\newline
+$f_{a,b}:AuB\rightarrow\{1,2,3,..,a+b\}$ f a bijection
+\paragraph{}
+$f_a(x), x\in A: 1,2,3,...,a$
+\newline
+$a+f_b(x), x\in B: 1,2,3,...,a,a+1,a+1,...,a+b$
+\subsubsection{cardinalities}
+$|N|=N_0$
+\newline
+$|Z|=N_0$
+\newline
+$|Q|=N_0$ (we can count with a tabular(c.f. analyse N est dénombrable))
+\newline
+As it has been seen in analyseI, the R is uncountable so £$|R|\neq N_0$ As the prof said:"The reals cannot be put in one-to-one correspondence with natural numbers. R is infinite, it is uncountable".
+\newline
+$|[-2;0[|=|R|$ Consequence of the definiton.
+\subsubsection{for the Naturals}
+We creat a functin to count the Nnumbers: if x positive 2x and if x negative -(2x+1)
+\newline
+Proove that f:$Z\rightarrow N$ is a bijection.
+\newline
+$f^{-1}:N\rightarrow Z$
+\paragraph{}
+$f^{-1}of=Z\rightarrow Z$
+\newline
+$f^{-1}of=id_z$
+\newline
+$fof^{-1}=N\rightarrow N$
+\newline
+$fof^{-1}=id_N$
+\paragraph{$z \geq 0$}
+$\llcorner\frac{2z+1}{2}\lrcorner=z$(after simplification)
+\paragraph{$z\leq 0$}
+$-|z|=z$(after simplification)
+
+\subsubsection{for the reals}
+By contradiction:
+\newline
+Assume: $f:(N\rightarrow (-\frac{pi}{2};\frac{pi}{2})$
+\newline
+g:$(-\frac{pi}{2};\frac{pi}{2})\rightarrow (0;1)$
+\newline
+$f:N\rightarrow(0;1)$ is a bijection.
+\begin{itemize}
+ \item $x_1=f(1)$
+ \item $x_2=f(2)$
+ \item $x_3=f(3)$
+ \item $x_4=f(4)$
+\end{itemize}
+$x_1=0.x_{11}x_{12}....$  
+$x_2=0x_{21}x_{22}....$
+\newline
+if we take the diagonale, we can build an extra number which is not in the list(it's named Cantor's diagonalization construction):
+$x_+=0.x_{11}x_{22}......$
+\paragraph{}
+we are in contradiction because can't list the reals.
+\subsubsection{exemple}
+Set of real numbers with exclusively digit 7.
+\newline
+A:=\{7,7.7,7777.7777777,77.777,77,.....\}
+\newline
+infinite but countable!!!:
+\newline
+We order this by lenght (7=1,77,7.7=2,...) and we can constructt different finite sets with this.
+\subsubsection{exemple}
+Same as before but allow digits 7 and 8.
+\newline
+a:=\{7,8,77.88,87,7,..\}
+\newline
+infinte and uncountabe: we can constuct the Cantor's diagonalization.
+\subsection{sequences}
+1,2,3,4,5,6,...
+\newline
+$1,\frac{1}{2},\frac{1}{4},\frac{1}{8},...$
+\paragraph{formelly}
+$f:A\mapsto B$
+\newline
+$A\subseteq N$
+\subsubsection{commun sequences}
+\paragraph{Integer sequences}
+\begin{description}
+ \item Natural sequances:\\{1,2,3,4,....}
+ \item even numbers(positive):\\{2,4,6,8....}
+ \item factorial:\\{1,2,6,24,120,...}
+ \item primes numbers:\\{2,3,5,7,11,13,...}
+ \item Fibonacci numbers:\\{0,1,1,2,3,5,8,...}
+\end{description}
+\paragraph{arithmetic sequence}
+$f(n)=a+nb/a,b\in R$
+\newline
+$\sum_{n=0}^{k}(a+bn)=(k+1)(a+\frac{bk}{2})$ (using dafuck plus loin...)
+\paragraph{Geometric sequence}
+$f(n)=ab^n/a,b\in R$
+\newline
+$\sum_{n=0}^(k)ab^n=a\frac{b^{k+1}-1}{b-1}$ si b n'est pas 1(using dafuck...)
+\subsubsection{identity}
+$fof^{-1}=id$
+\newline
+$f^{-1}of=id$
+\subsubsection{binomial coeficients}
+\[\frac{k(k+1)}{2}=
+\begin{pmatrix}
+k+1\cr
+2
+\end{pmatrix}
+\]
+\newline
+\[
+\begin{pmatrix}
+m\cr
+e
+\end{pmatrix}
+=\frac{m!}{e!(m-e)!}
+\]
+\subsubsection{dafuck}
+$s_k=\sum_{n=0}^kb^n=1+b+b^2+b^3+...+b^k$
+\newline
+$S_k=\sum_{n=0}^kb^n=1+\sum_{n=1}^kb^n=1+b(\sum_{n=1}^kb^{n-1})=1+b(\sum_{n=0}^{k-1}b^n)=i+b(\sum_{n=0}^kb^n-b^k)$
+\paragraph{}
+$S_k=1+bS_k-b^{k+1}\Longrightarrow S_k-bS_k=1-b^{k+1}\Longrightarrow S_k(1-b)=1-b^{k+1}$
+\newline
+As long as $b\neq 1$
+\newline
+$S_k=\frac{1-b^{k+1}}{1-b}=\frac{k^{k+1}-1}{b-1}$
+\subsubsection{transfromation de somme en fonction}
+$f(x9=\sum_{n=0}^{k}X^n$
+\newline
+$f(x)=1+X\sum_{n=1}^kX^{n-1}=1+X(\sum_{n=0}^kX^n-X^k)=i+Xf(x)-X^{k+1}$
+\newline
+$f(x)(1-x)=1-x^{k+1}\Rightarrow f(x)=\frac{1-x^{k+1}}{1-x}$ for x$\neq$ L
+\newline
+so we have f'(x)=
+\paragraph{}
+$\frac{(k+1)x^k(x-1)-(x^{k+1}-1)}{(x-1)^2}=g(x)$
+\newline
+$\sum_{n=0}^knb^{n-1}=g(b)$
+\newline
+$\sum_{n=0}^knx^n=xg(x)$
+\newline
+$\sum_{n=0}^kn^2x^n$ il faut répéter l'opération( rajouter des x pour réduire la puissance de n)
+\subsubsection{Aside}
+$\sum_{n=0}^{\infty}b^n=\frac{1}{1-b},0\leq b<1$
+\newline
+$\frac{b^{k+1}-1}{b-1}$ si b se rapproche aussi pret que l'on veut de 1:
+\newline
+$\frac{(k+1)b^k}{1}=-(k+1)$
+\paragraph{attention}
+dans ces formules il faut faire attention a ce que b ne soit pas égal a 1 car on aurait une division par 0
+
+\section{algorithms}
+$Big O, Big \Omega, Big$ $Theta, Small$ o
+\newline
+\subsection{first algoritm}
+Find the maximum of a sequence of n real numbers
+\paragraph{input}
+$a_1,a_2,a_3,...$ (n real numbers, unsorted)
+\paragraph{algoritm}
+$max=a_1$
+\newline
+for i=2 to n:
+\newline
+$if a_i>max$ then $max=a_i$
+\paragraph{output}
+max
+\paragraph{the question}
+How long take this algoritm. If we want to find the conplexity, the question is, what kind of operation are we doing.
+\newline
+Assumption: most costly operation is comparison. for our algorithm we need n-1 comparisons.
+\subsection{linear searching}
+\paragraph{task}
+find x in sequence, if contained return position, else return 0
+\paragraph{input}
+$x\in R$ $a_1,a_2,...,a_n$ (real numbers, unsorted)
+\paragraph{algorith}
+pos=0
+\newline
+for 1=1 to n
+\newline
+if $a_1=x$ then pos =i
+\paragraph{output}
+pos
+\subsection{binary search}
+Some task as befor $a_1$ are now sorted
+\paragraph{input}
+$x\in R$
+\newline
+$a_1,a_2,a_3,...a_n$ (reals, sorted, $a_i\leq a_{i+1}, i=1$ to n-1)
+\newline
+i=1 left most position of search field
+\newline
+j=n right most position of search field
+\paragraph{algorith}
+while(i<j)
+\newline
+$m=\llcorner\frac{i+j}{2}\lrcorner$
+\newline
+if $x<a_i$ then j=m-1 else i=m
+\newline
+if $x=a_i$ then pas=i else pos=0
+\paragraph{output}
+pos\paragraph{complexity}
+$\ulcorner log_2(n)\urcorner$
+\subsection{sorting (bubble sort)}
+\paragraph{task}
+Output is the sorted list of the numbers:\{1,7,0,3,-2\}
+\paragraph{input}
+$a_1,a_2,...,a_n$ (reals, unsorted)
+\paragraph{algorithm}
+for i=n down to 2
+\newline
+place the maximum of ($a_1,...,a_i$) at position i
+\paragraph{output}
+\{-2,0,1,3,7\}
+\paragraph{complexity}
+(n-1)+(n-2)+(n-3)+...+1
+\newline
+$\frac{(n-1)n}{2}\equiv \frac{n^2}{2}$
+\paragraph{}
+we can do much better with a linear complexity
+\subsection{matrix multiplication}
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schem8.jpg}
+We need to compute $C_{ij}$
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema9.jpg}
+$y_i=A_{i1}x_i+A_{i2}x_2+...=\sum_{in}^{n}A_{ij}x_j$
+\paragraph{}
+we can see that:
+\newline
+$C_{ij}=\sum_{k=i}^{n}A_{ik}B_{kj}$
+\paragraph{complexity}
+$n^3$ multiplications...
+\subsection{satisfiability}
+n Boolean variable $x_1,x_2,x_3,...,x_n$
+\newline
+Given Boolean function C($x_1,x_2,...,x_n$)
+\paragraph{paragraph}
+Find truth assignment to the Boolean variable so that the truth value of C is T. Proove that no such assignment exists.
+\paragraph{resolution's way}
+we take all possible combinaitions of assignemments with a big truth table. The big O is $2^n$ and we can't do better.
+\subsection{Big O}
+\begin{itemize}
+ \item Let f and g be funciton from R to R, we say f(x) is O(g(x)) if there exist $x_0$ and C that $|f(x)|<C|g(x)|$
+\end{itemize}
+for $x\geq x_0$, $x_0$ and C are colled withness.
+\paragraph{exemple}
+$10^5x^2$ is $O(x^2)$ 
+\newline
+$|10^5x^2|\leq Cx^2$ for $x>x_0$
+\newline
+$C=10^5$
+\newline
+$x_0=0$
+\newline
+you can forget the constant
+\paragraph{exemple}
+f(n)=$0.00001n^2+240n+10^{10}$
+\newline
+f is $O(x^2)$
+\newline
+Need to find $n_0,C$ so that $|f(n)|\leq Cn^2$ for $n\geq n_0$
+\newline
+$C=3$
+\newline
+$n_0=max\{240,10^{\frac{10}{2}}\}$
+\paragraph{claim}
+f=O(g)
+\newline
+h=O(k)
+\newline
+f+h=O(g+k),f,g,h,k$R\mapsto R$
+\newline
+$|f+h|\leq C|max\{g,k\}|$
+\newline
+$|f(x)|\leq C_{f,g}|g(x)|$ for $x>x_{fg}$
+\newline
+h=O(k)
+\newline
+$|h(x)|\leq c_{n,k}|k(x)|$ for $x>x_{fg}$
+\subsection{notation}
+\begin{description}
+ \item O:\\{uppperbound}
+ \item $\Omega$:\\{lowerbound} 
+ \item $\Theta$:\\{equal growth role}
+ \item o:\\{small notation}
+\end{description}
+\paragraph{}
+f(n)=$\Omega(g(n)),\exists C>0$ and $n_0$ so that $|f(n)|\geq C|g(n)|$ for $n\geq n_0$
+\newline
+g=O(g):$g=\Omega(f)$
+\newline
+f=$\Theta(g):f=O(g)\wedge f=\Omega(f)$
+\subsubsection{exemple}
+$\sum_{i=0}^{d}a_in^i$ is O($n^d$)
+\paragraph{proof}
+$|\sum_{i=0}^{d}a_in^i|\leq\sum_{i=0}^{d}a_i|n^i\leq(\sum_{i=0}^{d}|a_i|)n^d
+$\subsubsection{exemple}
+$\sum_{i=0}^na_ii^d$ is O($n^{d+1}$)
+\newline
+$\sum_{i=0}^{n}|a_i|i^d\leq A\sum_{i=0}^nn^d\leq A(n+1)n^d\leq 2An^{d+1}$
+\subsubsection{demonstration}
+Assume that f(x) is =(g(x))
+\newline
+the question is: is log(f(x)) O(log(g(x))?
+\paragraph{check}
+f(x) is O(g(x))
+\newline
+$|f(x)|\leq C|g(x)|$ for $x\geq x_0$
+\newline
+$log|f(x)|\leq log(C)+log|g(x)|$ for $x\geq x_0$
+\newline
+$f(x)\rightarrow\infty$ when $x\rightarrow\infty$
+\newline
+$logf(x)\leq log(C)+log(g(x))$
+\newline
+$\Rightarrow log(f(x))\leq 2log(g(x))$ for $x\geq x_0$
+\subsubsection{big $Omega$ notation}
+f(x) is $\Omega$(g(x)) if $\exists C>0$ and $x_0$ so that:
+\newline
+$|f(x)|\geq C|g(x)|$ for $x\geq x_0$
+\paragraph{claim}
+f(x) is O(g(x))$\Leftrightarrow$ g(x) is $\Omega$(f(x))
+\paragraph{proof}
+Assume that f(x) is O(g(x)) ,$\exists C_1,x_0$ so that is true.
+\newline
+$|f(x)|\leq C|g(x)|$ for $x\geq x_0$
+\newline
+if C=0:
+\newline
+then the statement is also correctif we choose C=1
+\newline
+Hence without loss of generality, we can assume that $C>0$ Hence:
+\newline
+$|f(x)|\leq C|g(x)|$ for $x\geq x_0$ is quivalent to
+\newline
+$|g(x)|\geq \frac{1}{C}|f(x)|$ for $x\geq x_0$
+\newline
+Hence the supplies that g(x) is $\Omega(f(x))$
+\begin{description}
+ \item f(x) is $\Theta$(g(x)):\\{if f(x) is O(g(x)) and $\Omega(g(x))$, si there exist constant $C_1,C_2,x_0$ so that: $C_1|g(x)|\leq f(x)\leq C_2|g(x)|$}
+\end{description}
+\paragraph{example}
+$log_{10}x$ is $\Theta(log_{e}(x))$
+\newline
+p(x) is $\Theta(q(x))$
+\newline
+$p(x)=\sum_{i=0}^dp_ix^i$ $p_d\neq0$
+\newline
+$q(x)=\sum_{i=0}^dq_ix^i$ $q_d\neq 0$
+\subsubsection{small o notation}
+We say that f(x) il o(g(x))
+\newline
+$\lim_{x\to \infty}\frac{|f(x)|}{|g(x)|}=0$
+\paragraph{example}
+$\sqrt{n}$ is o(n)
+\newline
+$\lim_{n\to \infty}\frac{\sqrt{n}}{n}=0$
+\newline
+log(n) is o$n^{\varepsilon}$) $\varepsilon>0$
+\newline
+$\lim_{n\to \infty}\frac{log(n)}{n^{\varepsilon}}=0$
+\begin{itemize}
+ \item $\Theta(1)$
+ \item $\Theta(log(n))$ search odrer that
+ \item $\Theta(n)$ finding a maximum, search unordered list
+ \item $\Theta(n^2)$ naive sorting
+ \item $\Theta(n^3)$ naive multiplication ofo matrix
+ \item $\Theta(n^d)$ polynomial time
+ \item $\Theta(e^n)$ expoential, SAT problem
+\end{itemize}
+%schema1
+
+\section{modular arithmetic}
+We say that m divides n, written $\frac{n}{m}$ if there exists an integer q so that mq=n
+\paragraph{alternatively}
+n has factor m, n is a multiple of m
+\subsection{properties}
+\begin{itemize}
+ \item if $\frac{m}{a}$ and $\frac{m}{b}$, tham $\frac{m}{a+b}$
+\end{itemize}
+$\frac{m}{a}\Leftrightarrow mq_a=a$ $q_a\in Z$
+\newline
+$\frac{m}{b}\Leftrightarrow mq_b=b$ $q_b\in Z$
+\newline
+$\frac{m}{a+b}\Leftrightarrow mq=a+b$ $q\in Z$
+\begin{itemize}
+ \item if $\frac{m}{a}$ then $\forall b\in Z, \frac{m}{ab}$
+\end{itemize}
+$\frac{m}{a}\Leftrightarrow mq_0=a$ $q_0\in Z$
+\newline
+$m(q_0b)=ab$ $b\in Z$
+\newline
+$\frac{m}{ab}\Leftrightarrow mq=ab$ $q\in Z$
+\begin{itemize}
+ \item $\frac{m}{n}$ and $\frac{n}{a}$ then $\frac{m}{a}$
+\end{itemize}
+$\frac{m}{n}\Leftrightarrow mq_n=n$ $q_n\in Z$
+\newline
+$\frac{n}{a}\Leftrightarrow nq_0=a$ $q_0\in Z$
+\newline
+$m(q_nq_a)=nq_a=a$
+\newline
+$\frac{m}{a}\Leftrightarrow mq=a$ $q\in Z$
+\begin{itemize}
+ \item if $\frac{m}{a}$ and $\frac{m}{a}$ then $\forall \alpha,\varsigma \in Z,\frac{m}{\alpha a+\varsigma b}$
+\end{itemize}
+From(*)
+\newline
+$\frac{m}{a}\rightarrow \frac{m}{\alpha a}$
+\newline
+$\frac{m}{b}\rightarrow \frac{m}{\varsigma b}$
+\newline
+then use (**) to conclude
+\subsection{euclidean division}
+Let $n\in Z$ and $m\in Z$, $m\neq 0,$ then there exist unique integer q and r, $0\leq r < m,$ so that n=mq + r ((dividend)=(divisor)(quotient)+(remainder))
+\newline
+notation:(make sens since q and r are unique...)
+\begin{itemize}
+ \item n div m = q
+ \item n mod m = r
+\end{itemize}
+\paragraph{m fixed, $m\neq 0$ }
+$0\leq a mod m< m$
+\newline
+$o\leq b mod m< m$
+\newline
+$a mod m = b mod m$
+\newline
+a=b mod m
+\newline
+a is an argument to mod m
+\newline
+a and b are in the same equivalence class mod m
+\paragraph{example}
+m=6
+\newline
+\{-5,1,7,13,19,...\}
+\newline
+\{-6,0,6,12,...\}
+\newline
+\{-4,2,8,...\}
+\paragraph{basic rules}
+\begin{enumerate}
+ \item a = b mod m a=b+km $k\in Z$
+ \item a = b mod m, c = d mod m then a+c = b+d mod m (we can proove using (1))
+ \item ac = bd mod m (same as 2)
+ \item (a+b) mod m : ((a mod m)+(b mod m))mod m
+ \item ab mod m: ((a mod m)(b mod m))mod m 
+\end{enumerate}
+a,b are in th esame equivalence classe, and c,d are together in a other equivalence classe.
+\paragraph{exemple}
+$17^{81} mod 5=17*17*...*17 mod 5$
+\newline
+$(17 mod 5)(17mod5)...(17mod5)mod5$(17 mod 5=2 or on fait 81 fois 17mod5)
+\newline
+$=2^{81}mod5$
+\newline
+$2^{10*8}2mod5$
+\newline
+$(-1)^8*2mod5=2mod5$
+\paragraph{}
+Efficient computation of $a^b$mod m. Can assume without less of generality that $0\leq a\leq m-1$
+\newline
+$a^bmod\\m=(amodm)^bmod\\m$
+\paragraph{more efficient}
+$b=\sum_{i=0}^Lb_i2^i$ $b\in\{0,1\}$
+\newline
+$L=\llcorner log_2(b)\lrcorner$
+\paragraph{to compute}
+$a^b=a^{\sum_{i=0}^Lb_i2^i}=\prod_{i=0}^L(a^{2^i})^{b_i}$
+\newline
+$a^{81}=a^{1+16+64}=a+a^{16}+a^{64}$
+\newline
+a= 17 mod 5=2 $\Rightarrow a=2: a^{16}=2^{16}((((2^2mod5)^2mod5)^2mod5)^2mod5=1$
+\newline
+$a^{64}=(a^{16})^4=1mod5$
+\paragraph{complexity}
+multiplication $\leq L$ squaring(reduction) $\Theta(L)$
+\subsubsection{application}
+Cryptography:(Caesar's Cipher)
+\newline
+plaim text(message)$\Rightarrow$ Cipher text(encrypted)
+\newline
+f:\{a,b,c,d,......z\}$\Rightarrow$\{0,1,...,25\} Hello$\Rightarrow$7,4,11,11,14
+\newline
+g:\{0,1,2,...,25\}$\Rightarrow$\{0,1,...,25\}
+\newline
+k:key $g_k(i)\Rightarrow(i+k)mod26$
+\newline
+$k\in [0,25]$
+\newline
+encriptation: $f^{-1}og_kof:\{a,b,c,...\}\Rightarrow\{a,b,c...\}$
+\newline
+$f^{-1}og_kof(Hello)=khoor$
+\newline 
+decryptation:$f^{-1}og_k{-1}ofof^{-1}og_kof$
+\subsubsection{Pseudorandom numbers}
+$X_n=aX_{n-1}+c mod m$
+\newline
+$a,c,m$ are appropriate integers
+\newline
+$x_1,x_2,x_3$ pseudorandom nubers
+\paragraph{Hashing}
+items that have a unique key k:$\in N$ because th ekey are listed, we can use a binary search $\Theta(log(n))$
+\newline
+Scheme using Hashing n items:
+%schema1
+\paragraph{collision}
+$k_1,k_2$ such $k_1=k_2$mod m
+\subsection{group}
+Is a set G, together with a binary opération, so that the following properties hold, call the opéraiton *
+\begin{enumerate}
+ \item $\forall a,b\in G, a*b\in G$:* $GxG\mapsto G$
+ \item assocoiativity: $\forall a,b,c\in G,(a*b)*c=a*(b*c)$
+ \item identity exists: $\exists e\in G,$ so that $\forall a\in G,a*c=e*a=a$
+ \item comuutative groupe: $\forall a,b\in G,a+b=b+a$
+ \item inverse: $\forall a\in G,\exists b\in G,$ so that $a*b=e$
+\end{enumerate}
+\paragraph{note}
+if a*b=b*a $\forall a,b\in G$ then G is commutative
+\subsubsection{claim}
+let $m\in Z,m+0$
+\newline
+$g=\{0,1,---,m-1\}$
+\newline
+*= + mod m
+\newline
+*=$\cdot$ mod m 
+\paragraph{check}
+\begin{enumerate}
+ \item claused: mod m makes sure that result is m:\{0,1,...,m-1\}
+ \item aoosciativity: 3,4,2 ((3+4mod 6)+2)mod6= 3+4+2 mod 6 (because integer with + is associative)
+ \item identity: e=0 because 0+a =a+0=0 mod m
+ \item inverse: m=6 a=2 $\exists b$ so that b+2=e=0
+\end{enumerate}
+\subsection{for the groupe}
+G,$\cdot$ modm/closed,associativity,identity,commutative(it's ok)
+\paragraph{Fact}
+if m is a prime, then every element in G has a multiplication inverse, but if m is not a prime, then not all 
+elements of G have an inverse with respect to multiplicaiton.
+\paragraph{example}
+m=5
+\newline
+G=\{0,1,2,3,4\} identity multiplication is 1
+\begin{tabular}{|c|}
+ 1=1\cr
+ \hline
+ $2\cdot3=1$\cr
+ \hline
+ $3\cdot2$\cr
+ \hline
+ $4\cdot4$
+\end{tabular}
+\subsubsection{primes}
+Primes: An integer $\geq$ 2 which can only be divided by itself or 1. (you know what it is)
+\paragraph{claim}
+$|set of primes|=\aleph_0$
+\newline
+Proof: sot of prime $\subseteq N$ Assuem that the set of primes is finite:
+\newline
+\{$p_1,p_2,p_3,...,p_n$\} then let $a=\prod_{i=1}^np_i+1$
+\newline
+if a is prim , then we fave a contradiction since $a>p_i,i=1,...,n,$ and hence $a\notin\{p_1,...,p_n\}$
+\newline
+a mod $p_i$=1 i=1,...,n
+\newline
+Hence a is not adivisible by on eof the primes $p_i$. hence a must contain a new prime, which leads to a contradiction
+\paragraph{prime number theoreme}
+pi(x)=$|\{n\in N_{\geq2}:$ n is prime$\}|$ (pi is a prime number counting function)
+\newline
+pi(10)=4(2,3,5,7)
+\newline
+pi(x) is O(x)
+\paragraph{claim}
+$pi(x)\sim\frac{x}{log_e(x)}$
+\newline
+ln the sense that:$\lim_{x \to \infty}\frac{pi(x)}{\frac{x}{log_e(x)}}=1$
+\paragraph{trick}
+$log_e(x)\sim log_2(x)-log_{10}x$, $log_2(1000)\sim 10$ (not identities but just a good estimation)
+\newline
+x=100 digit number
+\newline
+$log_2(x)\sim 330$
+\newline
+$log_{10}(x)\sim 100$
+\newline
+so the $log_e(x)\sim 230$
+\newline
+Pick randomly a 100 digit number integer
+\newline
+if we represent x in binary and it has k digits, then the probability of  a random number to be prime is $\geq \frac{1}{k}$
+\paragraph{}
+How to find a large prime:
+\begin{enumerate}
+ \item Pick a large integer at random.(difficult)
+ \item Test if the choosen number is prime
+ \item if yes we are done, if no go to one
+\end{enumerate}
+How to test if a large integer is prime?:
+\newline
+Given a: test if a is prime
+\newline
+for:i=2 to a-1 a
+\newline
+write a=iq+r; (euclideon division)
+\newline
+compute a mod i= r;
+\newline
+if r=0 htne a is divisible by i.
+\newline
+if a is not divisible by any i then it is prime
+\paragraph{slightly better}
+\begin{itemize}
+ \item Skip evne numbers other than 2
+ \item stop  at $\sqrt{a}$
+\end{itemize}
+\paragraph{siev eof Erathostenes}
+1 2 3 4 5 6 7 8 9 ...
+\newline
+1 2 3 5 7 9...
+\newline
+after that we can skip all the multiple of 3 (but not 3), ect...
+\subsubsection{prime number test}
+Fermat's Little theorem:\\
+if p is prim ethen aor all $a\in N$ $a^i=$a mod p
+\newline
+if we can find an a so that $a^p\neq$ a mod p 
+\newline
+then p is not prime!
+\newline
+check:a=2:n= 2 3 4 5 6 7 8 9 10
+\newline
+$2^2=$ 2 mod 2(correct)
+\newline
+$2^3=$ 2 mod 3(correct)
+\newline
+$2^4=$ 2 mod 4(does'nt pass)
+\newline
+$2^5=$ 2 mod 5(correct)
+\newline
+$2^6=$ 2 mod 6(does'nt pass)
+\newline
+if it pass, the number is a prime
+\newline
+pseudoprime with respect to a=2
+\newline
+with this, we know the numbers that we can avoid becouse they are not primes(the other are just pseudoprimes) ;)
+\paragraph{good news}
+$\exists$ integers which pass Format's test for all a; Cormichael numbers
+\newline
+they are many fewer pseudoprimes than primes
+\paragraph{to compute this}
+$2^a=$ 2 mod a
+\newline
+a,b$\in N$
+\newline
+c=$a\cdot b$ easy
+\newline
+For p,q prime, you get pg = a
+\newline
+Task: Given a, find p,q (very difficult)
+\newline
+f(pq)=pq(easy, but the inverse is difficult)
+\begin{enumerate}
+ \item gives to b a number
+ \item B gets number and says if he/she wins depending on odd even
+ \item Areveals page(name of person)
+ \item B can verify
+\end{enumerate}
+\subsubsection{induction}
+\begin{description}
+ \item induction:\\{we are on a ladder, if we can reach step 1, and given that we can reach the step n, we can also reach step n+1 then we can reach any step o fa infinite ladder}
+\end{description}
+P(n) sequence od propositions:$P(n)=\sum_{i=1}^ni=\frac{n(n+1)}{2}$
+\paragraph{principle of induction}
+$[P(1)\wedge(\forall P(n)\rightarrow P(n+1))]\rightarrow\forall nP(n)$
+\paragraph{}
+P(i) is base case, base step
+\paragraph{we will prove}
+$P(n)=\sum_{i=1}^ni=\frac{n(n+1)}{2}$
+\paragraph{}
+Base case:
+\newline
+P(1) has truth value T
+\newline
+$\sum_{i=1}^1i=1$(explicit computation) is that equal to $\frac{n(n+1)}{2}$ when n =1: yes
+\paragraph{}4
+P(n+1)=$\sum_{i=1}^{n+1}i=\frac{(n+1)(n+2)}{2}$ want to show that this truth value T assuming that P(n) has truth value T
+\newline
+$\sum_{i=1}^ni+(n+1)=(P(n)=T)=\frac{n(n+1)}{2}+(n+1)=\frac{(n+1)(n+2)}{2}$
+\paragraph{example}
+P(n)=$\sum_{i=0}^nr^1=\frac{r^{n+1}-1}{r-1}$ $r\neq 1; n\geq 0$
+\newline
+Base case
+\newline
+P(0)=$\sum_{i=0}^ur^0=1=\frac{r-1}{r-1}=1:T$
+\paragraph{}
+induction: P(n)$\rightarrow$ P(n+1) $\forall n\geq 0$
+\paragraph{}
+P(n+1)=$\sum_{i=0}^nr^i+r^{n+1}=\frac{r^{n+1}-1}{r-1}+r^{n+1}=\frac{r^{n+2}-1}{r-1}$
+\paragraph{why it this rule valid}
+$P(1)\wedge(\forall nP(n)\rightarrow P(n+1))\rightarrow \forall nP(n)$
+\newline
+proof by contradiction:
+\paragraph{}
+Assume
+\newline
+$P(1)\wedge(\forall nP(n)\rightarrow P(n+1))\rightarrow \urcorner\forall nP(n)$
+show that it is a contradiction 
+\begin{enumerate}
+ \item P(1) hypothesis
+ \item $\forall n (P(n)\rightarrow P(n+1)$ hypothesis
+ \item $\urcorner\forall n$ $P(n)$ hypothesis
+ \item $\exists n$  $ \urcorner P(n)$ from 3 by logical quivalence
+ \item $\urcorner P8s)$ for som es$\in N_{\geq1}$ by 4
+ \item $\urcorner P(s*)$ by discussion over...
+ \item $s*\neq 1$ by 1
+ \item $\urcorner P(s*-1)$ by 2: contradiction since s* was suppose to be the smallest element of S
+\end{enumerate}
+S=\{$ s\in N_{\geq 1}:\urcorner P(s)$has a truth value T}
+$|s|\geq 1$ by  3 and 4
+\newline
+Let s* tbe the smallest element of S
+\paragraph{}
+we use that $N_{\geq 1}$ is well ordered. Every subset of $N_{\geq 1}$ has a unique smallest element.
+\paragraph{generalizations}
+$P(b)\wedge(\forall\geq b$ $P(n)\rightarrow P(n+1))\rightarrow\forall n\geq b$ $P(N)$
+\newline
+Strong induction: $P(1)\wedge \forall n(\forall m\leq n$ $P(m)\rightarrow P(n+1))\rightarrow\forall n P(n)$
+Which means that if it's true for all the steps until m before n, it's true 
+\paragraph{proof by induction}
+$\sum_{i=0}^ni^2=\frac{n(n+1)(2n+1)}{6}$
+\newline
+How to find or guess formula?
+\newline
+$f(x)=\sum_{i=0}^nx^i=\frac{x^{n+1}-1}{x-1},x\neq 1$
+\newline
+$\lim_{x\to 1}(xf(x))=\sum_{i=0}^ni^2x^{i-1}=\sum_{i=0}^ni^2$
+\newline
+$\sum_{i=0}^ni^2\sim\int_{0}^nx^2dx=\int_0^n x^2dx=\frac{x^3}{3}|_{x=0}^n=\frac{n^3}{3}$ 
+\newline
+the integrale is the area under the function of the sum so it's the lowerbound 
+\newline
+Guess;$\sum_{i=0}^ni^2=S(n)=\frac{n^3}{3}+an^2+bn+c$
+\begin{itemize}
+ \item S(0)=0 we can conclude that c=0
+ \item S(1)=1 =$\frac{1}{3}+a+b$
+ \item S(2)=5=$\frac{8}{3}+4a+2b$
+\end{itemize}
+if we - the 2 equation find: 3=2+2a
+\newline
+a=$\frac{1}{2}$, b=$\frac{1}{6}$ so we found: $n^3+\frac{1}{2}n^2+\frac{1}{6}$ which gives the formula
+\subsubsection{recursions}
+factorial(n)= n! for $n\geq0$ 0!=1 =$\prod_{i=1}^ni,n\geq 1$
+\newline
+factorial(n)=if n=0 return 1, else return n*factorial(n-1)
+\paragraph{}
+Fibonacci sequence:
+\newline
+$f(n), n\geq 0:0,1,2,3,5,8$
+\newline
+f(n)=f(n-1)+f(n-2),$n\geq2$
+\newline
+fibonacci(n)=if $n<2$ return n, else return fibonacci(n-1)+fibonacci(n-2)
+\paragraph{}
+power(a,e,m)=$a^emodm,m\geq1,e\geq0$
+\newline
+power(a,4,m)=$power(a,2,m)^2$mod m
+\newline
+power(a,e,m)=$power(a,\frac{e}{2},m)^2$ mod m
+\newline
+example:$a^{100}=(a^{50})^2=((a^{25})^2)^2=(((a^{12})^2)^2)^2$
+\newline
+compute: power(a,e,m) $m>1,e\geq0$: if e=0 return 1
+\newline
+else t=power$(a,\llcorner\frac{e}{2}\lrcorner,m)^2$mod m 
+\newline
+if (e is even) return t, else return t*a mod m
+\paragraph{example}
+power(a,5,m) e=5=0: no t=$power(a,2,m)^2$ mod m
+\newline
+if (e is even) NO!
+\newline
+else (e is odd) return t*a = $a^4*a=a^5$
+\newline
+power(a,2,m)
+\newline
+t=power$(a,1,m)^2$mod m
+\newline
+return t=$a^2$
+\newline
+power(a,1,m)
+\newline
+$e^2=0$ No
+\newline
+t=power$(a,0,m)^2$ mod m
+\newline
+return t*a = 1*a =a
+\newline
+complexity log(n)
+\subsection{sorting}
+\paragraph{Basic idea}
+$n\geq 0$
+\newline
+We are given n elemenets $a-1,...,a_n(a_i\in R)$
+\begin{enumerate}
+ \item $n\leq 1$ then list is already sorted
+ \item if $n\geq 2$ break problem into 2 parts and sort each part, call parts $L_1,L_2$, $L=L_1u^oL_2$ 
+ \item create from $L_1$ and $L_2$ a marged sorted list complexity n
+\end{enumerate}
+\paragraph{note}
+if 2 list are sorted, the complexity is n (you take the first of one list and you add it in the second,...)
+\paragraph{merge sort}
+Sort list L of n items if $n\leq 1$, list is already sorted
+\newline
+else :
+\begin{enumerate}
+ \item Create two subproblems $L_1$ and $L_2$ by splitting L into two sets of appoximably equal size
+ \item recurse. sort $L_1$ and $L_2$
+ \item merge $L_1$ and $L_2$ into a sorted list L
+\end{enumerate}
+\paragraph{proof of complexity}
+M(n)= $nlog_2(n)$ complexity compare to $n^2$ for bubble sort,n is a power of 2, 2M($\frac{n}{2}$)
+\newline
+M(n)=$n+2M(\frac{n}{2}$ want to solee for M(n), and want to proove that this thing is nlog(n), with $n=2^k$
+\paragraph{Base case}
+n=1 $nlog_2(n)=0$
+\paragraph{induction}
+M(n)=n+2M($\frac{n}{2}$)
+\newline
+M(n)=n+2($\frac{n}{2}log_2(\frac{n}{2}))$
+\newline
+=n+n($log_2(n)-1$)=$nlog_2(n)$
+\paragraph{quick sort}
+Sort list L of n items $a_1,a_2,...,a_n$
+\newline
+if $n\leq 1$, then lsit already sorted 
+\newline
+else
+\begin{enumerate}
+ \item Break problem into 2 parts: $L_1\{a_{i}:a_i<a_n,i=1,...,n\},L_2\{a_i:a_1\geq a_1;i=1,...,n\}$
+ \item recurse and sort $L_1$ and $L_2$ (Q(r)+Q(n-r-1) $0\leq r\leq n-1$
+ \item merge $L_1$ and $L_2$ to get sorted list
+\end{enumerate}
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema10.jpg}
+\newline
+attention le \{\} représente ou devrait être le pivot par rapport à la list, faux sur les schéma 
+\paragraph{recursions}
+a,b$\in Z$
+\newline
+gcd(a,b):if b=0 return a; else return gcd(b,amodb);
+\newline
+\begin{itemize}
+ \item a=$\prod p_i^{\alpha_i}$
+ \item b=$\prod p_i^{\rho_i}$
+\end{itemize}
+$p_i$ primes, $\alpha_i,rho_i\in N$
+\newline
+gcd(a,b)=$\prod p_i^{min(\alpha_i,\rho_i)}$ (the largest number that divides botnh a and b)
+\newline
+max:\{$c\in N, c|a\wedge c|b$\
+\paragraph{permutations on n numbers}
+n=2 (you can do 2 permutation for n=2)(1,2)(2,1)
+\newline
+n=3 (you can do 6 permutations)
+\newline
+n (you can do ! permutations)
+\paragraph{}
+the recustion say that you can fix the last element and permute the n-1 elements (you so it for all the elements of the groupe n)
+\paragraph{}
+permute(b) $a_1,...,a_b$ for $0\leq b \leq n$
+\newline
+if b=1 nothing to be done
+\newline
+else
+\newline
+for i=1 to b
+\newline
+    swap $a_i$ with $a_b$
+\newline
+    permute(b-1)
+\newline
+    swap($a_i$ with $a_b$) to replace the elements in the right order (1,2,3),(3,2,1),(1,2,3)
+\paragraph{}
+swapping means that (1,2,3,4) changes in (4,2,3,1)
+\section{counting probability and graphs}
+A set of interessting objects
+\newline
+$|A|$ want to determine the cardinality of A
+\paragraph{example}
+\begin{itemize}
+ \item How many hand shakes at a party with n people
+ \item How many winnig ticket are there at a sertain lotery
+\end{itemize}
+How many legal expression are using n parenthesis:
+\begin{itemize}
+ \item n=1: ()
+ \item n=2: (()),()()
+ \item n=3: ((())),()()(),(())(),()(()),(()())
+\end{itemize}
+How many trees are there on n labeled vertice
+%schéma1
+\newline
+Nuber of complete binary trees on n+1 leaves
+%schéma2
+\paragraph{techniques}
+\begin{itemize}
+ \item combinatorial techniques
+ \item algebric proofs
+\end{itemize}
+\subsubsection{2 simple principle}
+A=$A_1uoA_2$ $A_1nA_2=\varnothing$
+\begin{enumerate}
+ \item $|A|=|A_1|+|A_2|$(sum rule)
+ \item A=$uoA_i$ (disjoint union)
+\end{enumerate}
+\paragraph{1}
+$|A|=\sum|A_i|$ (disjoint union)
+\newline
+$|A|=|A_1|+|A_2|-|A_1nA_2|$
+\paragraph{2}
+A=$A_1xA_2$=\{$(a_1,a_2):a_2\in A_1,a_2\in A_2$\}
+\newline
+$|A|=|A_1|\cdot |A_2|$
+\subsubsection{a few simple example}
+A=\{a,b,c,...\} English alphabet
+\newline
+$|A|=26$
+\begin{itemize}
+ \item How many strings over A of lenght 6
+\end{itemize}
+A=AxAxAxAxAxA=$A^6$
+\newline
+$|A|=|A^6|=26^6$ (product rule)
+\begin{itemize}
+ \item How many strings of lenght 6 starting with about a vowel V=\{a,e,i,o,u\}
+\end{itemize}
+
+$A=VxA^5$
+\newline
+$|A|=|V|x|A^5|=5*26^5$
+\begin{itemize}
+ \item How many strings of lenght 6 where fisrt and last charactere are a vowel
+\end{itemize}
+$A=VxA^4xV$
+\newline
+$|A|=|V|^2\cdot |A|^4=5^2*26^4$
+\begin{itemize}
+ \item How many strings of lenght 6 where first or 6th charactere are from V
+\end{itemize}
+$A_1=VxA^4x(A/V)$
+\newline
+$A_2=(A/V)xA^4xV$
+\newline
+$A_1uA_2$ all sequences that have a vowel at position 1 and 2 a consonant at 6 or vice versa
+\newline
+$A_3=VxA^4xV$
+\newline
+$|A|=|a_1|+|A_2|+|A_3|=5*26^4*21+21*26^4*5+5*26^4+5$
+\subsubsection{pigeonhole principle}
+if $k>n$ then at least one bin must contain at least 2 objects
+\paragraph{slightly more general}
+$\ulcorner\frac{k}{N}\urcorner$
+\newline
+there exists at least one bin with
+\newline
+$\ulcorner\frac{k}{N}\urcorner$ or more objects
+\paragraph{example}
+A\{1,2,3,4,5,6,7,8,9,10,11,12\}
+\newline
+Task: pick 8 of these 12 numbers out of this subset, how many pairs sum up to 13
+\newline
+Claim there are always at least 2 pairs out of the subset of 8 numbers that add to 13
+%schema3
+\paragraph
+6 bin but 8 numbers, at lesast one bin must conatain $\ulcorner\frac{8}{6}\urcorner$ numbers
+\paragraph{taks}
+given p printers and c computers
+\newline
+$c>p$
+\newline
+%schéma4
+\newline
+How many cables do I need so that any subset of p computers con jprint aon all p printers
+\paragraph{optimal solution}
+%schéma5
+connect p+1,..,c to every printer
+\newline
+connecitons: $1\leq i\leq p$:connect computer i to printer i
+\newline
+$p+1\leq i\leq c$: conect computer i to all printers
+\newline
+\#of cables required: p(c-p)+p=pc-p(p-1)
+\paragraph{claim}
+this  solution is optimal(using pigonehole principle)
+\newline
+Assume that c(c-p)+p+p-1 suffice.
+\newline
+$\ulcorner c -p+1-\frac{1}{p}\urcorner$
+\begin{itemize}
+ \item bin:printers
+ \item objects: connections
+\end{itemize}
+By the pingeonhole principle there is at least one printer which is 
+%schéma6
+
+\subsubsection{choose r objects out of n}
+does order matter?
+\begin{itemize}
+ \item yes: permutation
+ \item no: combination
+\end{itemize}
+with reprtition or not?
+\paragraph{4 counting problems}
+\begin{enumerate}
+ \item permuting without repetition: gold,silver,bronze out of 10 computer
+ \item combination without repetition: 3 representation out of 10
+ \item permutation with repetition: 3 digit pin code
+ \item combination with repetition: how many ways there are to pick 3 cookies out of 10
+\end{enumerate}
+\subsubsection{permutation without repetition}
+p(n,r)=$\frac{n!}{(n-r)!}$
+\subsubsection{combination without repetition}
+c(u,r)=$\frac{n!}{r!(n-r)!}$
+\newline
+\[
+\begin{pmatrix}
+n\cr
+r
+\end{pmatrix}
+\]
+\paragraph{note}
+\[
+\begin{pmatrix}
+ n\cr
+ r\cr
+\end{pmatrix}
+=
+\begin{pmatrix}
+ n\cr
+ n-r\cr
+\end{pmatrix}
+\]
+\subsubsection{permutation with repetition}
+$n^r$
+\subsubsection{combination with repetition}
+f(n,r)=
+\[
+\begin{pmatrix}
+ r+n^{-1}\cr
+ r-n\cr
+\end{pmatrix}
+=C(r+n^{-1},n-1)
+\]
+\subsection{cards}
+Strandart deck of cards
+\begin{itemize}
+ \item 52 cards
+ \item 13 kinds
+ \item 4 color
+\end{itemize}
+\paragraph
+How many hands are there
+\[
+\begin{pmatrix}
+ 52\cr
+ 5\cr
+\end{pmatrix}
+=2598960
+\]
+
+\paragraph{cards} 13 kinds/4 suits
+\begin{itemize}
+ \item How many hands contain 5 kinds?
+\end{itemize}
+\[
+\begin{pmatrix}
+13\cr
+5\cr
+\end{pmatrix}
+\cdot 4^5=1317888
+\]
+\newline
+(51\% de chance)
+\begin{itemize}
+ \item How many hands where all cards have the same suit? (flush)
+\end{itemize}
+pick color, pick 5 out of this color of 13 from this color
+\newline
+\[
+4
+\begin{pmatrix}
+13\cr
+5\cr
+\end{pmatrix}
+=5148
+\]
+(0.2\% de chance)
+\begin{itemize}
+ \item How many hands with 4 cards of one kind
+\end{itemize}
+pick a kind, take all cards of this kind, pick any of the remaining cards
+\newline
+\[
+\begin{pmatrix}
+13\cr
+1\cr
+\end{pmatrix}
+\cdot 1 \cdot
+\begin{pmatrix}
+ 52-4\cr
+ 1\cr
+\end{pmatrix}
+=624
+\]
+\newline
+(0.024\% de chance)
+\subsubsection{Pascal's identity}
+$0<k\leq n+1$
+\newline
+\[
+\begin{pmatrix}
+n+1\cr
+k
+\end{pmatrix}
+=
+\begin{pmatrix}
+ n\cr
+ k\cr
+\end{pmatrix}
++
+\begin{pmatrix}
+ n\cr
+ k-1\cr
+\end{pmatrix}
+\]
+\paragraph{Algebric}
+$\frac{(n+1)!}{k!(n+1-k)!}=?\frac{n!}{k!(n-k)!}+\frac{n!}{(k-1)!(n-k+1)!}$
+\newline
+if we make some modifications, we found the proposition
+$
+\begin{pmatrix}
+n+1\cr
+k\cr
+\end{pmatrix}
+$
+this means that we pick k elements subset in a set of n+1 elements
+\subsubsection{binomial thm}
+$n\geq =$
+\newline
+$(x+y)^n=\sum_{k=0}^n\begin{pmatrix}
+                      n\cr
+                      k\cr
+                     \end{pmatrix}
+x^ky^{n-k}$
+\paragraph{combinatorial}
+$(x+y)(x+y)...(x+y)$
+\newline
+n factors
+\paragraph{Algebric proof}
+by induction
+\newline
+check that correct for n=0(1=1)
+\paragraph
+P(n)= binomial identity for n
+\newline
+$P(n)\to P(n+1)$
+\paragraph
+use the induction hypothesis
+\newline
+$\sum_{k=0}^{n}\begin{pmatrix}
+                n\cr
+                k\cr
+               \end{pmatrix}
+x^{k+1}y^{n-k}+\sum_{k=0}^n\begin{pmatrix}
+                            n\cr
+                            k\cr
+                           \end{pmatrix}
+k^ky^{n-k+1}$
+\newline
+$=x^{n+1}+\sum_{k=1}^n\begin{pmatrix}
+                       n\cr
+                       k-1\cr
+                      \end{pmatrix}
+x^ky^{n-k+1}+\sum_{k=1}^n\begin{pmatrix}
+                          n\cr
+                          k\cr
+                         \end{pmatrix}
+x^ky^{n-k+1}+y^{n-k+1}$
+\newline
+pascal's identity
+\newline
+$=\begin{pmatrix}
+   n+1\cr
+   0\cr
+  \end{pmatrix}
+x^{n+1}y^0+\sum_{k=1}^n\begin{pmatrix}
+                        n+1\cr
+                        k\cr
+                       \end{pmatrix}
+x^ky^{n+1-k}+\begin{pmatrix}
+             n+1\cr
+             k+1\cr
+             \end{pmatrix}
+y^{n+1}x^0=\sum_{k=0}^{n+1}
+\begin{pmatrix}
+n+1\cr
+k
+\end{pmatrix}
+x^k y^{n+1-k}$
+\paragraph{note}
+x=y=1
+\newline
+$(x+y)^n=2^n=\sum_{k=0}^{n}\begin{pmatrix}
+                            n\cr
+                            k\cr
+                           \end{pmatrix}
+\cdot 1=\sum_{k=0}^n\begin{pmatrix}
+                     n\cr
+                     k\cr
+                    \end{pmatrix}$
+\newline
+donc
+\newline
+$2^n=\sum_{k=0}^n\begin{pmatrix}
+                  n\cr
+                  k\cr
+                 \end{pmatrix}
+$
+\subsubsection{Vandermonde(convolution)}
+\[
+\begin{pmatrix}
+ n+m\cr
+ r\cr
+\end{pmatrix}
+=\sum_{r=0}
+\begin{pmatrix}
+ n\cr
+ r-k\cr
+\end{pmatrix}
+\begin{pmatrix}
+ m\cr
+ k\cr
+\end{pmatrix}
+n,m,r\in N_0
+\]
+\paragraph{Algebric proof}
+\[
+\begin{pmatrix}
+n+m\cr
+r\cr
+\end{pmatrix}
+\]
+\newline
+$(x+y)^{n+m}=\sum_{r=0}^{n+m}
+\begin{pmatrix}
+n+m\cr
+r
+\end{pmatrix}
+x^ry^{n+m-r}
+$
+\newline
+$=(x+y)^n(x+y)^m$ (we use twice the binomial)
+\newline
+...
+\newline
+
+\subsubsection{example}
+$d_0$ basic captital
+\newline
+$d_n=d_{n-1}\cdot 1.02$ 2\% annual interest
+\newline
+$d_n=d_0(1.02)^n$
+\subsubsection{Towers of Hanoi}
+you know what it is
+\newline
+n disks, all of different dize
+\newline
+for n=1 $h_1=1$
+\newline
+for n=2 $h_2=3=2h_1+1$
+\newline
+for n=n $h_n=2h_{n-1}+1$
+\subsubsection{bit strings with no 00}
+n=1 0,1 (2)
+\newline
+n=2 01,10,11 (3)
+\newline
+n=3 $\urcorner$000,001,100 8-3 (5)
+\newline
+n=n $a_n=a_{n-a}+a_{n-2}$
+\subsubsection{two more examples}
+\# of n-digits integers with an even \# of zeros
+\begin{itemize}
+ \item n=1: 1,2,...,9  9 digits 
+ \item n=2: 0(1,2,...,9) + 00
+ \item n=3 (1,2,...,9)0(1,2,...,9) +0()()
+\end{itemize}
+$a_n=9\cdot a_{n-1}+1\cdot (10^{n-1}-a_{n-1})$
+\newline
+$=a_n=8a_{n-1}+10^{n-1}$
+\paragraph{second example}
+$x_1*x_2*...*x_{n+1}$(n operations)
+\newline
+\begin{itemize}
+ \item $(x_1*x_2)*x_3$  $x_1*(x_2*x_3)$
+\end{itemize}
+$c_n$=\#of ways tjo put parentheses
+\newline
+\begin{itemize}
+ \item $c_1 x_1*x_2$
+ \item $c_2= x_1*x_2*x-3$
+\end{itemize}
+$C_n=C_0C_{n-1}+C_1C_{n-2}+C_2C_{n-3}+...+C_{n-1}C_0$
+\subsubsection{summary of recustions}
+\begin{enumerate}
+ \item $d_n=1.02d_{n-1}$
+ \item $d_n=1.02d_{n-1}+y$
+ \item $a_n=a_{n-1}+a_{n-2}$
+ \item $h_n=2h_{n-1}+1$
+ \item $a_n=8a_{n-1}+10^{n-1},a_1=9$
+ \item $C_n=C_0C_{n-1}+C_1C_{n-2}+C_2C_{n-3}+...+C_{n-1}C_0$
+ \item $m_n=2m_{\frac{n}{2}}+n$ (mergesort)
+ \item $d_n=(1.02)^{n}d_0$
+ \end{enumerate}
+\subsubsection{example}
+$a_n=C_1a_{n-1}+C_2a_{n-2}$
+\begin{itemize}
+ \item $a_1,a_2$ initial conditions
+ \item $C_2\neq 0$
+\end{itemize}
+\paragraph{Guess}
+$a_n=r^n$ $r\in R$
+\newline
+$r^n=C_1r^{n-1}+C_2r^{n-2}$
+\newline
+$r^2=C_1r+C_2\Rightarrow r^2+rC_1+C_2=0$
+\paragraph{2 possible situations}
+\begin{enumerate}
+ \item $ax^2+bx+c=0\Rightarrow \frac{-b+-\sqrt{b^2-4ac}}{2a}$
+ \subitem $r_{1,2}=\frac{C_1+-\sqrt{C_1^2+4C_2}}{2}$
+ \newline
+ $a_n=\alpha_1r_1^n+\alpha_2r_2^n$ $\alpha_1,\alpha_2\in R$
+ \newline
+ we need to check that: $a_n=C_1a_{n-1}+C_2a_{n-2}$ with $a_n=\alpha_1r_1^n+\alpha_2r_2^n$
+ \newline
+ $\alpha_1r_1^n+\alpha_2r_2^n=C_1(\alpha_1r^{n-1}+\alpha_2r_2^{n-1})+C_2(\alpha_1r^{n-2}+\alpha_2r_2^{n-2})$
+ \newline
+ $\alpha_1(r_1^n-C_1r_2^{n-1}-C_2r_1^{n-2})+\alpha_2(r_2^n-C_1r_1^{n-1}-C_2r_2^{n-2})=?0$
+ \newline
+ $\alpha_1\cdot 0+\alpha_2\cdot 0=?0$
+ \paragraph
+ free to choose $\alpha_1,\alpha_2$
+ \newline
+ want: $a_0=\alpha_1r_1^0+\alpha_2r_2^0$
+ \newline
+  want: $a_1=\alpha_1r_1^1+\alpha_2r_2^1$
+  \newline
+  \[
+  \begin{pmatrix}
+   a_0\cr
+   a_1\cr
+  \end{pmatrix}
+=\begin{pmatrix}
+  1&1\cr
+  r_1&r_2\cr
+ \end{pmatrix}
+\begin{pmatrix}
+ \alpha_1\cr
+ \alpha_2\cr
+\end{pmatrix}
+  \]
+  \newline
+  $|A|\neq 0$
+  \newline
+  $|A|=r_2-r-1\neq 0$ (they are different)
+  \newline
+  \[
+  A^{-1}
+  \begin{pmatrix}
+   r_2&-1\cr
+   -r_1&1\cr
+  \end{pmatrix}
+\]
+\newline
+so we have:
+\newline
+\[
+\begin{pmatrix}
+ \alpha_1\cr
+ \alpha_2\cr
+\end{pmatrix}
+=
+\begin{pmatrix}
+ r_2&-1\cr
+ -r_1&1\cr
+\end{pmatrix}
+\begin{pmatrix}
+ a_0\cr
+ a_1\cr
+\end{pmatrix}
+\]
+\paragraph{so the explicit solutions are}
+$\alpha_1=\frac{a_0r_2-a_1}{r_2-r_1},\alpha_2=\frac{-a_0r_1+a_1}{r_2-r_1}$
+ \item $r_1=\frac{C_1}{2}r_2,(r-\frac{C_1}{2}=0)$
+ \subitem $a_n=\alpha_1r_1^n+alpha_2r_2^2$ does not work in this case; not enought degrees of freedom
+ \newline
+ In other words:$a_n=nr_1^n$
+ \paragraph{Claim}
+ $a_n=nr_1^n$ is a solution
+ \newline
+ $a_n=C_1a_{n-1}+C_2a_{n-2}$
+ \newline
+ $nr_1^2=?C_1(n-1)r-1+C_2(n-2)$ (after some simplifications ;))
+ \newline
+ $r_1=\frac{C-1}{2}$ and $C_2=-\frac{C_1^2}{4}($in the root:$C_1^2+4C_2=0)$
+ \newline
+ other simplification and we find this is correct
+\[
+\begin{pmatrix}
+ a_0\cr
+ a_1\cr
+\end{pmatrix}
+=
+\begin{pmatrix}
+ 1&0\cr
+ r_1&r_1\cr
+\end{pmatrix}
+\begin{pmatrix}
+\alpha_1\cr
+\alpha_2\cr
+\end{pmatrix}
+\]
+\newline
+$||=r_1\neq 0$
+ \end{enumerate}
+\subsubsection{let's do an example}
+\paragraph{Fibonnaci}
+$f_0=0$ $f_1=1$ $f_n=f_{n-1}+f_{n-2}$
+\newline
+Look for the solutions of the form $f_n=r^n$
+\newline
+$r^2=r+1$
+\newline
+$r^2-r-1=0$ characteristic equation
+\newline
+$r_{1,2}=\frac{1+-\sqrt{1+4}}{2}=\frac{1+-\sqrt{5}}{2}$
+\newline
+$f_n=\alpha_1(\frac{1+\sqrt{5}}{2})^n+\alpha_2(\frac{1-\sqrt{5}}{2})^n$
+\begin{itemize}
+ \item $0=\alpha_1+\alpha_2$
+ \item 1= $\alpha_1\frac{1+\sqrt{5}}{2}+\alpha_2\frac{1-\sqrt{5}}{2}$
+\end{itemize}
+we find with that: $\alpha_1=\frac{1}{\sqrt{5}},\alpha_2=-\frac{1}{5}$
+\newline
+$f_n=\frac{1}{\sqrt{5}}(\frac{1+\sqrt{5}}{2})^n-\frac{1}{\sqrt{5}}(\frac{1-\sqrt{5}}{2})^n=\Theta((\frac{1+\sqrt{5}}{2})^n)$
+\subsubsection{example 2}
+$de_n=4d_{n-1}-4d_{n-2}$ $d_0=d_1=1$
+\newline
+find solutions of the form $d_n=r^n$
+\newline
+$r^2=4r-4$
+\newline
+$r^2-4r+4=0$
+\newline
+$r_1=r_2=2$
+\newline
+$(r-2)^2=0$
+\begin{itemize}
+ \item $d_n=\alpha_1r_1^n+\alpha_2\cdot n\cdot r_1^n=\alpha_12^n+\alpha_2n2^n$
+ \item $1=d_0=\alpha_1$
+\end{itemize}
+$\alpha_2=-\frac{1}{2}$
+\paragraph{solution}
+$d_n=2^n-\frac{1}{2}n2^n$
+\paragraph{remark}
+$a_n=C_1a_{n-1}+C_2a_{n-2}+...+C_ka_{n-k},a_0,..,a_{k-1}$ given $C_k\neq 0$
+\newline
+$a_n=r^n$
+\subsubsection{inhomogeneous equations}
+$h_n=2h_{n-1}+1$ (linear equation)
+\newline
+if we forget the (+1): $h_n=2h_{n-1}=C2^n$
+\paragraph{Guess}
+$h_n=p$
+\newline
+$\Rightarrow$p=2p+1 (p=-1)
+\newline
+so we found that $h_n=2^n-1$
+\subsubsection{characteristic polynomial}
+$r^2-r-1=0;r_{1,2}$ solutions
+\newline
+$a_n=\alpha r_1^n+\zeta r_2^n$
+\newline
+pick so that $a_0,a_1$ are correct
+\subsubsection{3+4}
+$h_n=2h_{n-1}+1,n\geq 1,h_0=0$
+\newline
+First look for any solution, irrespective of boundary condition
+\paragraph{Guess}
+\begin{itemize}
+ \item $h_0=p$ constant
+ \item $p=2p+1$ p=-1
+ \item -p=1
+\end{itemize}
+$h_n=-1+2^nc$
+\newline
+$0=h_0=-1+2^0c$ $c=1$
+\newline
+$h_n=2^n-1$
+\newline
+the question: How do we guess the particular solution?
+\subsubsection{generating functions}
+And now to some thing completely different... generating functions
+\begin{tabular}{cccccc}
+$f_1$&$f_2$&$f_3$&$f_4$&$f_5$&...\cr
+$0x^0$&$1x^1$&$1x^2$&$2x^3$&$3x^4$&...\cr
+\end{tabular}
+$0x^0$+$1x^1$+$1x^2$+$2x^3$+$3x^4$+$5x^5$+... formal power serie
+\newline
+no convergence here: x is just a symbol
+\newline
+$F(x)=x+x^2+2x^3+3x^4+5x^5+8x^6+...,F(x)=\sum_{n\geq0}f_nx^n$
+\paragraph{manipulations}
+$F(x)+G(x)=H(x)$ define the sum...
+\newline
+$\sum_{n\geq0}f_nx^n+\sum_{n\geq0}g_nx^n=\sum_{n\geq0}(f_n+g_n)x^n, (f_n+g_n)=h_n$
+\begin{itemize}
+ \item F+g=G+F
+ \item F+G+H=F+(G+H)
+ \item Neutral element E(x)=0 F+E=E+F=F
+ \item F(x)+G(x)=E(x), G(x)=-F(x)
+ \item $F(x)\cdot G(x)=(\sum_{n\geq0}f_nx^n)(\sum_{n\geq0}g_kx^k)=\sum_{n\geq0}(\sum_{k=0}^nf_{k}g_{n-k})x^n$
+ \item $F(x)\cdot G(x)=G(x)\cdot F(x)$
+ \item (FG)H=F(GH)
+ \item C(x)=1 neutral element
+ \item FC=CF=F
+\end{itemize}
+\paragraph{multiplication}
+$(1+x+x^2+x^3+x^4+...)(1+x+x^2+x^3+x^4+...)=1+2x+3x^2+4x^3+...+x^n$
+\paragraph{F(x) mutltiplication inverse}
+$\exists g(x)$ so that $F(x)\cdot G(x)=1$
+\newline
+$F(x)=1+x+x^2+x^2+...$
+\newline
+$G(x)=\alpha+\zeta x=1-x$
+\newline
+$1\cdot F(x)=1+x+x^2+x^3+...$
+\newline
+$=xF(x)=-x-x^2-x^3-...$
+\newline
+so we can see that $F(x)\cdot G(x)=1$
+\newline
+\begin{itemize}
+ \item n=0 $f_0g_0=1\Rightarrow g_0=\frac{1}{f_0}$ if $f_0\neq0$
+ \item n=1 $f_0g_1+f_1g_0=0$ $g_1=\frac{-f_1g_0}{f_0}$ if $f_0\neq 0$
+ \item n:$\sum_{k=0}^nf_ng_{n-k}=0$
+\end{itemize}
+$f_0g_n=-\sum_{k=1}^nf_kg_{n-k}$
+\newline
+$g_n=-\frac{1}{f_0}\sum_{k=1}^nf_kg_{n-k}$
+\paragraph{well defined}
+$f_0+0$
+\paragraph{example}
+f(x)=$1+x+x^2+x^3+...$
+\newline
+$f_0=1\neq 0$
+\newline
+G(x)=$g_0+g_1x+g_2x^2+...$
+\newline
+$g_0=\frac{1}{f_0}=1,g_1=-\frac{f_1g_0}{f_0}=-\frac{f_1}{f_0^2}=-1,g_2=0,g_n=0 n\geq 2$
+\newline
+F(x)=$1+x+x^2+x^3+...$
+\newline
+G(x)=1-x
+\newline
+$\frac{1}{F(x)}$
+\newline
+$\frac{1}{x-1}=1+x+x^2+x^3+...$
+\newline
+(Analysis:$\sum_{i=0}^{\infty}x^i=\frac{1}{1-x},|x|<1$)
+\subsubsection{Tower of Hanoi Problem}
+$h_nn=2h_{n-1}+1, n\geq 1,h_0=0$
+\newline
+$h_1x=2h_0x+1x$
+\newline
+$h_2x^2=2h_1x^2+1x^2$
+\newline
+...
+\paragraph
+generic term: $h_nx^n=2h_{n-1}x^n+1x^n$
+\newline
+$H(x)=\sum_{n\geq0}h_nx^n$
+\paragraph{}
+$h_n x^n=2h_{n-1}x^n+1x^n$
+\newline
+transformation:
+\newline
+$H(x)-h_0=2xH(x)+\frac{x}{1-x}$
+\newline
+$H(x)-h_0=2xH(x)+\frac{x}{1-x}$
+\newline
+H(x)(1-2x)=$h_0+\frac{x}{1-x},h_0=0$
+\newline
+$=\frac{x}{1-x}$
+\newline
+$H(x)=\frac{x}{(1-x)(1-2x)}=x\frac{1}{1-3x+2x^2}$
+\subsubsection{partial fraction expansion}
+$\frac{x}{(1-x)(1-2x)}=\frac{x}{1-x}+\frac{\zeta}{1-2x}$
+\newline
+$x=\alpha(1-2x)+\zeta(1-x)$
+\newline
+$x=\alpha+\zeta-x(2\alpha+\zeta)$
+\newline
+$2\alpha+\zeta=\alpha=-1;\zeta=1$
+\newline
+$\frac{1}{1-2x}=\sum_{n\geq 0}2^nx^n,\frac{1}{1-x}=\sum_{n\geq0}x^n$
+\paragraph{}
+$H(x)=\sum_{n\geq 0}(2^n-1)x^n=\sum_{n\geq0}h_nx^n$
+\paragraph{note}
+$a_n=C_0a_{n-1}+C_1a_{n-2}+...+$Inhomogenious term;$n\geq n_0$
+\newline
+H(x)=$\sum_{n\geq 1}h_nx^n$
+\newline
+$H(x)=\frac{p(x)}{q(x)}$
+\newline
+
+$\frac{1}{(x-x_1)(x-x_2)(x-x_3)...(x-x_k)}=\sum\frac{\alpha_i}{(x_{x_i})}$ $\alpha_i$ constant
+\newline
+$\frac{1}{(x-x_1)(x-x_2)^2}=\frac{\alpha}{x-x_1}+\frac{\alpha\beta\gamma}{(x-x_2)^2}$
+\newline
+$\frac{1}{1-x}=1+x+x^2+x^3+...=\sum_{n\geq0}x^n$
+\newline
+$\frac{1}{(1-x)^2}$  $(\frac{1}{1-x})'=\frac{1}{(1-x)^2}$
+\newline
+so we see that $\frac{1}{(1-x)^2}=\sum_{n\geq0}nx^{n-1}$
+------------------------------------------------------------
+\section{probabilities}
+\paragraph{example 1}
+\begin{itemize}
+ \item lottery,blackjack, games
+ \newline
+what is the probability of winning?
+\item you go to the doctor
+\newline
+You take a tewst a rare disease
+
+\subitem 99\% accurate
+\subitem 1 in a million has the disease
+\subitem wou test positive
+\subitem should you be worried?
+\end{itemize}
+\subsection{game show}
+monty Hall problem
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema11.jpg}
+\subsection{Estimating population size}
+\begin{itemize}
+ \item Walk around, every ten minutes, look at person closest to you
+ \item memorize his face 
+ \item if you have seen that person before, stop
+ \item when stopped, let t be the number of people wou have seen so far 
+\end{itemize}
+\paragraph{estimate}
+$\frac{t^2}{2}$
+\newline 
+[birthday paradox]
+\subsection{object in k-D}
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema12.jpg}
+\begin{itemize}
+ \item wnat to know volume
+ \item pick random points uniformly
+ \item within a box that contains object (without less of generality sidelenght of box is 1)
+ \item count proportion of points that are contains in the object 
+\end{itemize}
+estimate volume by this proportion
+\subsection{consider a social network}
+\begin{itemize}
+ \item one person is infected
+ \item interactions; probability p that the person you interact with gets infected
+ \item will disease spreed to the whole population 
+\end{itemize}
+\includegraphics{/home/logeek04/Documents/etude/discretesS/Schema13.jpg}
+d=5
+\newline
+$p\geq \frac{d}{2}$
+\subsection{setup}
+sample space $S(\Omega)$
+\newline
+we have the set of possible outcomes that are possible
+\newline
+we have the universe
+\subsubsection{cards}
+\begin{itemize}
+ \item $S=\begin{pmatrix}
+         52\cr
+         5\cr
+        \end{pmatrix}hands
+$
+\item S:a specific hand 
+\item E:3 of a kind all of the same suit
+\end{itemize}
+Basic Axioms of Probability 
+\newline
+Assign numbwers from [0,1] to all events $E\subseteq C$ so that the following holds. We call those numbers probability and denote then b P(B)
+\begin{enumerate}
+ \item $P(\varnothing)=0$
+ \item P(S)=1
+ \item if $E_1,E_2\subseteq S$ and $E_1\cap E_2=\varnothing$, $P(E_1uE_2)=P(E_1)+P(E_2)$
+\end{enumerate}
+\subsubsection{example}
+Die:
+\begin{itemize}
+ \item S=\{1,2,3,4,5,6\} fair die, uniform distribution
+\end{itemize}
+Assign to each outcome a number in [0,1], call this number p(s), so that $\sum_{s\in S} p(s)= 1$ (in thi sexample $\frac{1}{6}$ because it's a fair die)
+\newline
+$P(E)=\sum_{s\in S}p(s)$
+\paragraph{}
+E outcome is even
+\newline
+E=\{2,4,6\}
+\newline
+$P(E)=\sum_{s\in S}p(s)=\sum_{s\in \{2,4,6\}}p(s)=\frac{1}{6}\cdot|\{2,4,6\}|=\frac{3}{6}=\frac{1}{2}$
+\subsubsection{distribution (for countable S)}
+p:$S\to [0,1]$ so that $\sum_{s\in S}p(s)=1$
+\newline
+p(s) distribution (probability mass function)
+\newline
+$P(E)=\sum_{s\in E}p(s)$
+\subsubsection{conditional probability, independence, bayes lows, low of told probability}
+\paragraph{example}
+die:
+\newline
+$p(s)=\frac{1}{6},\forall s\in S$
+\newline
+E: outcome is even $\{2,4,6\}$
+\newline
+Perhaps we have extra information that are useless. For example, we might know that outcome $\leq 3$
+\newline
+Given this extra information, what is know the probability of E
+\paragraph{}
+in general, given two event sA ad B, we can define the conditional probability of A given B, denote it by P(A/B), as
+\newline
+$P(A/B)=\frac{P(A\cap B)}{P(B)}$
+\paragraph{note}
+only make sens if P(B)=0
+\paragraph{go back to our example}
+$P(even/\leq 3)=\frac{P(even \cap \leq 3}{P(\leq 3)}=\frac{1\cdot \frac{1}{6}}{3\cdot \frac{1}{6}}=\frac{1}{3}$
+\subsubsection{example}
+6 rolls/flips of a coin
+\newline
+A= last of the 6 outcomes is heads
+\newline
+B= the first 5 outcomes are tail
+\newline
+$P(A)=\frac{1}{2}$
+\newline
+$P(A/B)=\frac{1}{2}$
+\subsubsection{independence}
+we say that 2 events A and B are independent if $P(A\cap B)=P(A)P(B)$
+\newline
+if A and B are independent then P(A/B)=$\frac{P(A\cap B)}{P(B)}=\frac{P(A)P(B)}{P(B)}=P(A)$
+\subsubsection{Bayes low}
+$P(A/B)\frac{P(A\cap B)}{P(B)}\Leftrightarrow P(A\cap B)=P(A/B)P(B)$
+\newline
+$P(B/A)=\frac{P(A\cap B)}{P(A)}\Leftrightarrow P(A\cap B)=P(B/A)P(A)$
+\begin{itemize}
+ \item $P(A/B)P(B)=P(B/A)P(A)$
+ \item $P(A/B)=P(B/A)\frac{P(A)}{P(B)}$
+\end{itemize}
+\paragraph{}
+you got  tested for a rare disease. that test is 99 \% accurate. You test positive. Sould you be worried:
+\begin{itemize}
+ \item T positive or negative
+ \item D disease  yes,no
+\end{itemize}
+$P(D=y)=10^{-6}$
+\newline
+$P(T=p/D=y)=0.99$
+\newline
+$P(T=n/D=y)=0.01$
+\newline
+$P(T=p/D=n)=0.01$
+\newline
+$P(T=n/D=n)=0.99$
+\newline
+$P(D=y/T=p)=\frac{P(T=p/D=y)P(D=y)}{P(T=p)}$
+\paragraph{low of told probability}
+we have 2 events A and B
+\newline
+$A\cap (B u.  B^-)$
+\newline
+$P(A)=P(A\cap B)+P(A\cap B^-)$
+\newline
+=$P(A/B)P(B)+P(A/B^-)P(B^-)$
+\paragraph{back to the example}
+$P(T=p)=P(T=p/D=y)P(D=y)+P(P=p/D=n)P(D=n)\simeq 0.01$
+\newline
+$P(D=y/T=p)=\frac{P(T=p/D=y)P(D=y)}{P(T=p)}\simeq 10^{-4}$
+\subsubsection{spam filter}
+$P(opportunity/spam)=\frac{1}{10}$
+\newline
+P(opportunity/not spam)==$\frac{1}{100}$
+\newline
+P(spam)=$\frac{1}{2}$;P(not spam)=$\frac{1}{2}$
+\newline
+$P(opportunity)=P(oppo/spam)P(spam)+P(oppor/not spam)P(not spam)=\frac{11}{100}\frac{1}{2}$
+\newline
+P(spam/ contains the word opportunity)=$\frac{P(opportunity/spam)P(spam)}{P(opportunity)}=\frac{\frac{1}{10}\frac{1}{2}}{\frac{11}{100}\frac{1}{2}}=\frac{10}{11}\sim 90\%$
+\subsection{axioms of probability}
+$E\subseteq S,$ event
+\newline
+$0\leq P(E)\leq 1$
+\begin{itemize}
+ \item $P(\varnothing)=0$
+ \item $P(S)=1$
+ \item $A,B\in S,A\cap B=\varnothing$
+ \newline
+ P(AuB)=P(A)+P(B)
+\end{itemize}
+\paragraph{distribution}
+countable S
+\newline
+For all $s\in S$, assign 
+\newline
+$0\leq p(s)\leq 1$
+\newline
+$P(E)=\sum_{s\in S}p(s),\sum_{s\in S}p(s)=1$
+\newline
+random variable (Notation: typically capital letters,x,y oucomes are typically small caps
+\newline
+expectation, linéarity of expectation
+\newline
+Bernoulli triots, Bernoulli distribution, geometric distribution
+\subsubsection{random variable}
+random variable: A random variable is a mapform the sample space to the reals $X:S\to R$
+\newline
+$P(X=r)= \sum_{s\in S:X(s)=r}p(s)$(X: a random variable, r: a real number)
+\paragraph{example}
+throw 2 die X(s) is sum of outcomes
+\newline
+$P(X=7)=\sum_{s=\in S:X(s)=7}\frac{6}{36}=\frac{1}{6}$
+\paragraph{expectation}
+Die: average value
+\newline
+$1\frac{1}{6}+2\frac{1}{6}+3\frac{1}{6}+4\frac{1}{6}+5\frac{1}{6}+6\frac{1}{6}$
+\newline
+A random variable X define on S
+\newline
+$E[X]=\sum_{r\in X(s)}P(X=r)\cdot r$
+\newline
+$=\sum_{r \in X(s)}(\sum_{s\in S: X(s)=r}p(s))\cdot r=\sum_{s\in S}X(s)p(s)$
+\paragraph{other example}
+Singel throw of a die: X(s)= valeu of outcome $E[X]=3.5$
+\newline
+two throw of a value: X= sum of outcomes. What values can X take on?
+\newline
+
+$E[X]=\sum_{r\in \{2,3,..,12\}}P(X=r)=P(X=2)+..+P(X=12)=7$
+\newline
+$\sum_{s\in S}p(s)X(s)=\frac{1}{36}\sum_{(i,j)}(i+j=7$
+\subsubsection{linearity of expectation}
+S sample space 
+\newline
+x,y two random variables
+\paragraph{claim}
+E[y+x]=E[x]+E[y]
+\paragraph{proof}
+$E[X+Y]=\sum_{s\in S}(X(s)+Y(s))p(s)=\sum_{s\in S}X(s)p(s)+\sum_{s\in S}Y(s)p(s)$
+\newline
+$=E[X]+E[Y]$
+\paragraph{bask to our exemple}
+X= sum of the 2 throws
+\newline
+$E[X]=E[X_1+X_2]=E[X_1]+E[x_2]=3.5+3.5=7$(it's a die ;) )
+\newline
+$X_1$= value of the first throw
+\newline
+$X_2$= value of the second throw
+\newline
+$X=X_1+X_2$
+\subsubsection{Bernoulli trials}
+experiment has 2 possible outcomes
+\newline
+\{fail, success\}, (\{0,1\}, \{f,s\}, \{-1,1\})
+\newline
+probability of success: p
+\newline
+probability of failur:1-p=q
+\newline
+Sample space, n such Bernoulli trials that are independent; probabilities  of success and failure do not depend on previous outcomes
+\begin{itemize}
+ \item S=(0,1,0,0,0)
+\end{itemize}
+$P(s)=P^{\#1\in S}\cdot q^{\#0\in S}$
+\newline
+$p((1,0,1))=p^2q=p^2(1-p)$
+\newline
+$\sum_{s\in S}p(s)=\sum_{k=0}^n\begin{pmatrix}
+                                n\cr
+                                k\cr
+                               \end{pmatrix}
+p^kq^{n-k}=(p+q)^n=(1)^n=1$
+\subsection{bernoulli trials}
+for one trial; probability of success is p continue until success, how many trials we need to wait in average
+\newline
+$\sum_{k\geq 0}x^k=\frac{1}{1-x}$
+\newline
+$\sum_{k\geq 0}kx^{k-1}=\frac{1}{(1-x)^2}$
+
+\subsubsection{recall}
+For events A and B we say that they are independent if $P(a\cap B)=P(A)P(B)$
+\newline
+so $P(A/B)=\frac{P(A\cap B)}{P(B)}=\frac{P(A)P(B)}{P(B)}=P(A)$
+\begin{itemize}
+ \item $P(A/B)=P(A)$
+ \item $P(A\cap B)=P(A)P(B)$
+ \item $P(A(x)\cap B(y))=P(A(x))P(B(y))$
+ \item $P(X=x,Y=y)=P(X=x)P(Y=y)$
+\end{itemize}
+then we say that X and Y are independent 
+\paragraph{example}
+Toss a fair coin twice
+\begin{itemize}
+ \item X= \# of tail
+ \item Y=\# of head
+\end{itemize}
+E[X+Y]=E[x]+E[Y] always true
+\newline
+$E[X\cdot Y]=?E[X]E[Y]=1$ (wrong in general you can see it in the following paragraph)
+\newline
+E[X]=1=E[Y]
+\begin{itemize}
+ \item X=0, Y=2 (HH)
+ \item X=1, Y=1 (HT)
+ \item X=1, Y=1 (TH)
+ \item X=2, Y=0 (TT)
+\end{itemize}
+\paragraph{}
+$E[X\cdot Y]=\frac{1}{4}(0+1+1+0)=\frac{1}{2}\neq 1$
+\paragraph{but if X and Y are independent}
+then $E[X\cdot Y]=E[X]E[Y]$
+\newline
+proof: $E[X\cdot Y]=\sum_{s\in S}p(s)X(s)Y(s)=\sum_{x,y}(\sum_{s\in S, X(s)=x,Y(s)=y}p(s))x\cdot y$
+\subsection{MOrkov inequality}
+Let X be a non-negative randoom variable with fifintie mean E[X]. Then 
+\newline
+$P(X\geq \alpha)\leq \frac{E[X]}{\alpha} \alpha >0$
+\newline
+meaningful iff $\alpha \geq E[X]$
+\newline
+$\alpha=kE[X]\Rightarrow P(X\geq kE[X]\leq \frac{1}{k})$
+\paragraph{proof}
+$E[X]=\sum_{s\in S}p(s)X(s)$
+\newline
+$\geq \sum_{s\in S}p(s)X(s)\geq \sum_{s\in S}p(s)\alpha=\alpha\sum_{s\in S}p(s)=\alpha P(X\geq \alpha)$
+\newline
+$E[X]\geq \alpha P(X\geq \alpha)$
+\newline
+$P(X\geq \alpha)\geq \frac{E[X]}{ \alpha}$
+\paragraph{existance proof no first moment method }
+Assume that X is integer, $X\in N_{\geq 0}$
+\newline
+$P(X\leq n)\leq \frac{E[X]}{n}$
+\newline
+$P(X\leq n)=1-P(X\geq n)\geq 1-\frac{E [X]}{n}\geq 0$ if $E[X]>n$
+
+
+
+
+\end{document}

@@ -1,0 +1,242 @@
+\documentclass[12pt,a4paper]{article}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+\usepackage[tc]{titlepic}
+\usepackage{graphicx}
+\usepackage{blindtext}
+%\usepackage[a4paper]{geometry}
+\setcounter{section}{-1}
+\date{Automne 2015}
+\title{	
+\normalfont \normalsize 
+\textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+\textsc{Résumé Personnel en }\\ [0pt] %Name of the course
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Analyse III\\ % The assignment title<
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+%\includegraphics[width=8cm]{images/EPFL_logo}
+}
+\renewcommand{\contentsname}{Table des Matières}
+\begin{document}
+\setstretch{1}
+\maketitle
+\newpage
+\tableofcontents
+\setstretch{1.6}
+\newcommand{\coss}[1]{\ensuremath{\cos\left(#1\))}}
+\newcommand{\sinn}[1]{\ensuremath{\sin\left((#1\))}}
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\newcommand{\dive}{\text{ div }}
+\newcommand{\rot}{\text{ rot }}
+\newcommand{\grad}{\text{ grad }}
+
+\section{Rappels :}
+\subsection{Multiplication vectorielle}
+\begin{itemize}
+	\item Produit \evid{vectoriel} : Soit $\vec{A} = \begin{pmatrix}a_1 \\ a_2 \\ a_3 \end{pmatrix}$ et $\vec{B} = \begin{pmatrix}b_1 \\ b_2 \\ b_3 \end{pmatrix}$ similaire. Alors : \[\vec{A}\times \vec{B} = \begin{pmatrix} a_2b_3 - a_3b_2 \\ a_3b_1 - a_1b_3 \\ a_1b_2 - a_2b_1 \end{pmatrix}\]
+	\item Produit \evid{scalaire} : Soit les même $\vec{A}, \vec{B}$ qu'au dessus. Alors le produit scalaire est défini par : \[\vec{A}.\vec{B} = a_1b_1 + a_2b_2 + a_3b_3\]
+\end{itemize}
+\subsection{Dérivées partielles :}
+Soit une $f : \rn \to \R$ et $v \in \rn$. Alors nous pouvons poser que \[\frac{\delta f}{\delta x_i},\ D_x f(x) : \limite{t\to 0} \frac{f(x+t_0) - f(x)}{t} \et \frac{\delta f}{\delta x_i} = D_{e_i} f\]
+\begin{boite}
+Nous définissons \evid{le gradient} de $f$ comme :
+\[\nabla f = \(\frac{\delta f}{\delta x_1},...,\frac{\delta f}{\delta x_n}\) \in \rn\]
+\end{boite}
+Quelques propriétés utiles :\begin{align*}
+	\frac{\delta}{\delta x}\Big(f(x) + g(x)\Big) = \frac{\delta }{\delta x} f(x) + \frac{\delta }{\delta x} g(x)\\
+	\frac{\delta }{\delta x}\Big(f(x)\cdot g(x)\Big) = \(\frac{\delta }{\delta x}f(x)\) * g(x) + f(x) \cdot \(\frac{\delta }{\delta x} g(x)\)\\
+	\left.\begin{array}{r}
+	\Big(f\big(g(x)\big)\Big)' = f'\big(g(x)\big) \cdot g'(x)\\
+	 \nabla (f \circ \phi)(x) = \nabla f(\phi(x)) \cdot \nabla \phi(x),\ f : \Rm \to \R^k,\ \phi : \rn \to \Rm
+	\end{array}\right\} \text{égaux}\\
+	\text{si } 	 f \in C^2 \text{ alors } \frac{\delta^2 f}{\delta x_i \delta x_j} = \frac{\delta^2 f}{\delta x_j \delta x_i}
+\end{align*}
+\subsection{Intégrales} 
+\evid{Fubini : }
+\begin{align*}
+	 \int_{a}^{b}\int_c^d f(x,y) \deriv{x}\deriv{y} = \int_a^b\(\int_c^d f(x,y) \deriv{y}\) \deriv{x} = \int_c^d \(\int_a^b f(x,y) \deriv{x}\)\deriv{y}
+\end{align*}
+\subsection{Changement de Variables}
+\[\int f(x) \deriv{x} = \int f(\phi(y)) \Big|\det\big(\nabla \phi(y)\big)\Big| \deriv{y}\]
+
+\section[Opérateurs diff. de la physique]{Chapitre 1 Opérateurs différentiels de la physique}
+\begin{boite}
+	\evid{Définition : Le Laplacien} de $f : \rn \to \R$
+	\begin{equation*}
+		\Delta f := \frac{\delta^2 f}{\delta x_1^2} + \ldots + \frac{\delta^2 f}{\delta x_n^2} = \somme{n}{i=1} \frac{\delta^2 f}{\delta x_i^2}
+	\end{equation*}
+\end{boite}
+\uline{Exemple :} 
+\begin{align*}
+	f(x) = x_1^2 + 3x_1x_2 + x_2, \quad f : \R^2 \to \R\\
+	\Delta f = \frac{\delta^2 f}{\delta x_1^2} + \frac{\delta^2 f}{\delta x_2^2} = \frac{\delta}{\delta x_1}(2x_1 + 3x_2) +  \frac{\delta }{\delta x_2}(3x_1 + 1)\\
+	=2
+\end{align*}
+
+\begin{boite}
+	\evid{Définition divergence :} Soit une fonction $F(x) = \big(F_1(x),...,F_n(x)\big)$, telle que $F : \rn \to \rn,\quad F_i : \rn \to \R$. Alors nous définissons la divergence :
+	\begin{equation*}
+		\text{\dive } F = \frac{\delta F_1}{\delta x_1} +  \ldots + \frac{\delta F_n}{\delta x_n} = \somme{n}{i=1} \frac{\delta F_i}{\delta x_i}
+	\end{equation*}
+	avec "div" la divergence, et "F" un champs de vecteurs
+\end{boite}
+\uline{Exemple :} Soit la fonction F définie par $F(x_1,x_2) = (x_1^2 + x_1\ , \ x_1x_2)$
+\begin{equation*} 	
+	\dive F = \frac{\delta F_1}{\delta x_1} + \frac{\delta F_2}{\delta x_2} = \frac{\delta}{\delta x_1}(x_1^2 + x_2) + \frac{\delta }{\delta x_2}(x_1x_2)= 2x_1 + x_1 = \uline{3x_1}
+\end{equation*}
+
+\begin{boite}
+	\evid{Définition : La rotation}\\
+	Soit $\uline{n = 2},\ F:\R^2 \to \R^2,\ F=(F_1,F_2)$. Alors :
+	\begin{equation*}
+		\nabla  \times F = \rot\ F = \frac{\delta F_2}{\delta x_1}-\frac{\delta F_1}{\delta x_2}
+	\end{equation*}
+	Qui est en fait le déterminant de la matrice : $\begin{pmatrix}
+		\frac{\delta }{\delta x_1} & \frac{\delta }{\delta x_2}\\
+		F_1 & F_2
+		\end{pmatrix}$
+	
+	Et pour $\uline{n=3},\ F : \R^3 \to \R^3,\ F = (F_1,F_2,F_3)$ :
+	\begin{equation*}
+		\nabla \times F = \rot\ F =\(\frac{\delta F_3}{\delta x_2} - \frac{\delta F_2}{\delta x_3}\ ,\ \frac{\delta F_1}{\delta x_3} - \frac{\delta F_3}{\delta x_1}\ ,\ \frac{\delta F_2}{\delta x_1} - \frac{\delta F_1}{\delta x_2}\)
+	\end{equation*}		 
+	Qui, à nouveau, est le "déterminant" de la matrice $\begin{pmatrix}
+	e_1 & e_2 & e_3\\
+	\frac{\delta}{\delta x_1} & \frac{\delta}{\delta x_2} & \frac{\delta}{\delta x_3}\\
+	F_1 & F_2 & F_3
+	\end{pmatrix}$
+\end{boite}
+\uline{Exemple :} $F : \R^3 \to \R^3, \ F(x_1,x_2,x_3) = (x_1^2 + x_2,\ x_3,\ x_1)$
+\begin{align*}
+\rot F = \(\frac{\delta}{\delta x_2}x_1 - \frac{\delta}{\delta x_3}x_3\ ,\ \frac{\delta}{\delta x_3}(x_1^2 + x_2) - \frac{\delta }{\delta x_1}x_1\ ,\ \frac{\delta }{\delta x_1}x_3 - \frac{\delta }{\delta x_2}(x_1^2 + x_2)\)\\
+=(0-1,0-1,0-1) =\uline{ (-1,-1,-1)}
+\end{align*}
+\section[Intégrales curvilignes]{Chapitre 2 : Intégrales curvilignes}
+\begin{boite}
+	\evid{Définition (courbe simple)} : $\Gamma \in \R^d$ est une courbe \uline{simple} si pour un $I \in \R$ (intervalle), il existe $\gamma : I \to \R^d$ continue telle que 
+	\begin{itemize}
+		\item 	$\gamma(I) = \Gamma$ (courbe)
+		\item 	$\gamma(t_1)\neq \gamma(t_2) \quad \forall t_1,t_2 \in$ Int I 
+	\end{itemize}
+	$\gamma$ est appelé la \textit{paramétrisation}
+\end{boite}
+\evid{Exemple ok:} 
+\[\Gamma = \{x\in \R^2 : |x| = 1\} \qquad \gamma : [0,2\pi] \to \R^2 \quad \gamma(\theta) = (\cos\theta,\sin\theta)\]
+\evid{Exemple faux} (dessin courbe n'importe nawak.
+\begin{boite}
+	\evid{Définition (courbe fermée) :} $\Gamma$ : une courbe simple est dite \uline{fermée} si 
+	\[\exists (a,b) \text{ t.q. } \gamma(a) =\gamma(b),\quad \big(I = [a,b]\big)\]
+	Géométriquement, cela se caractérise par les deux extrêmes de I qui se rejoignent graphiquement.
+\end{boite}
+\evid{Exemple ok} le cercle est une courbe est fermée, car il existe un couple, $(0,2\pi)$, qui répond au critère : 
+\[\gamma(0) = \gamma(2\pi) = (1,0)\]
+Notons aussi que l'intuition géométrique est correcte : la forme est un cercle, ce qui est une courbe fermée.\\
+\evid{Exemples faux} Une courbe de type (hélix) (dessin chute avion)
+\begin{boite}
+	\evid{Définition régulière} Une courbe $\Gamma$ est dire régulière s'il existe un intervalle $[a,b]$ et une paramétrisation $\gamma : [a,b] \to \R^d$ tels que 
+	\begin{align*}
+		\gamma \in C^1 \([a,b] \to \R^d\)\\
+		\big(\gamma_1'(t),...,\gamma_d'(t)\big) \neq (0,...,0)\quad \forall t \in [a,b]
+	\end{align*}
+\end{boite}
+
+\evid{Exemple ok} Le cercle vu précédemment est aussi une courbe régulière car : $\gamma'(t) = (-\sin t, \cos t) \neq (0,0)$
+ 
+\evid{Exemple faux} La courbe définie par la paramétrisation \[\gamma : \R \to \R^2,\quad \gamma(t) = (t^3,t^2)\] 
+n'est pas régulière. En effet nous voyons que $\gamma'(t) = (3t^2, 2t)$ et que $\gamma'(0) = (0,0)$, donc $\gamma$ n'est pas régulière
+(dessin rebond)
+\begin{boite}
+	\evid{Définition} La longueur de  de $\Gamma$ sur l'intervalle [a,b] est définie par: 
+	\[\int_\Gamma 1 = \int_a^b ||\gamma'(t)||\deriv{t} \et \int_\Gamma f = \int_a^b f(\gamma(t)) ||y'(t)|| \deriv{t}\]
+\end{boite}
+\evid{Exemple :} \[f(x,y) = \sqrt{x^2 + 4y^2},\quad \Gamma = \{(x,y) \in \R^2 : 2y = x^2, x \in [0,1]\},\quad \gamma : [0,1] \to R^2, \gamma(t) = \(t, \frac{t^2}{2}\)\]
+Ainsi : \[\int_\Gamma f = \int_0^1 \Big(f\big(\gamma(t)\big)\cdot \big|\big|\gamma'(t)\big|\big| \deriv{t}\Big) = \int_0^1 \sqrt{t^2 + 4\frac{t^4}{4}}\sqrt{1+t^2} \deriv{t} = \int_0^1 t(1+t^2) = \left[\frac{t^2}{2} + \frac{t^4}{4}\right]_0^1 = \frac{3}{4}\]
+\begin{boite}
+	\evid{Définition} L'intégrale curviligne (pour un champs vectoriel). Un champs de vecteur est une fonction de $\R^d \to \R^d$. Soit $F : \Gamma \to \R^d$ avec $\Gamma$ une courbe et $\gamma$ sa paramétrisation sur $[a,b]$ Alors 
+	\[\int_\Gamma F. \vec{\deriv{l}} := \int_a^b F(\gamma(t)).\gamma'(t) \deriv{t}\]
+	avec le point (".") le produit scalaire.
+\end{boite}
+
+\evid{Exemple} Soit $\Gamma = \{(x,y) \in \R^2 : y = \cosh(x), x\in [0,1]\}$, donc $\gamma(t) = (t,\cosh(t))$, et soit $F(x,y) = (x^2,0)$. Alors nous savons que $\int_\Gamma F. \vec{\deriv{t}} =  \int_0^1F(\gamma(t)).\gamma'(t)\deriv{t} = \int_0^1 (t^2, 0).(1,\sinh(t)) \deriv{t} = \int_0^1 t^2 \deriv{t} = \frac{1}{3}$
+\begin{boite}
+	\evid{Définition} courbe régulière \uline{par morceaux}. $\exists \gamma : [a,b] \to \R^d$ avec $t_0=a,...,t_k = b$ t.q. 
+	\begin{itemize}
+		\item	$\gamma \in C^1 ([t_i,t_i+1])$
+		\item 	$\gamma'(t) \neq 0 \forall t\neq t_i$
+	\end{itemize}~\\
+	\evid{Définition} Soit $\Gamma$ une courbe régulière par morceaux. Alors \[\int_\Gamma f := \somme{k-1}{i=0} \int_{t_i}^{t_{i+1}} f(\gamma(t)) ||\gamma'(t)|| \deriv{t}\]
+	et soit $F : \Gamma \to \R^d$ un champs vectoriel. Alors 
+	\[\int_\Gamma F.\vec{\deriv{t}} = \somme{k-1}{i=0} \int_{t_i}^{t_{i+1}} F(\gamma(t)).||\gamma'(t)|| \deriv{t}\]
+\end{boite}
+\evid{Exemple} Soit un carré posé en 0,0 avec chaque côté nommé $\Gamma_1,...$ par l'axe x puis anti-horaire. Alors 
+\begin{align*}
+\Gamma = \Gamma_1 \cup \Gamma_2 \cup \Gamma_3 \cup \Gamma_4\\
+\Gamma_1 = \{\gamma_1(t) = (t,0) :  t\in [0,1]\}\\
+\Gamma_2 = \{\gamma_2(t) = (1,t-1) :  t\in [1,2]\}\\
+\Gamma_3 = \{\gamma_3(t) = (3-t,1) :  t\in [2,3]\}\\
+\Gamma_4 = \{\gamma_4(t) = (0,4-t) :  t\in [3,4]\}\\
+\gamma : [0,4] \to \R^2 : \gamma(t) = \gamma_1(t)\quad [0,1], \gamma_2(t) \quad [1,2], ...
+\end{align*}
+Alors nous voyons que pour $f=1$, nous avons 
+\begin{align*}
+|\Gamma| = \int_\Gamma f = \int_0^1 ||\gamma'(t)|| \deriv{t} + \int_1^2 ||\gamma'(t)|| \deriv{t} + \int_2^3||\gamma'(t)|| \deriv{t} + \int_3^4 ||\gamma'(t)|| \deriv{t}\\
+\mbox{Mais comme } ||\gamma'(t)|| = 1 \mbox{ nous avons}\\
+= \int_0^1 1 + \int_1^2 1 + \int_2^3 1 + \int_3^4 1 = 4
+\end{align*}
+\evid{Exemple} Soit 
+\[
+\int_\Gamma F. \vec{\deriv{l}} \text{ avec :}
+\left\{\begin{array}{l}
+	F(x,y) = (xy, y^2-x)\\
+	\Gamma = \{(t,t) : t\in [0,1]\}\\
+	\gamma : [0,1] \to \R^2, \gamma(t) = (t,t), \gamma'(t) = (1,1)
+\end{array}\right.\]
+Alors, nous pouvons calculer \[\int_\Gamma F.\vec{\deriv{l}} = \int_0^1 (t^2, t^2-t).(1,1) \deriv{t} = \int_0^1 (2t^2-t)\deriv{t} = \frac{2}{3}-\frac{1}{2} = \frac{1}{6}\]\ \^{$\Gamma$} $= \{(t,e^t) : t \in [0,1]\},$ \^{$\gamma$} $: [0,1] \to \R^2,$ \^{$\gamma$}$(t) = (t,e^t),$ \^{$\gamma'$}$(t) = (1,e^t)$
+
+
+
+\subsection{Propriétés}
+\begin{boite}
+\begin{enumerate}
+	\item	$\Delta f = \dive (\grad f) = \nabla. (\nabla f)$
+			
+		\item 	$n= 3 : \rot(\nabla f) = 0 \in \R^3$\\
+				$n = 2 : \rot(\nabla f) = 0 \in \R$
+				\begin{align*}
+					n= 3 : \dive\big(\rot(F)\big) = 0 
+					\left\{
+						\begin{array}{l}
+							f : \rn \to \R\\
+							F : \R^3 \to \R^3
+						\end{array}
+					\right.
+				\end{align*}
+		\item	$\dive(f\nabla g) = f\Delta g) + \nabla f\nabla g,\ f,g : \rn \to \R$
+		\item	$\nabla (fg) = g\nabla f + f\nabla g$
+		\item 	$\dive(fF) = f\ \dive F + \nabla f \cdot F$
+		\item 	$\rot(\rot F) = -\Delta F + \grad \dive f$
+		\item	$\uline{n=3} : \rot(fF) = \nabla f \times F + r\ \rot F$
+	\end{enumerate}
+\end{boite}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}  

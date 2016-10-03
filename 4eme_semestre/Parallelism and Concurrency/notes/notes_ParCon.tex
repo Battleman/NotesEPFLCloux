@@ -1,0 +1,27 @@
+\documentclass[12pt,a4paper]{article}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+\input{/home/battleman/Documents/LaTeX/code_writing.tex}
+\usepackage[tc]{titlepic}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+\renewcommand{\contentsname}{Table of Contents}
+
+\begin{document}
+\epflTitle{Parallelism and Concurrency}[Olivier Cloux][Spring 2016][Lecture Notes in]
+\setstretch{1}
+\tableofcontents
+\setstretch{1.3}
+\section{Week 1}
+\subsection{Parallel programming VS concurrent programming}
+\begin{itemize}
+    \item     Parallel programming : Uses parallel hardware to execute computation more quickly. Aims for efficiency by division into subproblems and optimal use of hardware.
+    \item     Concurrent program : may or may not execute multiple executions at the same time. Aims for modularity and maintainability. Main question is ``When can execution start ?'' and ``When do exchanges occur ?''.
+\end{itemize}
+\subsection{Granularity}
+Parallelism can occur at multiple levels :
+\begin{itemize}
+    \item     Bit level
+\end{itemize}
+
+\end{document}

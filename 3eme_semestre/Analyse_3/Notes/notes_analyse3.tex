@@ -1,0 +1,1624 @@
+\documentclass[12pt,a4paper]{article}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+\usepackage[tc]{titlepic}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\setcounter{section}{-1}
+
+\renewcommand{\contentsname}{Table des Matières}
+\begin{document}
+\setstretch{1}
+\epflTitle{Analyse III}[Olivier Cloux][Automne 2015]
+\newpage
+\tableofcontents
+\setstretch{1.6}
+\newcommand{\dive}{\text{ div }}
+\newcommand{\rot}{\text{ rot }}
+\newcommand{\grad}{\text{ grad }}
+\section{Préambule}
+\subsection{Programme}
+\begin{itemize}
+	\item 	7 semaines pour analyse vectoriel (bouquin analyse pour ingénieur, et differential geometry), chapitre 1-7
+	\item 	7 semaines pour analyse de Fourier
+			\begin{itemize}
+				\item 	2 semaines : Séries de Fourier
+				\item 	2 semaines : Transformations de Fourier
+				\item 	3 semaines : Applications
+						\begin{itemize}
+							\item 	1 semaines : Problème de Sturim-Liouville et autres problèmes
+							\item 	2 semaines : EDP's (équations aux dérivées partielles)
+							\begin{itemize}
+								\item	1 semaines : eq de la chaleur, des ondes
+								\item 	1 semaine : eq de Laplace (rectangles et disques)
+							\end{itemize}
+						\end{itemize}
+			\end{itemize}
+\end{itemize}
+\subsection{Rappels :} 
+\evid{Dérivées partielles = grad:}
+
+\begin{align*}
+f : \rn \to \R,\ v \in \rn\\
+\frac{\partial f}{\partial x_i},\ D_v f(x) : \limite{t\to 0} \frac{f(x+t_0) - f(x)}{t}\\
+\frac{\partial f}{\partial x_i} = D_{e_i} f\\
+\nabla f = \(\frac{\partial f}{\partial x_1},...,\frac{\partial f}{\partial x_n}\) \in \rn\\
+\end{align*} 
+Pour les dérivées partielles : dérivées de f+g = dérivée de f + dérivée de g et dérivée de fxg = (dérivée de f) x g + (dérivée de g) x f
+et 
+\begin{align*}
+	\nabla (f \circ \phi)(x) = \nabla f(\phi(x)) \cdot \nabla \phi(x),\ f : \Rm \to \R^k,\ \phi : \rn \to \Rm\\
+	 f \in C^2 \text{ alors } \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i}
+\end{align*}
+\evid{Intégrales} Fubini : 
+\begin{align*}
+	 \int_{a}^{b}\int_c^d f(x,y) \deriv{x}\deriv{y} = \int_a^b\(\int_c^d f(x,y) \deriv{y}\) \deriv{x} = \int_c^d \(\int_a^b f(x,y) \deriv{x}\)\deriv{y}
+\end{align*}
+\uline{changement de variables} :
+\begin{align*}
+	\int f(x) \deriv{x} &= \int f(\phi(y)) |\det)\nabla \phi(y)| \deriv{y}\\
+	\Omega &= \phi^{-1}(\Omega)
+	f : \Omega \to \R\\
+	\phi : \phi^{-1} (\Omega) \to \Omega \text{ "Différomorphisme"}\\
+	\in \rn \ \in \rn \\
+	\phi\ bijective\\
+	\phi,\phi^{-1} \in C^1
+\end{align*}
+
+\section[Opérateurs diff. de la physique]{Chapitre 1 Opérateurs différentiels de la physique}
+\begin{boite}
+	\evid{Définition :} Laplacien de $f : \rn \to \R$
+	\begin{equation*}
+		\Delta f := \frac{\partial^2 f}{\partial x_1^2} + \ldots + \frac{\partial^2 f}{\partial x_n^2} = \somme{n}{i=1} \frac{\partial^2 f}{\partial x_i^2}
+	\end{equation*}
+\end{boite}
+\uline{Exemple :} 
+\begin{align*}
+	f(x) = x_1^2 + 3x_1x_2 + x_2, \quad f : \R^2 \to \R\\
+	\Delta f = \frac{\partial^2 f}{\partial x_1^2} + \frac{\partial^2 f}{\partial x_2^2} = \frac{\partial}{\partial x_1}(2x_1 + 3x_2) +  \frac{\partial }{\partial x_2}(3x_1 + 1)\\
+	=2
+\end{align*}
+\uline{Exemple}
+\begin{align*}
+	f: \rn \to \R\\
+	f(x) = ||x||^2 = x_1^2 + x_2^2 + ... + x_n^2\\
+	\Delta f = \somme{n}{i=1} \frac{\partial^2 f}{\partial x_i^2} = \somme{n}{i=1} \frac{\partial}{\partial x_i}(2x_i) = \somme{n}{i=1} 2 = 2n
+\end{align*}
+
+$\begin{array}{ll}
+	\mbox{Par exemple,} & \mbox{l'équation de la chaleur : }\partial_t u - \Delta u = f\\
+						& \mbox{Equation des ondes : }\partial_{tt} u - \Delta u = f
+\end{array}$ 
+
+\begin{boite}
+	\evid{Définition divergence :} Soit une fonction $F(x) = \big(F_1(x),...,F_n(x)\big)$, telle que $F : \rn \to \rn,\quad F_i : \rn \to \R$. Alors nous définissons la divergence :
+	\begin{equation*}
+		\text{\dive } F = \frac{\partial F_1}{\partial x_1} +  \ldots + \frac{\partial F_n}{\partial x_n} = \somme{n}{i=1} \frac{\partial F_i}{\partial x_i}
+	\end{equation*}
+	avec "div" la divergence, et "F" un champs de vecteurs
+\end{boite}
+\uline{Exemple :} Soit la fonction F définie par $F(x_1,x_2) = (x_1^2 + x_1\ , \ x_1x_2)$
+\begin{equation*} 	
+	\dive F = \frac{\partial F_1}{\partial x_1} + \frac{\partial F_2}{\partial x_2} = \frac{\partial}{\partial x_1}(x_1^2 + x_2) + \frac{\partial }{\partial x_2}(x_1x_2)= 2x_1 + x_1 = \uline{3x_1}
+\end{equation*}
+
+\begin{boite}
+	\evid{Définition : La rotation}\\
+	Soit $n = 2,\ F:\R^2 \to \R^2,\ F=(F_1,F_2)$. Alors :
+	\begin{equation*}
+		\nabla  \times F = \rot\ F = \frac{\partial F_2}{\partial x_1}-\frac{\partial F_1}{\partial x_2}
+	\end{equation*}
+	Qui est en fait le déterminant de la matrice suivante : $\begin{pmatrix}
+		\frac{\partial }{\partial x_1} & \frac{\partial }{\partial x_2}\\
+		F_1 & F_2
+		\end{pmatrix}$
+	
+	Et pour $n=3,\ F : \R^3 \to \R^3,\ F = (F_1,F_2,F_3)$ :
+	\begin{equation*}
+		\nabla \times F = \rot\ F =\(\frac{\partial F_3}{\partial x_2} - \frac{\partial F_2}{\partial x_3}\ ,\ \frac{\partial F_1}{\partial x_3} - \frac{\partial F_3}{\partial x_1}\ ,\ \frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\)
+	\end{equation*}		 
+	Qui, à nouveau, est le déterminant de la matrice $\begin{pmatrix}
+	e_1 & e_2 & e_3 \\
+	\frac{\partial}{\partial x_1} & \frac{\partial}{\partial x_2} & \frac{\partial}{\partial x_3}\\
+	F_1 & F_2 & F_3
+	\end{pmatrix}$
+\end{boite}
+\uline{Exemple} $F : \R^2 \to \R^2,\ F(x_1,x_2) = (x_1,x_2)$
+\begin{equation*}
+	\rot\ = \frac{\partial}{\partial x_1}x_2 - \frac{\partial }{\partial x_1}x_2 = 0
+\end{equation*}
+\uline{Exemple :} $F : \R^3 \to \R^3, \ F(x_1,x_2,x_3) = (x_1^2 + x_2,\ x_3,\ x_1)$
+\begin{equation*}
+\rot F = \(\frac{\partial}{\partial x_2}x_1 - \frac{\partial}{\partial x_3}x_3\ ,\ \frac{\partial}{\partial x_3}(x_1^2 + x_2) - \frac{\partial }{\partial x_1}x_1\ ,\ \frac{\partial }{\partial x_1}x_3 - \frac{\partial }{\partial x_2}(x_1^2 + x_2)\)
+\end{equation*}
+$=(0-1,0-1,0-1) = (-1,-1,-1)$
+
+
+\subsection{Propriétés}
+\begin{enumerate}
+	\item	~\begin{boite}[0.6]
+				\begin{equation*}
+					\Delta f = \dive (\grad f) = \nabla. (\nabla f)
+				\end{equation*}
+			\end{boite}
+			\evid{Preuve :}
+			\begin{align*}
+				\nabla f = \(\frac{\partial f}{\partial x_1},...\frac{\partial f}{\partial x_n}\)\\
+				\nabla. (\nabla f) = \frac{\partial}{\partial x_1}\(\frac{\partial f}{\partial x_1}\) + ... + \frac{\partial }{\partial x_n}\(\frac{\partial f}{\partial x_n}\) \\
+				= \frac{\partial^2 f}{\partial x_1^2} + ... + \frac{\partial^2 f}{\partial x_n^2} = \Delta f 
+			\end{align*}
+	\item 	$n= 3 : \rot(\nabla f) = 0 \in \R^3$\\
+			$n = 2 : \rot(\nabla f) = 0 \in \R$
+			\begin{boite}
+				\begin{align*}
+					n= 3 : \dive(\rot(F) = 0 
+					\left\{
+						\begin{array}{l}
+							f : \rn \to \R\\
+							F : \R^3 \to \R^3
+						\end{array}
+					\right.
+				\end{align*}
+			\end{boite}
+			\evid{Preuve $n=2$ :}
+			\begin{align*}
+				\nabla f = \(\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2}\)\\
+				\nabla \times (\nabla f) = \frac{\partial }{\partial x_1}\(\frac{\partial f}{\partial x_2}\) - \frac{\partial }{\partial x_2}\(\frac{\partial f}{\partial x_1}\)\\
+				=0
+			\end{align*}
+			\evid{Preuve $n=3$}
+			\begin{align*}
+				\nabla f = \(\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},\frac{\partial f}{\partial x_3}\)\\
+				[\nabla \times (\nabla f)]_1 = \frac{\partial }{\partial x_2}(\frac{\partial f}{\partial x_3}) - \frac{\partial}{\partial x_3}\(\frac{\partial f}{\partial x_2}\) = 0\\
+				\nabla \cdot (\nabla \times f) = \frac{\partial }{\partial x_1}\(\frac{\partial F_3}{\partial x_2} - \frac{\partial F_2}{\partial x_3}\) + \frac{\partial }{\partial x_2}\(\frac{\partial F_1 }{\partial x_3} - \frac{\partial F_1}{\partial x_3}\) + \frac{\partial }{\partial x_3}\(\frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\) = 0
+			\end{align*}
+	\item	~\begin{boite}[0.7]
+				\[\dive(f\nabla g) = f\Delta g) + \nabla f\nabla g,\ f,g : \rn \to \R\]
+			\end{boite}
+			\evid{Preuve :}
+			\begin{align*}
+				\nabla \cdot (f \nabla g) = \somme{n}{i=1} \frac{\partial}{\partial x_i} \(f \frac{\partial g}{\partial x_i}\)\\
+				= \somme{n}{i=1} \( \frac{\partial }{\partial x_i}(f) \cdot \frac{\partial g}{\partial x_i} + f \frac{\partial^2 g}{\partial x_i^2}\)\\
+				= \somme{n}{i=1} \frac{\partial f}{\partial x_i} \cdot \frac{\partial g}{\partial x_i} + \somme{n}{i=1} f \frac{\partial^2 g}{\partial x_i^2}\\
+				= \nabla f \nabla g + f \Delta g
+			\end{align*}			 
+	\item	~\begin{boite}[0.6]
+				\[\nabla (fg) = g\nabla f + f\nabla g\]
+			\end{boite}
+			\evid{Preuve :}
+			\begin{align*}
+				\frac{\partial }{\partial x_i} (fg) = g\frac{\partial }{\partial x_i}f + f\frac{\partial g}{\partial x_i}\\
+				[g\nabla f + f \nabla g] = g\frac{\partial f}{\partial x_i} + f \frac{\partial g}{\partial x_i}
+			\end{align*}
+	\item 	~\begin{boite}[0.6]
+				\[\dive(fF) = f\ \dive F + \nabla f \cdot F\]
+			\end{boite}
+			\evid{Preuve :}
+			\begin{align*}
+				\dive(fF) = \somme{n}{i=1} \frac{\partial}{\partial x_i}(fF_i)\\
+				= \somme{n}{i=1}\(\frac{\partial}{\partial x_i}f \cdot F:i + f\frac{\partial F_i}{\partial x_i}\)\\
+				= \somme{n}{i=1} \frac{\partial f}{\partial x_i}\cdot F_i + \somme{n}{i=1} f \frac{\partial F_i}{\partial x_i}\\
+				= \nabla f F + f\ \dive F
+			\end{align*}
+	\item 	~\begin{boite}[0.6]
+				\[\rot(\rot F) = -\Delta F + \grad \dive f\]
+			\end{boite}
+			\evid{Preuve :}
+			\begin{align*}
+				\Delta F = (\Delta F_1,...,\Delta F_3)\\
+				F : \R^3 \to \R^3\\
+				\nabla \times (\nabla \times F) =-\nabla. (\nabla F) + \nabla (\nabla. F)
+			\end{align*}
+			\begin{boite}
+				\uline{Rappel :} \[A,B,C \in \R^3 : A \times (B\times C) = B(AC) - (AB)C\]
+			\end{boite}
+			\begin{align*}
+				\nabla \times (\nabla. F) - (\nabla. \nabla)F\\
+				= \grad(\dive F) - \dive(\grad F)\\
+				= \grad(\dive F) - \Delta f
+			\end{align*}
+	\item 	~\begin{boite}[0.6]
+				\[\uline{n=3} : \rot(fF) = \nabla f \times F + r\ \rot F\]
+			\end{boite}
+			\evid{Preuve :}
+			\misenforme
+			\begin{align*}
+				\nabla \times (fF) =\nabla f \times F + f(\nabla \times F)\\
+				\text{A compléter via le livre}
+			\end{align*}						
+			
+\end{enumerate}
+
+\section[Intégrales curvilignes]{Chapitre 2 : Intégrales curvilignes}
+\begin{boite}
+	\evid{Définition (courbe simple)} : $\Gamma \in \R^d$ est une courbe \uline{simple} si pour un $I \in \R$ (intervalle), il existe $\gamma : I \to \R^d$ continue telle que 
+	\begin{itemize}
+		\item 	$\gamma(I) = \Gamma$ (courbe)
+		\item 	$\gamma(t_1)\neq \gamma(t_2) \quad \forall t_1,t_2 \in$ Int I 
+	\end{itemize}
+	$\gamma$ est appelé la \textit{paramétrisation}
+\end{boite}
+\evid{Exemple 1 :} Soit la courbe $\Gamma$ et sa paramétrisation $\gamma$ :
+\begin{align*}
+	\Gamma = \{x\in \R^2 : |x| = 1\}\\
+	\gamma : [0,2\pi] \to \R^2 \quad \gamma(\theta) = (\cos\theta,\sin\theta)
+\end{align*}
+\uline{Cette courbe est simple} (cercle unitaire nommé $\Gamma$)\\
+\evid{Exemple 2 :} En gardant la courbe $\Gamma$ mais en changeant sa paramétrisation : 
+\[\gamma : \R \to \R^3,\quad \gamma(t) = \big(\cos(t), \sin(t), t\big)\]
+nous obtenons une "hélix" (chute avion en cercle)\\
+\evid{Exemple 3} Idem avec 
+\[\gamma : \R \to \R^2,\quad \gamma(t) = (t^3,t^2)\] 
+("rebond" en 0)\\
+\evid{Exemple 4} Toujours pareil avec 
+\[\gamma : \R \to \R^2, \gamma(t) = (t,|t|)\]
+(valeur absolue)\\
+\evid{Exemple 5} En revanche une courbe de ce type (dessin courbe presque aléatoire) ce n'est pas une courbe simple.
+\begin{boite}
+	\evid{Définition (courbe fermée) :} $\Gamma$ : une courbe simple est dite \uline{fermée} si 
+	\[\exists (a,b) \text{ t.q. } \gamma(a) =\gamma(b),\quad \big(I = [a,b]\big)\]
+	Géométriquement, cela se caractérise par les deux extrêmes de I qui se rejoignent graphiquement.
+\end{boite}
+\evid{Exemple 1} Cette courbe est fermée, car le couple $(0,2\pi)$ répond au critère : 
+\[\gamma(0) = \gamma(2\pi) = (1,0)\]
+Notons aussi que l'intuition géométrique est correcte : la forme est un cercle, ce qui est une courbe fermée.\\
+\evid{Exemples 2,3,4} Ces courbes ne sont pas fermées, car aucun couple ne correspond. Les dessins ne se rejoignent pas aux extrémités.
+\begin{boite}
+	\evid{Définition régulière} Une courbe $\Gamma$ est dire régulière si un intervalle $[a,b]$ et une paramétrisation $\gamma : [a,b] \to \R^d$ tels que 
+	\begin{align*}
+		\gamma \in C^1 \([a,b] \to \R^d\)\\
+		\gamma' (t) \neq 0 \in \R^d
+	\end{align*}		
+	 (dernière nécessité se dit aussi : $\big(\gamma_1'(t),...,\gamma_d'(t)\big) \neq (0,...,0)\quad \forall t \in [a,b]$)
+\end{boite}
+
+\evid{Exemple 1} régulière : $\gamma'(t) = (-\sin t, \cos t) \neq (0,0)$
+ 
+\evid{Exemple 2} $\gamma'(t) = (-\sin t, \cos t, 1) \neq (0,0,0) \to $ régulière
+
+\evid{Exemple 3} $\gamma'(t) = (3t^2, 2t)$. Or, nous voyons que $\gamma'(0) = (0,0) \to \Gamma$ n'est pas régulière
+
+\evid{Exemple 4} la fonction n'est pas différentiable au point 0, donc pas de classe $C^1$ donc pas régulière.
+
+\evid{Remarque :} pour une $\Gamma$ régulière : La ligne tangentielle en $\gamma(t_0)$ est définie par $(L) \gamma(t_0) + \gamma'(t_0)(t-t_0)$
+\begin{boite}
+Soit $\Gamma$ une courbe régulière $\in \R^d$, et soit $f: \Gamma \to \R$ une fonction continue :
+\evid{Définition} \[\int_T f := \int_a^b f(\gamma(t)) ||\gamma'(t)|| \deriv{t}\] avec $\gamma : [a,b] \to \R^d$ une paramétrisation de $\Gamma$
+\end{boite} 	
+\begin{boite}
+	\evid{Définition} La longueur de  de $\Gamma$ sur l'intervalle [a,b] est définie par: 
+	\[\int_\Gamma 1 = \int_a^b ||\gamma'(t)||\deriv{t}\]
+\end{boite}
+
+\evid{Exemple 1} $\int_\Gamma f$ avec $f=1\quad = \int_0^{2\pi} ||\gamma'(t)|| \deriv{t} = \int_0^{2\pi} 1\deriv{t} = 2\pi$
+
+\evid{Exemple autre} $f(x,y) = \sqrt{x^2 + 4y^2},\quad \Gamma = \{(x,y) \in \R^2 : 2y = x^2, x \in [0,1]\},\quad \gamma : [0,1] \to R^2, \gamma(t) = \(t, \frac{t^2}{2}\)$ ($t^2/2$ par isolation de y dans la définition de Gamma)\\
+Ainsi, $\int_\Gamma f = \int_0^1 f(\gamma(t)) ||\gamma'(t)|| \deriv{t} = \int_0^1 \sqrt{t^2 + 4\frac{t^4}{4}}\sqrt{1+t^2} \deriv{t} = \int_0^1 t(1+t^2$ (par mise en évidence de $t^2$ dans la racine de gauche) $= \left[\frac{t^2}{2} + \frac{t^4}{4}\right]_0^1 = \frac{3}{4}$
+
+Note sur l'intégrale ? pas vraiment clair... On découpe la courbe en petites parties $\Gamma_i$, donc on définit comme
+\[\int:\Gamma f \simeq \sum_i|\Gamma_i| f(\gamma(t_i))\] 
+avec $\gamma(t_i) \in \Gamma_i$. \\
+$\Gamma_i = \gamma([t_i,t_{i+1}]$ et $\gamma$ une paramétrisation de $[a,b] \to \R^d$. Donc 
+\[\int_\Gamma \simeq \sum ||\gamma(t_i)||(t_{i+1}-t_i) f(\gamma(t_i)) \sim \int_a^b ||\gamma(t)|| f(\gamma(t))\]
+
+\begin{boite}
+	\evid{Définition} L'intégrale curviligne pour un champs vectoriel). Un champs de vecteur est une fonction de $\R^d \to \R^d$. Soit $F : \Gamma \to \R^d$ avec $\Gamma$ une courbe et $\gamma$ sa paramétrisation sur $[a,b]$ Alors 
+	\[\int_\Gamma F. \vec{\deriv{l}} := \int_a^b F(\gamma(t)).\gamma'(t) \deriv{t}\]
+	avec le point (".") le produit scalaire.
+\end{boite}
+
+\evid{Exemple} Soit $\Gamma = \{(x,y) \in \R^2 : y = \cosh(x), x\in [0,1]\}$, donc $\gamma(t) = (t,\cosh(t))$, et soit $F(x,y) = (x^2,0)$. Alors nous savons que $\int_\Gamma F. \vec{\deriv{t}} =  \int_0^1F(\gamma(t)).\gamma'(t)\deriv{t} = \int_0^1 (t^2, 0).(1,\sinh(t)) \deriv{t} = \int_0^1 t^2 \deriv{t} = \frac{1}{3}$
+\begin{boite}
+	\evid{Définition} courbe régulière \uline{par morceaux}. $\exists \gamma : [a,b] \to \R^d$ avec $t_0=a,...,t_k = b$ t.q. 
+	\begin{itemize}
+		\item	$\gamma \in C^1 ([t_i,t_i+1])$
+		\item 	$\gamma'(t) \neq 0 \forall t\neq t_i$
+	\end{itemize}
+	
+	\evid{Définition} Soit $\Gamma$ une courbe régulière par morceaux. Alors 
+	\[\int_\Gamma f := \sum_{i=0}^{k-1} \int_{t_i}^{t_{i+1}} f(\gamma(t)) ||\gamma'(t)|| \deriv{t}\]
+	et soit $F : \Gamma \to \R^d$ un champs vectoriel. Alors 
+	\[\int_\Gamma F.\vec{\deriv{t}} = \sum_{i=0}^{k-1} \int_{t_i}^{t_{i+1}} F(\gamma(t)).||\gamma'(t)|| \deriv{t}\]
+\end{boite}
+\evid{Exemple} Soit un carré posé en 0,0 avec chaque côté nommé $\Gamma_1,...$ par l'axe x puis anti-horaire. Alors 
+\begin{align*}
+\Gamma = \Gamma_1 \cup \Gamma_2 \cup \Gamma_3 \cup \Gamma_4\\
+\Gamma_1 = \{\gamma_1(t) = (t,0) :  t\in [0,1]\}\\
+\Gamma_2 = \{\gamma_2(t) = (1,t-1) :  t\in [1,2]\}\\
+\Gamma_3 = \{\gamma_3(t) = (3-t,1) :  t\in [2,3]\}\\
+\Gamma_4 = \{\gamma_4(t) = (0,4-t) :  t\in [3,4]\}\\
+\gamma : [0,4] \to \R^2 : \gamma(t) = \gamma_1(t)\quad [0,1], \gamma_2(t) \quad [1,2], ...
+\end{align*}
+Alors nous voyons que pour $f=1$, nous avons 
+\begin{align*}
+|\Gamma| = \int_\Gamma f = \int_0^1 ||\gamma'(t)|| \deriv{t} + \int_1^2 ||\gamma'(t)|| \deriv{t} + \int_2^3||\gamma'(t)|| \deriv{t} + \int_3^4 ||\gamma'(t)|| \deriv{t}\\
+\mbox{Mais comme } ||\gamma'(t)|| = 1 \mbox{ nous avons}\\
+= \int_0^1 1 + \int_1^2 1 + \int_2^3 1 + \int_3^4 1 = 4
+\end{align*}
+\evid{Exemple} $\int_\Gamma F \vec{\deriv{l}}$ où $F(x,y) = (xy, y^2-x)$ et soit $\Gamma = \{(t,t) : t\in [0,1]\},\quad \gamma : [0,1] \to \R^2, \gamma(t) = (t,t), \gamma'(t) = (1,1)$. Alors $\int_\Gamma F.\vec{\deriv{l}} = \int_0^1 (t^2, t^2-t).(1,1) \deriv{t} = \int_0^1 (2t^2-t)\deriv{t} = \frac{2}{3}-\frac{1}{2} = \frac{1}{6}$\
+\^{$\Gamma$} $= \{(t,e^t) : t \in [0,1]\},$ \^{$\gamma$} $: [0,1] \to \R^2,$ \^{$\gamma$}$(t) = (t,e^t),$ \^{$\gamma'$}$(t) = (1,e^t)$
+
+trou david
+
+
+
+\section[Champs qui dérivent d'un potentiel]{Chapitre 3: Champs qui dérivent d'un potentiel}
+\begin{boite}
+	\evid{Définition : } Soit $\Omega \subset \R^n$ ouvert, et soit $F = F(x) = (F_1,...,F_n) : \Omega \to \R^n$. On dit que $F$ dérive d'un potentiel sur $\Omega$ s'il existe $f\in C^1(\Omega)$ tel que 
+	\[F(x) = \grad f(x) = \(\frac{\partial f}{\partial x_1}(x),...,\frac{\partial f}{\partial x_n}(x)\),\quad \forall x \in \Omega\]
+\end{boite}
+\evid{Exemple :} \[F(x) = x \text{ Alors }f(x) = \frac{1}{2}||x||^2 = \frac{1}{2}\somme{n}{i=1}x_i^2 \text{ car }\nabla f = F\]
+Donc F dérive d'un  potentiel.
+
+\begin{boite}
+	\evid{Théorème :} Si F dérive d'un potentiel $f\in C^2(\Omega)$. Alors 
+	\[\frac{\partial F_i}{\partial x_j}(x) - \frac{\partial F_j}{\partial x_i} = 0,\quad \forall i,j = 1,...,n \et \forall x \in \Omega\] 
+\end{boite}
+\evid{Preuve :} F dérive d'un potentiel f. $\left\{\begin{array}{l}
+f \in C^1(\Omega)\\
+\nabla f(x) = F(x)\ \forall x \in \Omega
+\end{array}\right.$ car $F \in C^1(\Omega)$, on a $f\in C^2(\Omega)$. Donc $\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j\partial x_i} \forall i,j\ \forall x \in \Omega$. Dans ce cas, on a 
+\begin{align}
+	F_i(x) = \frac{\partial f}{\partial x_i}(x) \quad \forall x \in \Omega,\ \forall i\\
+	\frac{\partial F_i}{\partial x_j}(x) = \frac{\partial^2 f}{\partial x_j \partial x_i}(x) \quad \forall x \in \Omega,\ \forall i,j\\
+	\frac{\partial F_j}{\partial x_i} = \frac{\partial^2 f}{\partial x_i\partial x_j}(x)
+\end{align}
+Par (1),(2),(3) $\to$ $\frac{\partial F_i}{\partial x_j} = \frac{\partial F_j}{\partial x_i}$
+
+\evid{Question :} Soit $F$ régulier. Supposons $\frac{\partial F_i}{\partial x_j} = \frac{\partial F_j}{\partial x_i} \forall i,j,\ \forall x$. Est-ce que F dérive d'un potentiel ? 
+
+\uline{Réponse :} vrai, si $\Omega$ convexe, ou simplement connexe. pas vrai si $\Omega$ n'est pas simplement connexe !
+
+\begin{boite}
+	\evid{Théorème :} $\Omega$ ouvert connexe. et soit $F \in C(\Omega,\R^n)$. Les affirmations suivantes sont alors équivalentes :
+	\begin{enumerate}
+		\item	F dérive d'un potentiel sur $\Omega$ : 
+		\item 	$\int_\Gamma F.\vec{\deriv{l}} = 0\ \forall \Gamma$ fermée régulière par morceaux
+		\item 	
+	\end{enumerate}	 
+\end{boite}
+
+\evid{Preuve : $1\to 2$} F : dérive d'un potentiel alors $\exists f \in C^1(\Omega) : \nabla f(x) = F(x) \forall x \in \Omega,\ \Gamma$ : une courbe fermée régulière. $\gamma : [a,b] : \left\{\begin{array}{l}
+\Gamma = \gamma ([a,b])\\
+\gamma(a) = \gamma(b)
+\end{array}\right.$ On calcule $\int_\Gamma F . \vec{\deriv{l}} = \int_a^b F(\gamma(t)).\gamma'(t) \deriv{t} = \int_a^b \nabla f(\gamma(t)).\gamma'(t) = \int_a^b \frac{d}{dt}[f(\gamma(t))] \deriv{t} = f(\gamma(b)) - f(\gamma(a)) = 0$ car la courbe est fermée et régulière.
+
+\begin{boite}
+	\evid{Rappel} Soit $g : \Gamma \to \R$, $\Gamma$ une courbe et paramétrisée par $\gamma$. Alors 
+		\[\int_\Gamma f \deriv{l} = \int_a^b g(\gamma(t)) ||\gamma'(t)|| \deriv{t}\]
+		Mais si $G : \Gamma \to \R^n$ alors
+		\[\int_\Gamma G \vec{\deriv{l}} = \int_a^b G(\gamma(t)).\gamma'(t) \deriv{t}\]
+\end{boite}
+
+\evid{Preuve : $2 \to 1$} On sait
+\[\int_\Gamma F.\vec{\deriv{l}} = 0\] $ \forall \Gamma$: fermées régulières. et on a $\Omega$ convexe, On montre : F dérive d'un potentiel.\\
+On va essayer de trouver f t.q. $\nabla f = F$. On fixe $x_0 \in \Omega$. Pour $x\in \Omega,\ [x_0,x] = \left\{\begin{array}{l}
+x_0 + t(x-x_0)\\
+t\in [0,1]
+\end{array}\right\}$. On définit $f(x) = \int_{[x_0,x]} F.\vec{\deriv{l}}$. Notons que si $\Omega$ est convexe, alors $[x_0,x] \subset \Omega,\ \forall x \in \Omega$. On montre $\nabla f(x) = F(x)\ \forall x \in \Omega$
+\uline{Rappel :} $f(y) - f(x) = \nabla f(x)(y-x) + o(||x-y||)$\\
+\\
+$f(y) - f(x) = \int_{[x_0,y]} F \deriv{l} - \int_{[x_0,x]} F \deriv{l}$. on a 
+\[\int_{[x_0,x]} F \deriv{l} + \int_{[x,y]} F \deriv{l} + \int_{[y,x_0]} F \deriv{l} = 0\]
+Donc 
+\[f(y) - f(x) = \int_{[x_0,y]} + \int_{[x,y]} + \int_{[y,x_0]} = \int_{[x,y]} F \vec{\deriv{l}}\] (le premier et troisième s'annulent)
+\[[x,y] = \{\underbrace{x+t(y-x)}_{\gamma(t)} : t \in [0,1]\}\]
+\[= \int_0^1 F(\gamma(t)).\gamma'(t) \deriv{t} = \int_0^1 F(\gamma(t)).(y-x) \deriv{t} \sim \int_0^1 F(x).(y-x) \deriv{t} = F(x).(y-x)\]
+
+\evid{Exemple :} \[F(x,y) =(4x^3y^2, 2x^4y + y)\] Montrer que F dérive d'un potentiel de $R^2$. \\
+\uline{Solution :} On cherche $f: \nabla f = F (\R^2)$
+\[\left\{\begin{array}{rcl}
+	\frac{\partial f}{\partial x} & = 4 x^3 y^2 & f(x,y) = x^4 y^2 + g(y)\\
+	\frac{\partial f}{\partial y} & = 2x^4 y + y
+\end{array}\right. \to \frac{\partial f}{\partial y} = 2x^4 y + g'(y) = 2x^4 y + y\]
+Donc \[g'(y) = y \to g(y) \frac{1}{2}y^2 + C \to f(x,y) = x^4 y^2 + \frac{1}{2}y^2 + C\]
+\uline{Autre solution/manière de procéder}
+\[f(x,y) = \int_{[0,(x,y)]} F \deriv{l},\quad \left\{\begin{array}{l}
+\gamma(t) = (tx,ty) \\
+t \in [0,1]
+\end{array}\right.\]
+Avec ça, on trouve :
+\begin{align*}f(x,y) = \int_0^1 F(tx,ty).(x,y) \deriv{t} = \int_0^1 (4t^3 x^3 t^2 y^2, 2t^4 x^4 ty + ty).(x,y) \deriv{t}\\
+ = \int_0^1 (4t^5x^4y^2 + 2t^5x^4y^2 + ty^2) = \int_0^1 (6t^5x^4y^2 + ty^2) \deriv{t} = x^4y^2 + \frac{1}{2}y^2
+\end{align*}
+ 
+\evid{Exemple 2} 
+\[F = (2x\sin(z), ze^y, x^2\cos(z) + e^y)\]
+Quel est le potentiel de F ? \\
+\uline{Solution :} On cherche $f : \nabla f = F$
+\begin{align*}
+	\left\{\begin{array}{l}
+		\frac{\partial f}{\partial x} = 2x\sin(z) to f(x,y,z) = x^2\sin(z) + f(y,z)\\
+		\frac{\partial f}{\partial y} = ze^y = \frac{\partial f_1}{\partial y}(y,z) \to f(y,z) = ze^y + f_2(z)\\
+		\frac{\partial f}{\partial z} = x^2\cos(z) + e^y = e^y + f_2'(z) + x^2\cos(z)
+	\end{array}\right.\\
+	\to f(x,y,z) = x^2 \sin(z) + ze^y + C
+\end{align*}
+\evid{Exemple 3} 
+\[F = \(\frac{-y}{x^2 + y^2},\frac{x}{x^2 + y^2}\)\] F est définit sur $R^2 \setminus \{(0,0)\}$
+{trou démonstrations}
+
+\section[Théorème de Green]{Chapitre 4 : Théorème de Green}
+\begin{boite}
+	\evid{Définition :}  On dit que $\Omega \subset \R^2$ est un domaine régulier s'il existe $\Omega_0,\Omega_1,...,\Omega_m \subset \R^2$ des ouverts bornés tels que :
+	\begin{align*}
+		\Omega = \Omega_0 \setminus \{\bigcup_{i=1}^m \Omega_i \}\\
+		\overline{\Omega_i} \subset \Omega_0 ,\quad \forall 1 \leq i \leq m\\
+		\Omega_i \cap \Omega_j = \emptyset \quad \forall i \neq j, \ 1 \leq i,j \leq m\\
+		\partial \Omega_i = \Gamma_i,\quad i = 0,1,...,m
+	\end{align*}
+	où les $\Gamma_i$ sont des courbes simples fermées régulières par morceaux.
+	
+	On dit que $\partial \Omega = \Gamma_0 \cup ... \cup \Gamma_m$ est orienté positivement si le sens de parcours de $\Gamma_i$ ($0\leq i \leq m$) laisse le domaine $\Omega$ à gauche.
+\end{boite}
+$\gamma_i$ est une paramétrisation de $\Gamma_i\ (0\leq i \leq m)$. Soit alors $(\gamma_{i1},\gamma_{i2})$ la paramétrisation, alors $\(\gamma_{i1}'(t),\gamma_{i2}'(t)\)$ est le vecteur tangent. Cela nous permet de définir 
+\[\nu = \(\gamma_{i2}'(t),\ - \gamma_{i1}'(t)\)\]
+Comme le \textit{vecteur normal}. Le sens est positif si $\nu$ dirige vers l'extérieur.
+
+\evid{Exemple} Le disque unité (ouvert) \[\Omega = \{(x_1,x_2) \in \R^2 : x_1^2 + x_2^2 < 1\}\] un domaine régulier dans $\R^2$.\\
+\uline{Vérification :} 
+\begin{align*}
+	\Omega_0 = \Omega,\ m=0\\
+	\Gamma_0 = \partial \Omega_0 = \{(\cos(\theta),\sin(\theta)),\ 0 \leq \theta \leq 2\pi\}\\
+	\gamma( \theta) = \big(\cos(\theta),\sin(\theta)\big)\\
+	\gamma'(\theta) = \big(-\sin(\theta),\cos(\theta)\big) \neq (0,0)
+\end{align*}
+Donc $\Omega$ a un sens positif.
+
+\begin{boite}
+	\evid{Théorème :} Théorème de Green.\\
+	Soit $\Omega \subset \R^2$ un domaine régulier, dont le bord $\partial \Omega$ est orienté positivement. Soit 
+	\[F = F(x_1,x_2) = (F_1(x_1,x_2),F_2(x_1,x_2))\]
+	avec $F \in C^1 (\overline{\Omega};\R^2)$. Alors 
+	\[\iint_\Omega \rot F(x_1,x_2) \deriv{x_1}\deriv{x_2} = \iint_\Omega \(\frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2} \deriv{x_1}\deriv{x_2}\) = \int_{\partial \Omega} F \cdot dl\]
+\end{boite}
+
+\evid{Rappel :} \[\int_\Gamma \vec{F} \vec{dl} = \int_a^b F(\gamma(t)) \cdot \gamma'(t) \deriv{t}\]
+et 
+\[\rot F = \(\frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\)\]
+
+\evid{Exemple} $\Omega = \{(x,y) \in\R^2 : x^2 + y^2 < 1\},\quad F(x,y) = (y^2,x)$. Vérifier le théorème de Green.\\
+\uline{Vérification} \begin{align*}
+\rot F = \(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y}\) = 1-2y\\
+\iint_\Omega \rot F = \int_0^1 \int_0^{2\pi} (1-2r\sin\theta) r \deriv{\theta}\deriv{r}\\
+= \int_0^1 \(2\pi + 2r\cos\theta \Big|_0^{2\pi}\) r\deriv{r}\\
+= \int_0^1 2\pi r \deriv{r} = \pi
+\end{align*}
+Nous pouvons aussi dire que 
+\begin{align*}
+	\int_{\partial \Omega} \vec{F} \cdot \vec{dl} = \int_0^{2\pi} F(\gamma(\theta)) \cdot \gamma'(\theta) \deriv{\theta}\\
+	= \int_0^{2\pi} (\sin^2 \theta, \cos\theta) \cdot (-\sin\theta, \cos\theta) \deriv{\theta}\\
+	= \int_0^{2\pi} (-\sin^2 \theta + \cos^2 \theta) \deriv{\theta}\\
+	=- \underbrace{\int_0^{2\pi} \sin^3 \theta \deriv{\theta}}_{=0} + \underbrace{\int_0^{2\pi} \frac{1 + \cos(2\theta)}{2} \deriv{\theta}}_\pi
+\end{align*}
+
+\begin{boite}
+	\evid{Théorème} Théorème de la divergence.\\
+	Soient $\Omega,\partial \Omega$ et F comme dans le théorème de Green. Soit $\nu$ un chamnps de normales extérieurs unité à $\partial \Omega$. Alors 
+	\[\iint_\Omega \dive F(x_1,x_2) \deriv{x_1}\deriv{x_2} = \iint \(\frac{\partial F_1}{\partial x_1} + \frac{\partial F_2}{\partial x_2}\) \deriv{x_1}\deriv{x_2} = \int_{\partial \Omega} (F\cdot \nu) \deriv{l}\]
+\end{boite}
+\evid{Rappel :} \[\int_\Gamma f \deriv{l} = \int_a^b f(\gamma(t)) ||\gamma'(t)|| \deriv{t}\]\\
+\evid{Proposition :}Soient $\Omega$ un domaine régulier sur $\R^2$, $\partial \Omega$ orienté positivement et $u \in C^1 (\overline{\Omega};\R)$. Alors 
+\[\iint_\Omega \frac{\partial u}{\partial x_1} = \int_{\partial \Omega} u \cdot \nu_i \deriv{l},\quad i=1,2\]
+
+On va montrer que Théorème de Green $\iff$ Théorème de la divergence $\iff$ Proposition
+\uline{Vérification :} $TG \to Prop$. On veut vérifier que $\iint_\Omega \frac{\partial u}{\partial x_1} = \int_{\partial \Omega} u \cdot \nu_1 \deriv{l}$.\\
+Soit $F = (0,u)$. Par TG :
+\begin{align*}
+	\iint_\Omega \rot F = \int_{\partial \Omega} \vec{F}\vec{dl}\\
+	\iff \iint_\Omega \frac{\partial u}{\partial x_1} = \int_a^b F(\gamma(t)) \gamma'(t) \deriv{t}\\
+	= \int_a^b u(\gamma(t)) \cdot \gamma_2'(t) \deriv{t}(1)
+\end{align*}
+on a 
+\begin{align*}
+	\int_{\partial\Omega} u \nu_1 \deriv{l} = \int_a^b u(\gamma(t)) \cdot \gamma_2'(t) \deriv{t}(2)\\
+	\big(\nu(\gamma(t)) = (\gamma_2'(t) - \gamma_1'(t))\big)\\
+	(1) + (2) \to \iint_\Omega \frac{\partial u}{\partial x_i} = \int_{\partial\Omega} u \cdot \nu_1 \deriv{l}
+\end{align*}
+(plein de calculs à la suite pour la preuve...)
+
+\evid{Preuve du théorème de Green}\\
+\uline{Étape 1} Soit $(x_1,x_2)$ tels que $a \leq x_1 \leq b$ et $f(x_1) \leq x_2 \leq g(x_1)$. Posons aussi que
+\[\underbrace{\iint_\Omega \frac{\partial u}{\partial x_2}}_{\circled{1}} = \underbrace{\int_{\partial \Omega} u \cdot \nu_2}_{\circled{2}}\]
+Analyse de \circled{1} : 
+\begin{align*}
+	\iint_\Omega \frac{\partial u}{\partial x_2} = \int_a^b \(\int_{f(x_1)}^{g(x_1)} \frac{\partial u}{\partial x_2}(x_1,x_2) \deriv{x_2}\)\deriv{x_1}\\
+	= \int_a^b \left[ u(x_1,g(x_1)) - u(x_1,f(x_1))\right] \deriv{x_1}\\
+	= \int_a^b u(x_1,g(x_1)) - \int_a^b u(x_1,f(x_1)) \deriv{x_1}
+\end{align*}
+Analyse de \circled{2} :
+\[\int_{\partial \Omega} u \cdot \nu_2 = \(\int_{\Gamma_1} + \int_{\Gamma_2} + \int_{\Gamma_3} + \int_{\Gamma_4}\) u \cdot \nu_2\]
+Note que 
+\begin{align*}
+	\nu_2 = 0 \text{ sur } \Gamma_1 \cup \Gamma_3\\
+	\int_{\Gamma_2} u \cdot \nu_2 = -\int_a^b u (x_1,f(x_1)) \deriv{x_1}\\
+	\gamma(x_1) = (x_1,f(x_1)) : a \leq x_1 \leq b\\
+	\gamma'(x_1) = (1,f'(x_1)) : \nu(\gamma(x_1)) = (f'(x_1),-1)\\
+	\int_{\Gamma_4} u\cdot\nu_2 = +\int_a^b u(x_1,g(x_1))\\
+	\gamma(x_1) = (x_1,g(x_1)) (neg)
+\end{align*}
+Etape 2-5 : David, c'était du mind-fuck	
+
+\section{Intégrales de surfaces}
+\subsection{Rappels sur le chapitre 4}
+$\Omega$ est un domaine régulier si les dérivées des sous domaines ($\partial \Omega_i$) sont des courbes simples, régulières et fermées.
+
+\evid{Théorème de Green :} 
+\[\iint_\Omega \rot F = \int_{\partial\Omega} \vec{F}\cdot \vec{\deriv{l}}\]
+(avec $\partial \Omega$ orienté positivement)
+
+\evid{Théorème de la divergence}
+\[\iint_\Omega \dive F = \int_{\partial\Omega} F \cdot \nu \deriv{l}\]
+
+\evid{Prop :} 
+\[\iint_\Omega \frac{\partial u}{\partial x_i} = \int_{\partial\Omega} u \cdot \nu_i \deriv{l}\]
+
+\subsection{Rappels sur le chapitre 3}
+\begin{enumerate}
+	\item 	Si F dérive d'un potentiel, alors $\rot F = 0$
+	\item 	$\Omega$ ouvert : Si F dérive d'un potentiel $\iff$ $\int_\Gamma \vec{F}\cdot \vec{\deriv{l}} \quad \forall \Gamma$ fermés, simples, réguliers.
+\end{enumerate}
+\evid{Corollaire :} $\Omega$ convexe (donc $\Omega$ n'a pas de trou) alors on a la réciproque : Si $\rot F = 0$ alors F dérive d'un potentiel.
+
+\uline{Preuve :} on va vérifier
+\[\int_\Gamma \vec{F}\cdot\vec{\deriv{l}} = 0 \quad \forall \Gamma \text{ courbe simple, fermée, régulière}\]
+On a, pas le théorème de Green 
+\[\int_\Gamma \vec{F} \cdot \vec{\deriv{l}} = \iint_D \rot F = 0\]
+
+\subsection{Intégrales de surfaces}
+\begin{boite}
+	\evid{Définition} $\Sigma \subset \R^3$ est une surface régulière s'il existe 
+	\begin{enumerate}
+		\item 	$A \subset \R^3$, ouverte bornée t.q. $\partial A$ est une courbe simple fermée régulière
+		\item 	Une paramétrisation $\sigma : \overline{A} \to \Sigma = \sigma(A)$ injective, $\sigma \in C^1(\overline{A},\R^3)$, avec $\sigma(u,v) = \Big(\sigma_1(u,v),\sigma_2(u,v),\sigma_3(u,v)\Big)$ telle que le vecteur normal satisfasse $\sigma_u \wedge \sigma_v \neq 0$
+	\end{enumerate}
+	\evid{Notations :} \[\frac{\sigma_u \wedge \sigma_v}{||\sigma_u \wedge \sigma_v||} \text{: Le vecteur normal unité}\]
+	et
+	\[\sigma(\partial A) =  \partial\Sigma \text{: La frontière de } \Sigma\]
+\end{boite}
+
+\evid{Exemple Sphère} $\Sigma = \{(x,y,z) \in \R^3 : x^2 + y^2 + z^2 = 1\}$. Alors $(x,y,z) "=" (\sin(\varphi)\cos(\theta), \sin(\varphi)\sin(\theta), \cos(\theta))$. Nous pouvons placer \[\sigma : (0,2\pi) \wedge (0,2\pi) \to  \Sigma,\quad (\theta,\varphi) \to \sigma(\theta, \varphi)\]
+\begin{enumerate}
+	\item 	$A = (0,2\pi) \times (0,\pi)$ (dessin rectangle, selon la taille mentionnée). A est ouvert et borné, $\partial A$ est 
+	\item 	$\sigma(\overline{A}) = \Sigma$. On peut vérifier $\sigma$ injective. De plus, $\sigma_\theta \wedge \sigma_\varphi \neq 0 \forall(\theta, \varphi) \in A$. Vérification : \[\sigma_\theta = (-\sin(\varphi)\sin(\theta), \sin(\varphi)\cos(\theta), 0)\text{ et }\sigma_\varphi= (\cos(\varphi)\cos(\theta), \cos(\varphi)\sin(\theta), -\sin(\theta))\]. Leur produit vectoriel vaut $-\sin(\varphi)\cos(\theta)$
+			De plus :
+			\begin{align*}
+				(\sigma_\theta \wedge \sigma_\varphi)_1 = -\sin^2\varphi\cos\theta\\
+				(\sigma_\theta \wedge \sigma_\varphi)_2 = -\sin^2\varphi\sin\theta\\
+				(\sigma_\theta \wedge \sigma_\varphi) = \sin\varphi(\sin\varphi\cos\theta, \sin\varphi\sin\theta,\cos\theta)\\
+				||\sigma_\theta \wedge \sigma_\varphi|| = |\sin \varphi|| \neq 0,\quad \varphi \in (0,\pi)
+			\end{align*}
+\end{enumerate}
+\begin{boite}
+	\evid{Définition} $\Sigma$ surface régulière par morceaux si (intuitivement) elle est union-finie de surface régulière "disjointes"
+\end{boite}
+\evid{Exemple} \[\Sigma =  \{(x,y,z) : x^2 + y^2 \leq 1,\ 0\leq z \leq h\}\]
+On peut ainsi placer :
+\[\sigma : \overbrace{[0,2\pi], \times [0,h]}^A \to \R^3,\quad (\theta, z) \to (\cos(\theta),\sin(\theta),z)\]
+de plus : \[\left\{\begin{array}{l}
+\sigma(\overline{A}) = \Sigma\\
+\sigma : \text{ injective } A\\
+\sigma_\theta \wedge \sigma_z \neq (0,0,0) \in \R^3
+\end{array}\right.\]
+et finalement 
+\begin{align*}
+	\sigma_\theta = (-\sin\theta, \cos\theta, 0)\\
+	\sigma_z = (0,0,1)\\
+	\sigma_\theta \sigma_z = (\cos\theta, \sin\theta, 0)\\
+	||\sigma_\theta \sigma_z|| = 1 \neq 0
+\end{align*}
+
+\begin{boite}
+	\evid{Définition} Soit $\Sigma$ une surface régulière. On définit 
+	\[\iint_\Sigma f \deriv{s} := \int_A f(u,v)|\sigma_u \wedge \sigma_v| \deriv{u}\deriv{v}\]
+	avec $\sigma: A \to \Sigma$ une paramétrisation. Si $\Sigma$ est régulière par morceaux\footnote{$\Sigma = \bigcup \Sigma_i : \Sigma_1$ disjointes} alors 
+	\[\iint_\Sigma f \deriv{s} = \sum_i \iint_\Sigma f \deriv{s} : \sum_i \iint ?????\]
+\end{boite}
+
+\evid{Exemple} \[\Sigma = \{(x,y,z) : x^2 + y^2 + z^2 = r^2\}\]
+calculer $\int_\Sigma 1 =$ aire($\Sigma$). On définit $\sigma(\theta, \varphi) = R(\sin\varphi\cos\theta, \sin\varphi\sin\theta, \cos\theta)$ et $A = (0,2\pi) \times (0,\pi)$. Ainsi :
+\begin{align*}
+	\sigma_\theta = RI_1\\
+	\sigma_\varphi = RI_2\\
+	\sigma_\theta \wedge \sigma_\varphi = RI_1 \times RI_2 = R^2\ I_1\wedge I_2\\
+	|\sigma_theta \times \sigma_\varphi|  R^2|I_1 \wedge I_2| = R^2 \sin\varphi
+\end{align*}
+On calcule ensuite l'intégrale :
+\begin{align*}
+	\iint_\Sigma \deriv{s} = \iint_{[0,2\pi] \times [0,\pi]} 1 \cdot R^2 \sin\varphi \deriv{\theta}\deriv{\varphi}\\
+	 = \int_0^\pi 2\pi R^2 \sin\varphi \deriv{\varphi}\\
+	= -2\pi R^2 \cos\varphi \Big|_0^\pi\\
+	= 4\pi R^2
+\end{align*}
+\evid{Exemple 5.4 :} voir le livre
+
+\begin{boite}
+	\evid{Définition} $\Sigma$ régulière par morceaux, et $F = \Sigma \to \R^3$. On définit 
+	\[\iint_\Sigma \vec{F} \cdot  \vec{\deriv{s}} = \iint_A \vec{F(\sigma(u,v))(\sigma_u\wedge \sigma_v) \deriv{u}\deriv{v}}\]
+	($\sigma$ une paramétrisation). On a alors 
+	\[\iint_\Sigma \vec{F}\cdot \vec{\deriv{s}} = iint_\Sigma (\vec{F}\cdot\vec{\nu})[\sigma_(u,v)] \deriv{u}\deriv{v}\]
+	où $\nu(u,v) = \frac{\sigma_u \wedge\sigma_v}{||\sigma_u \wedge\sigma_v||}(u,v)$
+\end{boite}
+
+\section{Théorème de la divergence}
+\subsection{Rappel}
+Surface régulière $S_i$, $S = \sigma(A)$ avec $A$ un domaine régulier dans $\R^2$ et $\sigma$ une fonction injective, $\sigma = \sigma(u,v)$ et $\sigma_u \wedge \sigma_v \neq 0$.
+\begin{boite}
+	\evid{Définition 1 :} Soit $S$ une surface régulière, et soit $f: S \to \R$ une fonction continue. Alors 
+	\begin{equation}
+		\iint_S f = \iint_A f(\sigma(u,v)) |\sigma_u \wedge \sigma_v| \deriv{u}\deriv{v}
+	\end{equation}
+	\evid{Définition 2 :} Soit $S$ une surface régulière, et $F : S \to \R^3$. Alors 
+	\begin{equation}
+		\iint_S F \cdot \deriv{s} = \iint_A F(\sigma(u,v))(\sigma_u \wedge \sigma_v) \deriv{u}\deriv{v} = \iint_S (F\cdot \nu) \deriv{s}
+	\end{equation}
+	avec $\nu$ le \textbf{normal} de S.
+\end{boite}
+
+\subsection{Théorème de la divergence}
+\begin{boite}
+	\evid{Définition :} Soit $\Omega \subset \R^3$ un domaine ouvert et régulier. S'il existe $\Omega_0,...,\Omega_m$ des domaines bornée de $\R^3$ t.q. 
+	\setstretch{1}
+	\begin{enumerate}[label=\roman*)]
+		\item 	$\Omega = \Omega_0 \setminus (\bigcup_{i=1}^m \Omega_i)$
+		\item 	$\overline{\Omega_i} \subset \Omega_0$ pour $1 \leq i \leq m$
+		\item 	$\Omega_i \cap \Omega_j \neq\emptyset$ si $i \neq j$ et $1\leq i,j \leq m$
+		\item 	$\partial \Omega_i = \Sigma_i$ pour $i = 0,1,...,m$ sont des surfaces régulières par morceaux, orientables et telles que $\partial\Sigma_i \neq \emptyset$
+		\item 	Il existe un champ (continu par morceaux) de normales extérieures $\nu$ à $\Omega$
+	\end{enumerate}
+	\setstretch{1.2}
+\end{boite}
+\evid{Remarque :} Un domaine $\Omega$ est régulier si $\forall x_0 \in \partial \Omega$, autour de $x_0$, on peut considérer $\Omega$ comme demi l'espace
+
+\begin{boite}
+	\evid{Théorème :} (de la divergence). Soit $\Omega$ un domaine régulier, soit $F = \overline{\Omega} \to \R^3$ de classe $C^1$ et soit $\nu$ la normale extérieur unité à $\Omega$. Alors 
+	\begin{equation}
+		\iint_\Omega \dive F = \iint_{\partial\Omega} (F \cdot \nu) \deriv{s}
+	\end{equation}
+\end{boite}
+\subsection{Exemples}
+\evid{6.4} Soit $\Omega = \{ (x,y,z) \in \R^3: x^2 + y^2 + z^2 < 1\}$, et soit $F(x,y,z) = (xy,y,z)$. On veut vérifier le théorème de la divergence. 
+\[\dive F = y + 2\]
+En passant en coordonnées sphériques ($x = r\cos\theta \sin \varphi,\ y = r \sin\theta\sin\varphi,\ z = r \cos\varphi$) on trouve :
+\begin{align*}
+	\iiint_\Omega (y+2) \deriv{x}\deriv{y}yderiv{z} = \int_0^1 \int_0^{2\pi} \int_0^{\pi} \big(r\sin\theta\sin\varphi + 2\big)r^2 \sin\varphi \deriv{\varphi}\deriv{\theta}\deriv{r}\\
+	= \int_0^1 r^3 \deriv{r} \int_0^{2\pi} \sin\theta \deriv{\theta} \int_0^\pi \sin^2\varphi \deriv{\varphi} + 2 \int_0^1 r^2 \deriv{r} \int_0^{2\pi} 1 \deriv{\theta} \int_0^\pi \sin\varphi \deriv{\varphi}\\
+	= \frac{1}{4}0 \int_0^\pi \sin^2 \varphi \deriv{\varphi} + 2 \frac{1}{3}2\pi(-\cos\varphi)\Big|_0^\varphi\\
+	= \frac{8\pi}{3}
+\end{align*}
+Faisons maintenant le calcul de $\iint_{\partial\Omega} (F\cdot \nu) \deriv{s}$. Une paramétrisation de la surface est donnée par 
+\[\partial\Omega = \Sigma = \{(\sigma(\theta,\varphi) = (\cos\theta\sin\varphi, \sin\theta\sin\varphi,\cos\varphi),\ (\theta,\varphi) \in A\}\] avec \[A = [0,2\pi] \times [0,\pi]\]
+Nous calculons immédiatement :
+\begin{align*}
+	\sigma_\theta = \frac{\partial \sigma}{\partial \theta} = (-\sin\theta\sin\varphi, \cos\theta,\sin\varphi, 0)\\
+	\sigma_\varphi = \frac{\partial \sigma}{\partial \varphi} = (\cos\theta \cos\varphi, \sin\theta\cos\varphi, -\sin\varphi)
+\end{align*}
+Depuis là, il devient facile de calculer le produit vectoriel par un calcul direct :
+\begin{align*}
+	\sigma_\theta \wedge \sigma_\varphi = \Bigg(\cos\theta\sin\varphi(-\sin\varphi),\\ 0\cos\theta\cos\varphi - \sin\theta\sin^2 \varphi,\\ -\sin^2\theta \sin\varphi \cos\varphi - \cos^2\theta\sin\varphi\cos\varphi\Bigg)\\
+	= \Big(-\cos\theta\sin^2\varphi,\ - \sin\theta\sin^2 \varphi,\ -\sin\varphi\cos\varphi \Big)\\
+	= -\sin\varphi(\cos\theta\sin\varphi,\ \sin\theta,\sin\varphi,\cos\varphi)
+\end{align*}
+Notons maintenant que $\nu(x,y,z) (\in \Omega) = (x,y,z)$.\\
+Nous pouvons ainsi calculer 
+\begin{align*}
+(F\cdot \nu)[\sigma(\theta,\varphi)] = (xy \cdot x + y\cdot y + z\cdot z) (\sigma(\theta,\varphi)))\\
+= (x^2y + 1 - x^2) [\sigma(\theta,\varphi)]\\
+= \cos^2\theta\sin^2\varphi\sin\theta\sin\varphi + 1 - \cos^2\theta\sin^2 \varphi
+\end{align*}
+Calculons maintenant :
+\begin{align*}
+	|\sigma_\theta \wedge \sigma_\varphi| = |\sin\varphi|\sqrt{\cos^2\theta\sin^2\varphi + \sin^2\theta\sin^2\varphi + \cos^2}\\
+	= \sin\varphi
+\end{align*}
+et finalement :
+\begin{align*}
+	\iint_{\partial\Omega} (F\cdot\nu) \deriv{s} = \int_0^{2\pi}\int_0^\pi \sin\varphi\Big(\cos^2 \theta \sin\theta \sin^3\varphi - \cos^2\theta \sin^2\varphi + 1\Big) \deriv{\varphi}\deriv{\theta}\\
+	= \underbrace{\int_0^{2\pi} \cos^2\theta\sin\theta \int_0^\pi \sin^4\varphi}_{I_1} - \underbrace{\int_0^{2\pi} \cos^2\theta \int_0^\pi \sin^3\varphi}_{I_2} + \underbrace{\int_0^{2\pi} 1 \int_0^\pi \sin\varphi}_{I_3}\\
+	I_1 = \underbrace{\int_0^{2\pi} \cos^2\theta \sin\theta}_0\text{\footnote{Par un calcul assez compliqué}} \int_0^\pi \int_0^\pi \sin^4\varphi = 0\\
+	I_2 = -\int_0^{2\pi} \cos^2\theta \int_0^\pi \sin^3 \varphi = -\int_0^{2\pi} \frac{1+\cos(2\theta)}{2} \deriv{\theta} \cdot \Big[-\cos\varphi + \frac{\cos^3 \varphi}{3}\Big]_0^\pi\\
+	= -(\pi + 0) \cdot \(\Big[+1 - \frac{1}{3}\Big] - \Big[-1 + \frac{1}{3}\Big]\) = -\frac{4\pi}{3} \\
+	I_3 = \int_0^{2\pi} 1 \int_0^\pi \sin\varphi = 2\pi [-\cos\varphi]]_0^\pi = 2\pi \cdot 2 = 4\pi\\
+	\iint_{\partial\Omega} (F\cdot\nu) \deriv{s} = I_1 + I_2 + I_3 = 0 - \frac{4\pi}{3} + 4\pi = \frac{8\pi}{3} = \iiint_\Omega\dive F
+\end{align*}
+
+\section{Théorème de Strokes}
+\begin{boite}
+Soit $\Sigma \subset \R^3$ une surface régulière par morceaux et orientable. Soit $F: \Sigma \to \R^3,\ F = (F_1,F_2,F_3)$, où les $F_i$ sont $C^{1}$ sur un ouvert contenant $\Sigma \cup \partial \Sigma$. Alors 
+\[\iint_\Sigma (\rot \vec{F} \cdot \vec{\nu}) \cdot \deriv{s} = \int_{\partial\Sigma} F \cdot \deriv{l}\]
+\end{boite}
+Deux choses importantes à choisir : la direction de la courbe et de $\vec{\nu}$. 
+
+\evid{Condition de compatibilité :} la règle de la main droite.
+
+\evid{Rappel :} 
+\begin{align*}
+	\rot F = \nabla \times F = \begin{pmatrix}
+		\frac{\partial}{\partial x_1} & \frac{\partial}{\partial x_2} \frac{\partial}{\partial x_3}\\
+		F_1 & F_2 & F_3
+	\end{pmatrix} = \(\frac{\partial F_3}{\partial x_2} - \frac{\partial F_2}{\partial x_3}\ ;\ \frac{\partial F_1}{\partial x_3} - \frac{\partial F_3}{\partial x_1}\ ;\ \frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\)
+\end{align*}
+
+\begin{boite}
+	\evid{Théorème de Strokes - dim. 2}
+	Pour un ensemble A et son bord $\partial A$. Soit aussi $F = (F_1,F_2) : \overline{A} \to \R^2$. Donc $\rot F = \frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}$. Alors :
+	\[\iint_A \rot F \deriv{s} = \int_{\partial A} \vec{F} \cdot \vec{\deriv{l}}\]
+\end{boite}
+\evid{Rappel, d=2} \uline{Strokes} Théorème de la divergence. Prop : $\iint_A \frac{\partial u}{\partial x_i} = \int_{\partial A} u \cdot \nu_i$ 
+
+\subsection{Exemples}
+\subsubsection{Sphère}
+\[\Sigma = \{(x,y,z) \in \R^3 : x^2 + y^2 + z^2 = 1\},\ \partial \Sigma = \emptyset,\ F : \Sigma \to \R^3\]
+Alors, par Strokes dans 3 dimension nous trouvons 
+\[\iint_\Sigma (\rot F \cdot \nu) = 0\]
+
+\subsubsection{Demi-Sphère}
+\[\Sigma = \{(x,y,z) : x^2 + y^2 + z^2 = 1,\ z \geq 0\} \to \partial \Sigma = \{(x,y,z) : z=0, x^2 + y^2 = 1\}\]
+
+\subsubsection{Cylindre}
+\[\Sigma = \{(x,y,z) : x^2 + y^2 = 1,\ 0 \leq z \leq 1\}\]
+Nous séparons notre bord en deux parties : $\Gamma_0$ qui est le pieds du cylindre, et $\Gamma_1$ qui est la tête. Alors 
+\[\partial\Sigma = \Gamma_0 \cup \Gamma_1 = \{(x,y,z) : x^2 + y^2 = 1, z=0\} \cup \{(x,y,z) : x^2 + y^2 = 1, z=1\}\]
+
+\subsubsection{Un truc}
+\[F(x,y,z) = (z,x,y),\ \Sigma = \{(x,y,z) : x^2 + y^2 + z^2 = 1,\ z \geq 0\}\]
+Une demi sphère. Il est facile de calculer 
+\[\rot F = \begin{pmatrix}
+	\partial_x & \partial_y & \partial_z\\
+	z & x & y
+\end{pmatrix} = (1,1,1)\]
+De même que :
+\begin{align*}
+	\gamma : [0,2\pi] \to \R^3,\ \theta \to (\cos\theta,\sin\theta,0)\\
+	\int_{\partial \Sigma} \vec{F} \vec{\deriv{l}} = \int_0^{2\pi} F(\gamma(\theta)) \gamma'(\theta) \deriv{\theta} = \int_0^{2\pi} (0, \cos\theta, \sin\theta)(-\sin\theta, \cos\theta, 0) \deriv{\theta}\\
+	= \int_0^{2\pi} \cos^2\theta \deriv{\theta} = \int_0^{2\pi} \frac{1+\cos(2\theta)}{2} \deriv{\theta} = \pi
+\end{align*}
+
+Calcul de l'autre côté de l'égalité :
+\begin{align*}
+	\nu(x,y,z) = (x,y,z),\ (x,y,z) \in \Sigma\\
+	\sigma: [0,2\pi] \times [0,\frac{\pi}{2}] \to \R^3,\ (\theta, \varphi) \to (\cos\theta\sin\varphi,\ \sin\theta\sin\varphi,\ \cos\varphi)\\
+	\rightarrow(\rot F \cdot \nu)(\sigma(\theta,\varphi) = (1,1,1) (\cos\theta\sin\varphi,\ \sin\theta\sin\varphi,\ \cos\varphi) \\
+	=  (\cos\theta\sin\varphi + \sin\theta\sin\varphi + \cos\varphi)\\
+	\to  \iint_\Sigma (\rot F \nu)(\sigma(\theta,\varphi) = \int_0^{2\pi}\int_0^{\frac{\pi}{2}} (\rot F \nu)(\sigma(\theta,\varphi) |\sigma_\theta \wedge \sigma_\varphi) \deriv{\theta}\deriv{\varphi}\\
+	 \sigma_\theta = (-\sin\theta\sin\varphi,\ \cos\theta\sin\varphi,\ 0)\\
+	 \sigma_\varphi = (-\cos\theta\cos\varphi,\ \sin\theta\cos\varphi,\ -\sin\varphi)\\
+	 \to (\sigma_\theta \wedge \sigma_\varphi) = (-\cos\theta\sin^2\varphi,\ -\sin\theta\sin^2\varphi,\ -\sin\varphi\cos\varphi)\\
+	 = -\sin\varphi(\cos\theta\sin\varphi,\ \sin\theta\sin\varphi,\ \cos\varphi)\\
+	 \to |(\sigma_\theta \wedge \sigma_\varphi)| = -\sin\varphi
+\end{align*}
+En appliquant dans l'intégrale, nous trouvons :
+\begin{align*}
+	\iint_\Sigma (\rot F \nu)\deriv{s} = \int_0^{2\pi}\int_0^{\frac{\pi}{2}} (\cos\theta\sin\varphi,\ \sin\theta\sin\varphi,\ \cos\varphi) \sin\varphi \deriv{\varphi}\deriv{\theta}\\
+	= \int_0^{2\pi}\int_0^{\frac{\pi}{2}} (\cos\theta\sin^2\varphi,\ \sin\theta\sin^2\varphi,\ \cos\varphi\sin\varphi)\\
+	= \underbrace{\int_0^{2\pi}\cos\theta}_0 \int_0^{\frac{\pi}{2}} \sin^2\theta + \underbrace{\int_0^{2\pi}\sin\theta}_0 \int_0^{\frac{\pi}{2}}\sin^2 \varphi + 2\pi \int_0^{\frac{\pi}{2}} \frac{\sin(2\varphi)}{2} \deriv{\varphi}\\
+	= 2\pi \frac{1}{4} \Big[-\cos(2\varphi)\Big]_0^{2\pi} = \pi
+\end{align*}
+
+\setcounter{section}{13}
+\section{Séries de Fourier}
+\setcounter{equation}{0}
+On dit que $f: \rtor$ est \textbf{régulière par morceaux} si elle est régulière par morceaux sur tout compact $[a,b]$ avec $-\infty < a < b< \infty$, c'est à dire :
+\begin{itemize}
+	\item 	$f$ est continue par morceaux sur $[a,b]$, ce qui veut dire qu'il existe 
+			\[a = a_0 < a_1 < ... < a_{n+1} = b\]
+			tels que, $\forall i = 0,1,...,n,\ f\big|_{(a_i,a_{i+1})}$ est continue et 
+			\[\llimite{x\to a_i}{x > a_i}{f(x)} = f(a_i + 0),\quad \llimite{x\to a_i}{x < a_i}{f(x)} = f(a_i - 0)\]
+			existent et sont finies
+	\item 	$f'$ existe et est continue par morceaux sur $(a_i, a_{i+1})$ et 
+			\[\llimite{x\to a_i}{x > a_i}{f'(x)} = f'(a_i + 0),\quad \llimite{x\to a_i}{x < a_i}{f'(x)} = f'(a_i - 0)\]
+			existent et sont finies
+\end{itemize}
+\begin{boite}
+	\evid{Définition} Soient $N \geq 1$ et $f: \rtor$ une fonction bornée T-périodique, $T>0$ (donc $f(x+T) = f(x) \forall x \in \R$) et intégrable sur $[0,T]$. Soient $n\in N$ et :
+	\begin{align*}
+		a_n = \frac{2}{T}\int_0^T f(x)\coss{\frac{2\pi n}{T}x}\deriv{x} \qquad n = 0,1,2,...\\
+		b_n = \frac{2}{T}\int_0^T f(x)\sinn{\frac{2\pi n}{T}x}\deriv{x} \qquad n = \uline{1},2,...\\
+	\end{align*}
+	\begin{enumerate}
+		\item 	On appelle \textbf{série de Fourier partielle d'ordre} $N$ de $f$ et on note 
+				\begin{equation}
+					F_N f(x) = \frac{a_0}{2} + \sum_{n=1}^N \left\{a_n \coss{\frac{2\pi n}{T}x} + b_n \sinn{\frac{2\pi n}{T}x}\right\}
+				\end{equation}
+		\item	On appelle \textbf{série de Fourier} de $f$ à la limite, quand elle existe, de $F_N f(x)$. On la note 
+				\begin{equation}
+					Ff(x) = \limite{N\to \infty} F_Nf(x) = \frac{a_0}{2} + \sum_{n=1}^\infty \left\{a_n \coss{\frac{2\pi n}{T}x} + b_n \sinn{\frac{2\pi n}{T}x}\right\}
+				\end{equation}
+	\end{enumerate}
+\end{boite}
+
+\evid{Exemple :}
+On choisit $T = 2\pi$ et $f(x) = \sin(x)$ :
+\begin{align*}
+	a_0 =  \frac{1}{\pi} \int_0^{2\pi} \sin(x) = 0\\
+	a_n = \frac{1}{\pi} \int_0^{2\pi} \sin(x) \cos(nx) \deriv{x} \quad n\geq 1\\
+	= \frac{1}{2\pi} \int_0^{2\pi} \left\{\sin(x(n+1)) + \sin[(1-n)x]\right\} \deriv{x}\\
+	=0
+\end{align*}
+Également
+\begin{align*}
+	b_1 = \frac{1}{\pi}\int_0^{2\pi} \sin x \sin x \deriv{x} = \frac{1}{\pi}\int_0^{2\pi} \frac{1-\cos(2x)}{2}\deriv{x} = 1\\
+	b_n = \frac{1}{\pi}\int_0^{2\pi} \sin x \sin(nx) \deriv{x} = -\frac{1}{2\pi}\int_0^{2\pi}\left\{\cos[(1+n)x] - \cos[(1-n)x]\right\}\deriv{x} = 0
+\end{align*}
+
+\evid{Observation :}
+\[f(x) = \sin x = \frac{a_0}{2} + \sum_{n=1}^{+\infty}\Big[a_n\cos(nx) + b_n\sin(nx)\Big]\]
+
+\evid{Ex. 1} $T = 2\pi,\ \sin(nx)\ (n\geq 1),\ a_k = 0\ \forall k \geq 0,\ b_k = \left\{\begin{array}{ll}
+0 & k\neq n\\
+1 & k=n
+\end{array}\right.$
+
+\evid{Ex. 2} $T = 2\pi,\ \cos(nx)\ (N\geq 1), a_k = \left\{\begin{array}{ll}
+0 & k\neq n\\
+1 & k=n
+\end{array}\right.,\ b_k = 0\ \forall k \geq 1$
+
+\evid{Ex. 3} $T = 2\pi, f=1,\ a_k = \left\{\begin{array}{ll}
+1 & k\geq 1\\
+2 & k=0
+\end{array}\right.,\ b_k = 0\ \forall k$
+
+\evid{Ex. 4} $T = 2\pi, f(x) = \cos(x) + \sin(2x),\ a_1 = 1,\ b_2 = 1,\ \left\{\begin{array}{ll}
+a_k = 0 & k \neq 1\\
+b_k = 0 & k \neq 2
+\end{array}\right.,\ f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \big[a_n\cos(nx) +b_n\sin(nx) \big]$
+
+\begin{boite}
+	\evid{Théorème :} Soit $f$ une fonction régulière par morceaux, T-périodique. Alors $F_Nf(x)$ converge si $f$ est continue en $x$
+\end{boite}
+\evid{Preuve :} $f$ régulière (de classe $C^2$). Nous avons 
+\begin{align*}
+	a_n = \frac{2}{T}\int_0^T f(x) \coss{\frac{n2\pi x}{T}} \deriv{x} = \frac{2}{T} \int_0^T f(x) \frac{T}{n2\pi}\deriv{}\sinn{\frac{n2\pi x}{T}} \\
+	=\frac{1}{n\pi} \int_0^T f(x) \deriv{}\sinn{\frac{n2\pi x}{T}} = \frac{1}{n\pi} \left[f(x) \sinn{\frac{n2\pi x}{T}}\right]_0^T - \frac{1}{n\pi}\int_0^T \sinn{\frac{2n\pi x}{T}}f'(x) \deriv{x}\\
+	= \frac{1}{n\pi} \int_0^T f'(x9 \frac{T}{n2\pi}\deriv{}\coss{\frac{2n\pi x}{T}} = \frac{T}{2(n\pi)^2}\int_0^T f'(x) \deriv{}\coss{\frac{2n\pi x}{T}} = \\
+	 \frac{T}{2(n\pi)^2}\left[ f'(x)\coss{\frac{2n\pi x}{T}}\right]_0^T - \frac{T}{2(n\pi)^2} \int_0^T \coss{\frac{2n\pi x}{T}} f''(x) \deriv{x}
+\end{align*}
+Donc 
+\[|a_n| \leq \frac{T}{2(n\pi)^2} \cdot \int_0^T |f''(x)|\]
+De plus, nous trouvons par la même méthode :
+\[|b_n| \leq  \frac{T}{2(n\pi)^2} \cdot \int_0^T |f''(x)|\]
+
+\begin{boite}
+	\evid{Théorème de Dirichlet} Soit $f: \rtor$ une fonction T-périodique, régulière par morceaux. Soient $a_n,b_n$ et $F_Nf$ comme dans la définition précédente. Alors la limite $Ff(x)$ existe pour tout $x\in \R$ et 
+	\[Ff(x) = \left\{\begin{array}{ll}
+		f(x) & f \text{ continue en } x  \\
+		\frac{f(x+0) + f(x-0)}{2} &\text{ sinon}
+	\end{array}\right.
+	\]
+avec $f(x+0) = \llimite{y\to x}{y > x}{f(y)}$ et $f(x-0) =\llimite{y \to x}{y < x}{f(y)}$
+\end{boite}
+\evid{Preuve :} long et inutile... en gros : $t = 2\pi,\ a_0 = \frac{1}{\pi} \int_0^{2\pi} f(x) \deriv{x} = \frac{1}{\pi} \int_0^{2\pi} = 1$ et $a_n = \frac{1}{\pi}\int_0^{2\pi} f(x)\cos(nx) \deriv{x} = ....... = 0$ et $b_n  =\frac{1}{\pi}\int_0^{2\pi} f(x) \sin(nx) \deriv{x} = ... = \left\{\begin{array}{ll}
+	-\frac{2}{n\pi} & n=2k+1\\
+	0 & n = 2k
+\end{array}\right.$
+
+\subsection{Rappels}
+Soit $f$ est une fonction régulière par morceaux, T-périodique. On définit 
+\begin{align*}
+	a_n =  \frac{2}{T}\int_0^T f(x) \coss{\frac{2n\pi x}{T}} \deriv{x}\\
+	b_n =  \frac{2}{T}\int_0^T f(x) \sinn{\frac{2n\pi x}{T}} \deriv{x}
+\end{align*}
+
+\begin{boite}
+	\evid{Théorème} Soit une fonction $f$ de classe $C^2$, T-périodique. Alors $F_nf(x)$ converge, avec 
+	\[F_N(x) = \frac{a_0}{2} + \sum_{n=1}^N\Big[a_n \coss{\frac{2n\pi x}{T}} + b_n \sinn{\frac{2n\pi x}{T}}\big]\]
+\end{boite}
+\evid{Idée :} $|a_n|,|b_n| \leq \frac{C}{n^2},\ \forall n \geq 1$
+
+\begin{boite}
+	\evid{Théorème} Soient les fonctions $f,g$ régulières, les deux T-périodiques.
+	\[\forall n \geq 0 \left\{\begin{array}{l}
+		a_n(f) = a_n(g)\\
+		b_n(f) = b_n(g)
+	\end{array}\right. \to f(x) = g(x)\] Si $f,g$ sont continues en x.
+\end{boite}
+
+\begin{boite}
+	\evid{Corollaire} Soit $f: C^2$. Alors 
+	\[f(x) = F_f(x)\]
+	où
+	\[F_f(x) = \lim{N\to +\infty} F_Nf(x) = \frac{a_0}{2} + \sum_{n=1}^N\Big[a_n \coss{\frac{2n\pi x}{T}} + b_n \sinn{\frac{2n\pi x}{T}}\big]\]
+\end{boite}
+
+\evid{Preuve :}
+\begin{align*}
+	a_n(F_f(x)) = a_n(f) *\\
+	b_n(F_f(x)) = b_n(f)
+\end{align*}
+vérifier pour * pour n=1
+\begin{align*}
+a_1(F_f) = \frac{2}{T} \int_0^T F_f(x) \coss{\frac{2n\pi x}{T}} \deriv{x} = \frac{2}{T} \int_0^T \lim{N\to\infty} F_Nf(x) \coss{\frac{2n\pi x}{T}} \deriv{x}
+\end{align*}
+Mais $N \geq 1$
+\[\frac{2}{T} \int_0^T F_Nf(x) \coss{\frac{2n\pi x}{T}} \deriv{x} = a_1\]
+Parce que 
+\begin{align*}
+	\frac{2}{T} \int_0^T \coss{\frac{m2n\pi x}{T}}\coss{\frac{2n\pi x}{T}} \deriv{x} = \left\{\begin{array}{ll}
+	1 & m=1\\
+	0 &  m = 0
+	\end{array}\right.\\
+	\frac{2}{T} \sinn{\frac{m2n\pi x}{T}}\coss{\frac{2n\pi x}{T}} \deriv{x} = 0 \quad \forall m \geq 1
+\end{align*}
+
+On a déjà annoncé :
+\begin{boite}
+	\evid{Théorème :} Soit $f$ régulière, T-périodique. Alors 
+	\[F_Nf(x) \to \left\{\begin{array}{ll}
+		f(x) & f \text{ continue en } x\\
+		\frac{f(x_+) + f(x_-)}{2} & f \text{ discontinue en }x
+	\end{array}\right.\]
+\end{boite}
+\evid{Notation complexe :} $f$ régulière par morceaux, T-périodique. Alors 
+\[c_n = \frac{1}{T}\int_0^T f(x)e^{- \frac{in2\pi x}{T}}\deriv{x},\quad n \in \Z\]
+\evid{Lemma :}
+\[F_N(f) = \sum_{n=-N}^N c_n e^{\frac{in2\pi x}{T}}\]
+Comment arriver au Lemma :
+\begin{align*}
+	n \geq 1,\ a_n \coss{\frac{2n\pi x}{T}} + b_n \sinn{\frac{2n\pi x}{T}} = \frac{a_n}{2}\big[e^{i\frac{2n\pi x}{T}} + e^{-i\frac{2n\pi x}{T}} \Big] + \frac{b_n}{2i}\big[e^{i\frac{2n\pi x}{T}} - e^{-i\frac{2n\pi x}{T}} \Big]\\
+	= e^{i\frac{2n\pi x}{T}}\big[\frac{a_n}{2} + \frac{b_n}{2i}\big] + e^{-i\frac{2n\pi x}{T}}\big[\frac{a_n}{2} - \frac{b_n}{2i}\big]
+\end{align*}
+On va montrer 
+\begin{align*}
+	c_n = \frac{1}{2}a_n + \frac{b_n}{2i}\\
+	c_{-n} = \frac{a_n}{2} - \frac{b_n}{2i}
+\end{align*}
+On a 
+\begin{align*}
+	\frac{a_n}{2} + \frac{b_n}{2i} =  \frac{1}{T} \int_0^T f(x) \coss{\frac{2n\pi x}{T}} \deriv{x} +  \frac{1}{T} \int_0^T f(x) \frac{1}{i} \sinn{\frac{2n\pi x}{T}} \deriv{x}\\
+	=  \frac{1}{T} \int_0^T f(x) \Big[\coss{\frac{2n\pi x}{T}} - i \sinn{\frac{2n\pi x}{T}}\Big] \deriv{x} = \frac{1}{T}\int_0^T f(x) e^{-i\frac{2n\pi x}{T}} \deriv{x}
+\end{align*}
+
+\begin{boite}
+	On a donc, $\forall n \geq 1$ :
+	\begin{align*}
+		c_n = \frac{a_n}{2} + \frac{b_n}{2i}\\
+		c_{-n} = \frac{a_n}{2} - \frac{b_n}{2i}\\
+		c_0 = \frac{a_0}{2}
+	\end{align*}
+\end{boite}
+\evid{Exemple :}
+Pour $T = 2\pi,\ f(x) = e^{ix}$ : \[c_n = \left\{\begin{array}{ll}
+1 & n = 1\\
+0 & n \in \Z\setminus \{1\}
+\end{array}\right.\]
+\evid{Preuve :}
+\[c_n = \frac{1}{2\pi} \int_0^{2\pi} e'^{ix} e^{-inx} \deriv{x} = \frac{1}{2\pi} \int_0^{2\pi} e^{i(1-n)x} \deriv{x} = \left\{\begin{array}{ll}
+	1 & n=1\\
+	0 & n \in \Z \setminus\{1\}
+	\end{array}\right.
+\]
+\evid{Lemma :}
+\[c_n(F_Nf) = c_n(f)\]
+si $N \geq |n|$\\
+\evid{Preuve :} 
+\begin{align*}
+	c_n(F_Nf)(x) = \frac{1}{T}\int_0^T F_Nf(x) e^{-i\frac{2n\pi x}{T}}\\
+	 \text{avec } T = 2\pi\\
+	 =\frac{1}{2\pi} \int_0^{2\pi} \(\sum_{-N}^N c_k e^{ikx}\)e^{-inx} \deriv{x} = \frac{1}{2\pi} \sum_{-N}^N c_k \int_0^{2\pi} e^{i(k-n)x}\deriv{x} = c_n
+\end{align*}
+
+\begin{boite}
+	\evid{Théorème :} Soient $f,g$, des fonctions régulières par morceaux, T-périodiques. Supposons 
+	\[c_n(f) = c_n(g)\quad \forall n \in \Z\]
+	Alors $f(x) = g(x)$ si $f,g$ sont continues en x. 
+\end{boite}
+\evid{Preuve :} On va montrer : Si $\left\{\begin{array}{ll}
+h & \text{est une fonction régulière T-périodique}\\
+c_n(h) = 0 & \forall n \in \Z
+\end{array}\right.$
+Alors $h(x) = 0$ si $h$ est continue en x. \\
+On va supposer $T = 2\pi$.\\
+On a
+\[c_n(h) = \frac{1}{2\pi } \int_0^{2\pi} h(x) e^{-inx} \deriv{x} = 0,\quad \forall n \in \Z\]
+Définit 
+\begin{align*}
+	D_N(x) = \sum_{-N}^N e^{inx}\\
+	G_N(x) = \frac{1}{N}\big[D_0(x) + D_1(x) + ... + D_{N-1}(x) \big]
+\end{align*}
+On va montrer 
+\begin{align}
+	D_N(x) = \frac{\sin\big[(N+1/2) x\big]}{\sinn{\frac{x}{2}}} \label{equ: Dn}\\
+	G_N(x) = \frac{1}{N} \frac{\sin^2\(\frac{Nx}{2}\)}{\sin^2\(\frac{x}{2}\)}\label{equ: Gn}
+\end{align}
+On a 
+\[\frac{1}{2\pi} \int_0^{2\pi} D_N(x) = \frac{1}{2\pi} \int_0^{2\pi} D_N(x) \deriv{x} = \frac{1}{2\pi}\int_0^{2\pi} G_N(x) \deriv{x}\]
+[beaucoup de répétition...]
+
+
+\subsection{Identité de Parseval}
+\begin{boite}
+	Soit $f: \R \to \R$ une fonction T-périodique, régulière par morceaux, avec 
+	\[c_n = \frac{1}{T} \int_0^T f(x)e^{-\frac{in2\pi x}{T}} \deriv{x} \quad n \in \Z \]
+	Alors :
+	\begin{equation}
+		\frac{1}{T} \int_0^T |f(x)|^2 \deriv{x} = \sum_{-\infty}^{+\infty} |c_n|^2 
+	\end{equation}
+	Ou, de manière équivalente
+	\begin{equation}
+		\frac{2}{T} \int_0^T |f(x)|^2 \deriv{x} = \frac{|a_0|^2}{2} + \sum_{n=1}^\infty(|a_n|^2 + |b_n|^2)
+	\end{equation}
+	Note : $|f(x)|$ dénote le module du complexe. Si la fonction est réelle, l'opérateur $||$ est inutile.
+\end{boite}
+
+\evid{Rappels}
+\begin{align*}
+	c_n = \frac{1}{2}\(a_n + \frac{b_n}{i}\)\quad c_{-n} = \frac{1}{2}\(a_n - \frac{b_n}{i}\)\\
+	a_n = c_n + c_{-n},\quad n \geq 0\\
+	b_n = i(c_{n}-c_{-n}),\quad n \geq 1
+\end{align*}
+On a 
+\begin{align*}
+	a_0 = 2c_0\\
+	|a_n|^2 + |b_n|^2 = |c_n+ c_{-n}|^2 +|c_n-c_{-n}|^2 = ... = 2(|c_n|^2 + |c_{-n}|^2)
+\end{align*}
+
+\evid{Il fait une preuve longue et inutile}
+
+\evid{Lemme 1:} pour $n,m \in \Z$
+\[\frac{1}{T}\int_0^T e^{\frac{in2\pi x}{T}} e^{-\frac{in2\pi x}{T}} \deriv{x} = \left\{\begin{array}{ll}
+1 & n=m\\
+0 & \text{sinon}
+\end{array}\right.\]
+\evid{Lemme 2:} pour $f$, T-périodique
+\[F_Nf(x) = \sum_{-N}^N c_ne^{\frac{in2\pi x}{T}}\]
+Alors
+\[\frac{1}{T}\int_o^T |f(x)|^2 \deriv{x} = \frac{1}{T}\int_0^T|f(x)-F_Nf(x)|^2 \deriv{x}+ \frac{1}{T}\int_0^T|F_Nf(x)|^2 \deriv{x}\]
+
+\evid{Continuation de la preuve}
+
+\begin{boite}
+	\evid{Théorème} soit $f$ une fonction T-périodique. Alors 
+	\[\frac{1}{T} \int_0^T |f - F_Nf|^2 = \min \frac{1}{T}\int_0^T \Big|f - \sum_{-N}^N \gamma_n e^{\frac{in2\pi x}{T}}\Big|^2 \quad \gamma_n \in \C\]
+\end{boite}
+
+\evid{Exemple 11} Soit $f$, périodique de $2\pi$, impaire, définie par $\left\{\begin{array}{ll}
+	x & 0 \leq x \leq \frac{\pi}{2}\\
+	\pi-x & \frac{\pi}{2} < x \leq \pi
+\end{array}\right.$ Sachant que $f$ est impaire si et seulement si $f(x) = -f(-x)\ \forall x \in \R$, avec $x \in (-\pi,0) \iff -x \in (0,\pi)$. Donc 
+\[
+	f(x) = -f(-x) = 
+	\left\{\begin{array}{ll}
+		-(-x) & -x \in (0,\frac{\pi}{2}]\\
+		-(\pi-(-x)) & -x \in (\frac{\pi}{2},\pi)
+	\end{array}\right. 
+	=
+	\left\{\begin{array}{ll}
+		x & x\in [-\frac{\pi}{2},0)\\
+		-(\pi+x) & x\in (-\pi,-\frac{pi}{2})
+	\end{array}\right.
+\]
+Donc 
+\[
+	f(x) = 
+	\left\{
+		\begin{array}{ll}
+			\pi-x &\frac{\pi}{2} < x \leq \pi\\
+			x & \frac{-\pi}{2} \leq x \leq \frac{\pi}{2}\\
+			-(pi+x) & -\pi < x < -\frac{\pi}{2}
+		\end{array}
+	\right.
+\]
+
+Nous pouvons aussi placer que $a_n = 0$ et $n\geq 0$ car \textit{f} est impaire.
+
+\begin{align*}
+	b_n = \frac{1}{\pi} \int_{-\pi}^\pi f(x) \sin(nx) \deriv{x} = \frac{1}{\pi} 2 \int_0^\pi f(x) \sin(nx) \deriv{x} \\
+	= \frac{2}{\pi} \Big[\int_0^{\frac{\pi}{2}} x\in(nx) \deriv{x} + \int_{\frac{\pi}{2}}^\pi (\pi-x) \sin(nx) \deriv{x} \Big]
+\end{align*}
+
+\section{Applications des séries de Fourier}
+\subsection{Équation de la chaleur (1D)}
+Définie par 
+\[\partial_t u -K\partial_{xx}^2u = 0 \quad [0,T]\times[0,L]\]
+avec K la constante de la diffusion
+\[u(t=0, x) = \phi(x)\]
+\subsubsection{Conditions aux limites de Dirichlet}
+\[u(t, 0) = u(t,L) = 0\]
+Le système
+\[\left\{\begin{array}{ll}
+	\partial_t u - \partial {xx} u = 0 & t > 0, x \in [0,L]\\
+	u(t,0) = u(t,L) = 0 & t > 0\\
+	u(t = 0, x) = \phi(x) & x \in [0,L]
+\end{array}\right.\]
+Nous utilisons pour ça la méthode la la séparation des variables
+
+On cherche des solutions (non-nulles) de 
+\[\left\{\begin{array}{l}
+\partial_t u - \partial_{xx}^2 u = 0\\
+u(t,0) = u(t,L) = 0
+\end{array}\right.\]
+sous la forme 
+\[u(t,X) = T(t)\cdot X(x)\]
+Ainsi
+\[\left\{\begin{array}{l}
+	\partial_t u = T'(t) X(x)\\
+	\partial_{xx}^2 = T(t) X''(x)\\
+	X(0) = X(L) = 0
+\end{array}\right.\]
+\[\partial_t u - K\partial_{xx}^2 u = T'(t)X8x) - KT(t)X''(x) = 0\]
+Cela implique
+\begin{equation}
+	T'(t)X(x) = KT(t) X''(x) \to \frac{T'(t)}{KT(t)} = \frac{X''(x)}{X(x)} = -\lambda = \text{constante}
+	\label{1}
+\end{equation}
+On va montrer 
+\[\lambda \geq 0 \quad (\lambda > 0)\]
+ON a 
+\begin{align*}
+	\left\{\begin{array}{ll}
+		X''(x) + \lambda X(x) & =0\\
+		X(0) = X(L) & = 0
+	\end{array}\right.\\
+	\int_0^L [X''(x) + \lambda X(x)]X(x) \deriv{x}= 0\\
+	 \to -\int_0^L X'(x)^2 + X'(x)X(x) \Big|_0^L + \lambda \int_0^L X^2(x) \deriv {x} = 0
+\end{align*}
+En utilisant le fait que $X(0) = X(L) = 0$ on a 
+\[-\int_0^L X'(x)^2 \deriv{x} + \int_0^L \lambda X(x)^2 \deriv{x} = 0 \to \lambda \geq 0 \]
+???????????
+\evid{Résumé} :
+\[\left\{\begin{array}{l}
+X(x) = b\sin(\sqrt{\lambda_n}x)\\
+\lambda_n = \(\frac{n\pi}{L}\)^2,\ n \geq 1
+\end{array}\right.\]
+On cherche $T(t)$
+$\eqref{1} \to T'(t) = K\lambda_n  \quad T(t) \to T(t) = ce^{-l\lambda_n}$ Donc 
+\[u(t,x) = T(t)X(x) = \alpha_n e^{-K\lambda_n t} \sin(\sqrt{\lambda_n}x)\]
+où
+\[\lambda_n = \(\frac{n\pi}{L}\)^2,\ n\geq 1\]
+
+\evid{Lemme :} Si $u_1,u_2$ sont 2 solutions du système 
+\[\left\{\begin{array}{ll}
+	\partial_t u - \partial_{xx}^2 u = 0 & t \geq 0,\ x \in [0,L]\\
+	u(t,0) = u(t,L) = 0 & t \geq 0
+\end{array}\right.\]
+et $c_1,c_2 \in \R$ alors $c_1u_1 +c_2u_3$ est aussi une solution.
+????
+\subsubsection{Rappel sur les séries de Fourier}
+Soit $f: [0,L] \to \R$. Alors
+\[f(x) = \sum_{n \geq 1}^{+\infty} a_n \sinn{\frac{n\pi x}{L}}\]
+où
+\[a_n = \frac{2}{L}\int_0^L f(x) \sinn{\frac{n\pi x}{L}}\]
+
+\begin{boite}
+	\evid{Théorème} Supposons 
+	\[\left\{\begin{array}{l}
+		\phi(x) = \sum_{n \geq 1} a_n \sinn{\frac{n\pi x}{L}} \quad [0,L]\\
+		\sum_{n\geq 1} a_n |\lambda_n|^2 < +\infty
+	\end{array}\right.\]
+	Alors il existe une solution unique 
+	\[\left\{\begin{array}{l}
+		\partial_t u - K\partial_{xx}^2 = 0\\
+		u(t,0) = u(t,L) = 0\\
+		u(t=0, x) = \phi(x)
+	\end{array}\right.\]
+	en plus
+	\[u(t,x) = \sum_{n\geq 1} a_n e^{-K\lambda_n t} \sin(\sqrt{\lambda_n}x) \quad \Bigg(\lambda_n = \(\frac{n\pi}{L}\)^2\Bigg)\]
+\end{boite}
+
+\evid{Exemple}
+\[\left\{\begin{array}{ll}
+	\partial_t u - \partial_{xx}^2 u = 0 & t \geq 0,\ x \in [0,\pi]\\
+	u(t,0) = u(t,\pi) = 0,\ t \geq 0\\
+	u(t=0, x) = \sin(x) + \sin(2x)
+\end{array}\right.\]
+\uline{La solution}
+\begin{align*}
+	u(t,x) = e^{-\lambda_1 t} \sin(x) + e^{-\lambda_2 t} \sin(2x)\\
+	\lambda_1 = \(\frac{1\pi}{\pi}\)^2 = 1\\
+	\lambda_2 = \(\frac{2\pi}{\pi}\)^2 = 4\\
+\end{align*}
+Donc
+\[u(t,x) = e^{-t} \sin(x) + e^{-4t}\sin(2x)\]
+ 
+\evid{Rappel :} \[\phi(x) = \sum a_n \sinn{\frac{n\pi x}{L}} \et \sum |\lambda_n|^2 |a_n|^2 \leq + \infty \to u(t,x) = \sum a_n e^{-k\lambda_n t} \sin(\sqrt{\lambda_n}x)\]
+
+\subsubsection{Exemple !!}
+Résoudre le système :
+\[\left\{\begin{array}{ll}
+	\partial_t u(t,x) - \partial^2_{xx} u(t,x) = 0 &  (t,x) \in (0,+\infty)\times(0,\pi)\\
+	u(t,\pi) = u(t,0) = 0\\
+	u(0,x) = \sin(x) + \sin(2x)
+\end{array}\right.\]
+Dans notre cas : 
+\begin{align*}
+	L = \pi\\
+	\phi(x) = \sin(x) + \sin(2x) = \sum_{n\geq 1} a_n \sin (nx)\\
+	a_1 = 1,\ a_2 = 1, \forall n \in [3,+\infty[ a_n = 0\\
+	u(t,x) = a_1 e^{-\lambda_1 t} \sin(\sqrt{\lambda_1} x) + a_2 e^{-\lambda_2 t} \sin(\sqrt{\lambda_2} x)\\
+	\lambda_1 = 1,\ \lambda_2 = 4\\
+	u(t,x) = e^{-t} \sin(x) + e^{-4t} \sin(2x)
+\end{align*} 
+Si on dérive cette fonction comme au début (1x selon le temps, 2x selon l'espace), on obtient bien 0. Donc cette réponse est correcte.
+
+\uline{Remarque :} On a $|u(x,y)| \leq e^{-k\lambda_1 t} \sum_{n\geq 1}|a_n|$. Preuve formelle : 
+\begin{align*}
+	u(t,x) = \sum_{n\geq 1} a_n e^{-k\lambda_1 t} \sin(\sqrt{\lambda_1}x)\\
+	| \sin(\sqrt{\lambda_1}x)| \leq 1,\ \forall x,t\\
+	\to |u(t,x)| \leq \sum_{n\geq 1} a_n e^{-k\lambda_1 t}\\
+	\lambda_{n+1} > \lambda_n\\
+	\forall n |e^{-k\lambda_n t}| \leq e^{-k\lambda_1 t} \forall t > 0
+\end{align*}
+Du coup
+\[\sum_{n \geq 1} |a_n| e^{-k\lambda_n t} \leq e^{-k\lambda_1 t} \sum_{n\geq 1} |a_n| \forall t > 0\]
+\subsubsection{Exemple 2}
+\[\left\{\begin{array}{ll}
+	\partial_t u(t,x) - \partial^2_{xx} u(t,x) = f(t,x) &  \pour (t,x) \in (0,+\infty)\times(0,\pi)\\
+	u(t,0) = u(t,L) = 0 & t > 0\\
+	u(0,x) = \phi(x) & x \in (0,L)
+\end{array}\right.\]
+On cherche une solution sous la forme 
+\[u(t,x) = \sum_{n\geq 1} a_n(t) \sin(\sqrt{\lambda_n} x)\]
+Supposons que 
+\[f(t,x) = \sum_{n\geq 1} f_n(t) \sin(\sqrt{\lambda_n}x)\]
+Avec ça :
+\begin{align*}
+	\partial_t u(t,x) = \sum_{n \geq 1}a_n'(t)\sin(\sqrt{\lambda_n} x)\\
+	k\partial^2_{xx} u(t,x) = \sum_{n\geq 1} k a_n(t)\big(-\lambda_n \sin(\sqrt{\lambda_n} x)\big)
+\end{align*}
+Comme $u$ satisfait l'équation de la chaleur avec source $f$
+\[\sum_{n \geq 1} \big(a_n'(t) + k \lambda_n a_n(t) - f_n(t)\big) \sin(\sqrt{\lambda_n}x) = 0\]
+On obtient 
+\[\forall n \geq 1:\ a_n'(t) + k\lambda_n a_n(t) = f_n(t),\ t\geq 0\]
+On peut écrire
+\[a_n(t) = a_n(0) e^{-k\lambda_n t)} + \int_0^t e^{k \lambda_n (s-t)} f_n(s) \deriv{s}\]
+On écrit que $\phi(x) = \sum_{n\geq 1} a_n \sin(\sqrt{\lambda_n}x)$
+\[u(0,x) = \phi(x) \iff \forall n \in \N^* \ a_n(0) = a:n\]
+Nécessairement :
+\[u(t,x) = \sum_{n\geq 1} a_ne^{-k\lambda_n t} \sin(\sqrt{\lambda_n}x) + \sum_{n\geq 1} \(\int_0^t e^{k(s-t)} f_n(s) \deriv{s}\) \sin(\sqrt{\lambda_n} x)\]
+
+\begin{boite}
+	\evid{Théorème} Supposons que 
+	\[\left\{\begin{array}{ll}
+	\phi(x) = \sum_{n\geq 1} a_n \sinn{\frac{n\pi x}{L}}\\
+	f(t,x) = \sum_{n\geq 1} f_n(t) \sinn{\frac{n\pi x}{L}}\\
+\end{array}\right.\]
+	On suppose aussi que 
+	\[\sum_{n\geq 1} \lambda_n^2 |a_n|^2 < +\infty\] 
+	ainsi que 
+	\[\sum_{n\geq 1} \sup_{t \in [0,T]} \lambda_n^2 |f_n(t)| < + \infty\]
+	Alors
+	\[u(t,x) = \sum_{n\geq 1} a_n e^{-k\lambda_n t} \sin(\sqrt{\lambda_n}x) + \sum_{n\geq 1} \int_0^t e^{k\lambda_n(s-t)} f_n(s)\deriv{s} \sin(\sqrt{\lambda_n}x)\]
+\end{boite}
+\subsubsection{Exemple 3}
+Résoudre 
+\[\left\{\begin{array}{ll}
+	\partial_t u(t,x) - \partial^2_{xx} u(t,x) = 0 & (t,x) \in (0,\infty) \times (0,\pi)\\
+	u(t,0) = 0\\
+	u(t,\pi) = g(t) = \pi t\\
+	u(0,x) = \sin(x) & x \in (0,\pi)
+\end{array}\right.\]
+
+Posons 
+\begin{align*}
+	v(t,x) = u(t,x) -tx \quad (t,x) \in (0,\infty) \times (0,\pi)\\
+	\partial_t v(t,x) = \partial_t u(t,x) - x\\
+	\partial^2_{xx}v(t,x) = \partial^2_{xx}u(t,x)\\
+	\left\{\begin{array}{ll}
+		\partial_t v(t,x) - \partial^2_{xx} v(t,x) = x & (t,x) \in (0,+\infty) \times (0,\pi)\\
+		v(t,0) = v(t,\pi) = 0\\
+		u(0,x) =  \sin(x) & x \in (0,\pi)
+	\end{array}\right.
+\end{align*}
+Cherchons $(a_n)$. Dans notre cas :
+\begin{align*}
+	\phi(x) = \sin(x)\\
+	\forall n \neq 1 :\ a_n = 0,a_1 = 1
+\end{align*}
+Cherchons $(f_n)_{n \in \N}$. On veut écrire $x = \sum_{n\geq 1} f_n(t) \sin(\sqrt{\lambda_n}x)$
+\[\begin{array}{ll}
+	f_n(t)	& = \frac{1}{\pi}\int_0^\pi x \sin(nx) \deriv{x} \sim \frac{1}{\pi}\int_0^\pi u v' \deriv{x} \\
+	 		& = \frac{1}{\pi}\(\left[x\frac{-\cos(nx)}{n}\right]_0^\pi + \frac{1}{n}\int_0^\pi \cos(nx) \deriv{x}\)\\
+	 		& = \frac{1}{\pi} \frac{\pi(-1)^{n+1}}{n} + 0 = \frac{(-1)^{n+1}}{n}
+\end{array}\]
+Il faut vérifier que 
+\[\sum_{n\geq 1} |a_n|^2 \lambda_n^2 < +\infty \et \sum_{n\geq 1} \sup_{t \in [0,T]} |f_n(t)| \lambda_n^2 < + \infty\]
+\[\sup_{t \in [0,T]} |f_n(t)| |\lambda_n|^2 = \frac{1}{n}\(\frac{n\pi}{L}\)^2\]
+\[u(t,x) = e^{-t} \sin(x) + \sum_{n\geq 1} \int_0^t e^{k\(\frac{n\pi}{2}\)^2 (s-t)} \frac{(-1)^{n+1}}{n} \sin(nx)\]
+
+
+
+\section{Examen}
+\setcounter{equation}{0}
+Examen composé de questions QCM et VF (total de 30\%), et une partie écrite (70\%)
+
+\evid{$\rot, \dive, \Delta$} : 
+\begin{align*}
+	d=2 : \rot F = \frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\\
+	d=3 : \rot F = \nabla \times F\\
+	\dive F = \nabla F = \sum_{i=1}^d \frac{\partial F_i}{\partial x_i}\\
+	\Delta f = \dive ( \nabla f)  = \sum_{i=1}^d \frac{\partial^2 f}{\partial x_i^2}
+\end{align*}
+\evid{Intégrale curviligne $\Gamma$} : $\gamma : [a,b] \to \R^d,~ f : \Gamma \to \R$
+\[\int_\Gamma = \int_a^b f(\gamma(t)) ||\gamma'(t)|| \deriv{t}\]
+\evid{Intégrales de surface :} 
+\begin{align*}
+	S = \{ \varphi(x,y) : D \subset \R^2 \to \R^3\}\\
+	f : S \to \R\\
+	\int_S f = \int_D f(\varphi(x,y)) | \partial_x \varphi \times \partial_y \varphi| \deriv{x}\deriv{y}
+\end{align*} 
+\evid{Champs qui dérivent d'un potentiel :} $F$ donné. Est-ce que $\exists F$ tel que $F = \nabla f$
+\begin{itemize}
+	\item 	\uline{Théorème :} Si $F = \nabla f$ alors 
+			\begin{equation}
+				\frac{\partial F_i}{\partial x_j} = \frac{\partial F_j}{\partial x_i} ~ \forall i,j
+				\label{eq: champ potentiel}
+			\end{equation}
+	\item 	\uline{Théorème :} Si $\Omega$ est convexe et Eq. \ref{eq: champ potentiel} est vérifié, alors 
+			\[\exists f : F = \nabla f\]
+	\item 	\uline{Théorème :} Si $F = \nabla f$ alors 
+			\[\int_\Gamma \vec{F} \vec{\deriv{l}} = 0~ \forall F \text{ simple fermé}\]
+\end{itemize} 
+\evid{Théorème de la divergence :} Soit $\nu$ la normale extérieure, alors 
+\[\int_\Omega \dive F = \int_S \vec{F} \vec{\nu} \deriv{\sigma}\]
+\evid{Analyse de Fourier :} Soit $f$ une fonction T-périodique. Alors :
+\begin{align*}
+	a_n = \frac{2}{T} \int_0^T f(x) \coss{\frac{n2\pi x}{T}} \deriv{x}\\
+	b_n = \frac{2}{T} \int_0^T f(x) \sinn{\frac{n2\pi x}{T}} \deriv{x}\\
+\end{align*}
+\begin{itemize}
+	\item 	\uline{Théorème :} Soit $f$ régulière :
+			\[f(x) = \frac{a_0}{2} + \sum_{n \geq 1}^{+\infty} \Big[ a_n \coss{\frac{n2\pi x}{T}} + b_n \sinn{\frac{n2\pi x}{T}}\Big]\]
+	\item 	\uline{Théorème :}
+			\[\frac{2}{T} \int_0^T |f|^2 = \frac{a_0^2}{2} + \sum_{n\geq 1}^{+\infty} \big(|a_n|^2 + |b_n|^2\big)\]
+	\item 	\uline{En fonction de la parité :} Si $f$ est paire alors $b_n = 0$, si $f$ est impaire alors $a_n = 0$
+\end{itemize}
+\evid{Application : Équation de la chaleur}
+Nous avons une fonction 
+\[\left\{\begin{array}{ll}
+	\partial_t u(t,x) - \partial^2_{xx} u(t,x) = 0 & (t,x) \in (0,\infty) \times [0,L]\\
+	u(t,0) = u(t,L) = 0 & t > 0\\
+	u(t=0, x) = u_0(x) & \text{donné}
+\end{array}\right.\]
+\begin{enumerate}
+	\item 	Résoudre : 
+			\[\left\{
+				\begin{array}{ll}
+					\partial_t u(t,x) - \partial^2_{xx} u(t,x) = 0 & (t,x) \in (0,\infty) \times (0,\pi)\\
+					u(t,0) = u(t,\pi) = 0 & t > 0\\
+					u(0, x) =  \sin(x)
+				\end{array}
+			\right.\]
+			Idée : 	
+				\begin{align*}
+					u(t,x) = \sum a_n(t) e_n(x)\\
+					\left\{
+						\begin{array}{ll}
+							-e_n''(x) = \lambda_ne_n(x)\\
+							e_n(0) = e_n(\pi) = 0
+						\end{array}
+					\right.\\
+					\left\{
+						\begin{array}{ll}
+							e_n(x) = \sin(nx)\\
+							\lambda_n = n^2
+						\end{array}
+					\right.\\
+					a_n'(t) = -\lambda_n a_N(t)\\
+					a_N(t) = e^{-\lambda_n^2t}\\
+					\left\{
+						\begin{array}{ll}
+							u(t,x) = \sum_{n\geq 1} a_n e^{-n^2 t} \sin(x)\\
+							u(t=0,x) = u_0(x) = \sin(x)\\
+						\end{array}
+					\right.
+				\end{align*}
+			Donc $a_n = 0$ si $n\geq 1$ et $a_n = 1$ si $n=1$.
+			\[u(t,x) = e^{-t}\sin(x)\]
+			On a 
+			\[|u(t,x) | \leq e^{-t} \to 0 \text{ quand } t \to +\infty\]
+\end{enumerate}
+\evid{Des exemples ?} Soit $E = (x^3 + y, z, x)$, alors nous calculons
+\begin{align*}
+	\dive E = \frac{\partial E_1}{\partial x} + \frac{\partial E_2}{\partial y} + \frac{\partial E_3}{\partial z} = 2x + 0 + 0 = 2x\\
+	\begin{array}{rl}
+		\rot E = & \nabla \times E \\ =  &
+		\begin{pmatrix}
+			\partial_x & \partial_y & \partial_z\\
+			E_1 & E_2 & E_3
+		\end{pmatrix}\\ = &\big(\partial_yE_3 - \partial_zE_2 \ ; \ \partial_zE_1 - \partial_xE_3 \ ; \ \partial_xE_2 - \partial_yE_1 \big)\\
+		=& (0-1,0-1,0-1)\\
+		=& (-1,-1,-1)
+		\end{array}	
+\end{align*}
+\evid{Autre exemple ?} Soit $\Sigma = \{(x,y,z) : x^2 + y^2 = z\}$. Calculer $\nu$, le normal en $(1,0,1) \in \Sigma$. Nous définissons $f(x,y,z) = x^2 + y^2 - z$, donc nous pouvons remplacer $\Sigma = \{(x,y,z): f(x,y,z) = 0\}$. Depuis là :
+\begin{align*}
+	\nu(x,y,z) = \nabla f(x,y,z)\\
+	\text{si } (x,y,z) \in \Sigma\\
+	\nabla f = (2x, 2y, -1)\\
+	\nabla f(1,0,1) = (2,0,1)
+\end{align*}
+\evid{Autre exemple 2: le retour ?} Soit $\phi(x,y) = (3x^2, 2y)$. Alors :
+\begin{enumerate}
+	\item 	Est-ce que $\nabla \times \phi = 0$ ?
+	\item $\phi$ est-il le gradient d'une fonction = Si oui, trouver $f$ tel que $\phi = \nabla f$
+\end{enumerate}
+\begin{enumerate}
+	\item 	$\nabla \times \phi = \frac{\delta \phi_2}{\delta x} - \frac{\delta \phi_1}{\delta y} = 0-0 = 0$
+	\item 	Oui
+\end{enumerate}
+Trouver $f$ : 
+\begin{align*}
+	\left\{\begin{array}{l}
+		\frac{\delta f}{\delta x} = \phi_1 = 3x^2\\
+		\frac{\delta f}{\delta y} = \phi_2 = 2y
+	\end{array}\right.\\
+	\frac{\delta f}{\delta x} = 2x^2 \to f(x,y) = x^3 + g(y)\\
+	2y = \frac{\delta f}{\delta y} = g'(y) \to g(y) = y^2 + C\\
+	f(x,y) = x^3 + y^2 + C
+\end{align*}
+\evid{On continue avec les exemples} Soit $D = \{(x,y,z) : x^2 + y^2 + z^2 < 1\}$ et $u(x,y,z) = e^{x^2 + y^2 + z^2}$
+\begin{enumerate}
+	\item 	Calculer $\nabla u \cdot \nu$ sur $\delta D$, avec $\nu$ le vecteur normal sortant et $|\nu| = 1$
+	\item 	Calculer $\iiint_D \Delta u$
+\end{enumerate}
+\begin{align*}
+	\nabla u \cdot \nu = \frac{\delta u}{\delta r}\\
+	u(x,y,z) = e^{r^2}\\
+	\frac{\delta u}{\delta r} = 2re^{r^2} = 2e \text{ sur } \delta D
+\end{align*}
+Calculer 
+\[\iiint_D \Delta u = \iiint_D \dive(\nabla u) = \iint_{\delta D} \nabla u \cdot \nu = \iint_{\delta D} 2e = 2e|\delta D|\]
+\evid{On ne s'arrête plus !}
+Soit $\Gamma = \{(\sin(t) \cos(t)) : t \in [0,\frac{\pi}{2}]\}$. calculer la longueur de $\Gamma$. Elle se trouve avec 
+\begin{align*}
+	\int_0^\frac{\pi}{2} ||\gamma'(t)|| \deriv{t} = \int_0^\frac{\pi}{2} 1 \deriv{t} = \frac{\pi}{2}
+\end{align*}
+car 
+\[\gamma'(t) = (\cos(t),-\sin(t)) \to ||\gamma'(t)|| = (cos^2(t) + \sin^2(t)) = 1\]
+\evid{Ça devient ridicule ces exemples...} soit $f$ une fonction $2\pi$-périodique : $f(x) = x [0,2\pi]$
+\begin{enumerate}
+	\item 	calculer les $a_n$ et $b_n$
+	\item 	Calculer $\sum_{k\geq 0} \frac{(-1)^k}{2k+1}$
+\end{enumerate}
+\begin{align*}
+	a_n = \frac{1}{\pi}\int_0^{2\pi} f(x)\cos(nx) \deriv{x} \ n \geq 0\\
+	b_n = \frac{1}{\pi}\int_0^{2\pi} f(x)\sin(nx) \deriv{x} \ n \geq 1\\
+	a_0 = \frac{1}{\pi}\int_0^{2\pi} x \deriv{x} = \frac{1}{\pi} \frac{x^2}{2}\Big|_0^{2\pi}§ = 2\pi\\
+	a_n = \frac{1}{\pi}\int_0^{2\pi} x \underbrace{\cos(nx) \deriv{x}}_{= \frac{\deriv{\sin(nx)}}{n}}= \frac{1}{\pi} \Bigg[\frac{x\sin(nx)}{n} \Big|_0^{2\pi} - \int_0^{2\pi} \frac{\sin(nx)}{n} \deriv{x} \Bigg]\\
+	=\frac{1}{\pi} 2\pi \frac{\sin(n2\pi)}{n} = 0\\
+	b_n = \frac{1}{\pi}\int_0^{2\pi} x \underbrace{\sin(nx) \deriv{x}}_{\frac{\deriv{-\cos(nx)}}{n}} = \frac{1}{\pi} \Bigg[\frac{-\cos(nx)}{n}\Big|_0^{2\pi} + \int_0^{2\pi} \frac{\cos(nx)}{n} \deriv{x} \Bigg]\\
+	=\frac{1}{\pi} \(\frac{-2\pi\cos(n2\pi)}{n}\) = -\frac{2}{\pi}
+\end{align*}
+Ainsi :
+\begin{align*}
+	x = f(x) = \sum_{n\geq 1} \frac{a_0}{2} +  b_n \sin(nx) \ x \in (0,2\pi) \\
+	= \pi + \sum{n\geq 1} \(\frac{-2}{n}\) \sin(nx)
+\end{align*}
+Prenons $x=\frac{\pi}{2}$. Ainsi
+\[\begin{array}{ll}
+\frac{\pi}{2} &= \pi-\sum_{n\geq 1} \frac{2}{n} \sin{\frac{n\pi}{2}} = -\sum_{n=2k,\ k\geq 1} \frac{2}{n} \sinn{\frac{n\pi}{2}} -\sum_{n=2k+1,\ k\geq 0} \frac{2}{n} \sinn{\frac{n\pi}{2}}\\
+&= \sum_{k\geq 0} \frac{2}{2k  + 1} \sinn{\frac{(2k+1)\pi}{2}} = -\sum_{k\geq 0} \frac{2}{2k+1 (-1)^k}\\
+\sinn{\frac{2k+1}{2}\pi} = (-1)^k
+\end{array}\]
+Donc
+\[\pi-\sum_{k\geq 0} \frac{(-1)^k}{2k+1} = +\frac{\pi}{2}\]
+
+
+
+
+%%%%%%%%%%%%%%%%%%APPENDIX%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\appendix
+\section{Rappels}
+\setstretch{1}
+\subsection{Trigonométrie}\label{appendix: trigo}
+\begin{itemize}
+	\item 	$\sin(x) + \sin(y) = 2\sinn{\frac{x+y}{2}}\coss{\frac{x-y}{2}}$
+	\item 	$\sin a \cos b = \frac{1}{2}\big[\sin(a+b) + \ sin(a-b)\big]$
+	\item 	$\cos a - \cos b = -2\sinn{\frac{a+b}{2}} \sinn{\frac{a-b}{2}}$
+	\item 	$\sin a\sin b = -\frac{1}{2}\big[\cos(a+b) - \cos(a-b)\big]$
+\end{itemize}
+
+\subsection{Complexes}\label{appendix: complexes}
+Pour $t \in \R$, $z \in \C$, $z = x+iy$ :
+\begin{itemize}
+	\item 	$e^{it} = \cos(t) i\sin(t)$
+	\item 	$e^{-it} = \cos(t)-i\sin(t)$
+	\item 	$\cos(t) = \frac{e^{it} + e^{-it}}{2}$
+	\item 	$\sin(t) = \frac{e^{it} - e^{-it}}{2i}$
+	\item 	$|z| = \sqrt{(x^2 + y^2)}$
+	\item 	$z^2 = x^2 + y^2 + 2xy \neq x^2 + y^2 = |z|^2$
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 

@@ -1,0 +1,70 @@
+\documentclass[12pt,a4paper]{article}
+\input{/media/battleman/DATA/Documents/LaTeX/preambule.tex}
+\usepackage[tc]{titlepic}
+\usepackage{graphicx}
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%TODO : Supprimer quand plus de todo %%%%%
+\marginparwidth = 75pt
+\textwidth = 400pt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\lstset{language=Java}
+\setstretch{1}
+\epflTitle{Software Engineering}[Olivier Cloux][Autumn 2016]
+\newpage
+\tableofcontents
+\setstretch{1.2}
+\section{Intro}
+Software is everywhere, even in cars. Tesla cars are a piece of hardware, on which we run software. There are a lot of path in a piece of code, around $2^{\text{length of the code}}$, meaning a program like Firefox (5M LOC) has around $2^{500k}$ path possible
+
+\textbf{Kolmogorov Complexity :} Minimal length of a description of the object. Computation resources needed to specify an object. If K(object) $\geq$ |object|, complex. Either, simple.
+
+\section{Managing Software development}
+
+\section{Modularity and abstraction}
+Having a good looking code is not just aesthetics, it is mandatory for maintaining software. A great layout, naming, use of comments,... can make the difference between good and bad programmers. The two main elements of layout are : 
+\begin{itemize}
+    \item Consistency : having lines of comment, and lines of code. No mixing
+    \item Use of white spaces : a right indentation is primordial, to immediately capture the nesting of functions.
+\end{itemize}
+When we recognize known layouts (for example, chess pieces arranged as in a game or randomly), expert user (programmer/chess player) can easily remember patterns, arrangements, location of a precise piece of information. Studies proved so. As an evidence, the Python language relies on indentation to run. 
+
+Whitespace are important too ! They are the key to understandable text, provide the basis for grouping. Also consider using parenthesis, even when not necessary.
+
+\subsection{Layout}
+\subsubsection{Classes}
+When designing a class, we first design the corresponding \textit{interface}, and then an implementation of this interface, in the form of a \textbf{class}. This can lead to multiples implementations of the same interface.
+
+In order to gain clearness, we should use the same coding style for the classes. One way to write classes is the following : 
+\setstretch{1}
+\begin{enumerate}
+    \item First, a header comment about the connection between the class and the implementation, and maybe the use of the interface.
+    \item Then, list data (member fields, global variables,...)
+    \item Followed by public methods (with constructor(s))
+    \item And protected methods (available in the package, so usable by sub-classes or other members of package.
+    \item Finally, state private methods : they are here to help you in this class, therefore are not quite probable to be read.
+\end{enumerate}
+\setstretch{1.2}
+Another good practice lays in the use of the files : separate class and interfaces in separate files, and use only one main class by file, named after that class. The use of \textit{upper camel} is good use
+\begin{example}
+    \textit{hashmymap} = bad, \textit{HashMyMap} = good
+\end{example}
+Furthermore, methods should be separated using at least 2 blank lines. All files of any file must be $\leq 120$ characters ! Even, this number should be an exception, and it is common practice to aim for $\leq 80$. This is to make the eye's job easier when reading (less prone to losing the line). Also a few other reasons (historical : punchcards use 70 characters ; terminal often stopped at 80 char, so working remotely becomes hard ;  possible copy in book or mail ; ...). Equivalently, files should be $\leq 2000$ lines. This is a rough guideline, but a good aim. If the file is too long, consider what the class is doing (it should be doing 1 thing ; consider fractioning).
+
+During import, avoid platform-specific imports (for Windows only) and wildcard (import java.utils.* is bad habit). Import specific package, and group them (all java.utils together). 
+
+\subsubsection{Methods}
+One possible layout :
+\setstretch{1}
+\begin{itemize}
+    \item Return value + parameters on a line
+    \item Exception throw (if any) on next line
+    \item Then opening brace
+    \item Body
+    \item Closing brace
+\end{itemize}
+\setstretch{1.2}
+Methods should be small ; if $> 50$ lines, ask yourself if can better ; never $ > 150$ lines. Max 7 parameters. avoid indirect (or mutual) recursion.
+\end{document} 
