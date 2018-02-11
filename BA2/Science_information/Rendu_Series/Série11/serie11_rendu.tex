@@ -1,0 +1,413 @@
+\documentclass[10p,a4paper]{scrartcl}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+
+\setstretch{1}
+\fancyhead[L]{Sciences de l'information } % formatage en-tête - matière
+\fancyhead[C]{Série 11} 	% formatage en-tête - Série
+\fancyhead[R]{Olivier Cloux}	% formatage en-tête - Nom
+\setmarginsrb{20mm}{20mm}{20mm}{15mm}{-5pt}{15mm}{0pt}{8mm}
+\title{	
+\normalfont \normalsize 
+\textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+\textsc{Sciences de l'information}\\ [0pt] %Name of the course
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Série 11 \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+\date{}
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\begin{document}
+
+\maketitle
+\setcounter{section}{11}
+\subsection{}
+\begin{enumerate}
+
+	\item	Essayons de déduire la première équation des deux autres. Nous cherchons $\mu_2$ et $\mu_3$ tels que la deuxième équation multipliée par $\mu_2$ additionnée à la troisième multipliée par $\mu_3$ donne la première équation.
+Nécessairement, nous avons $5\mu_2 + 5\mu_3 = 1$ et $6\mu_2 + 3\mu_3 = 2$. Donc (en ne divisant pas, mais en multipliant par l'inverse modulo (l'inverse de 5 est 8 par exemple), nous obtenons 
+			\begin{systeq}
+					\mu_2 + \mu_3 = 8\\
+					\mu_2 + 7\mu_3 = 9
+			\end{systeq}
+			Ce qui nous donne $\mu_2 = 10,\ \mu_3 = 11$. Nous vérifions ensuite ces valeurs sur les autres variables : $3\mu_2 + 7\mu_3 = 3,\ 4\mu_2 + 8\mu_3 = 11$. Tout concorde, nous pouvons donc simplement nous concentrer sur les deux dernières équations. En utilisant les règles sur les modulos (on ne divise pas, on multiplie toujours par un chiffre positif), nous avons ces calculs :
+			\begin{align*}
+				\begin{pmatrix}
+					5 & 6 & 3 & 4\\
+					5 & 3 & 7 & 8
+				\end{pmatrix}
+				\sim
+				\begin{pmatrix}
+					5 & 6 & 3 & 4\\
+					0 & 3 & 4 & 4
+				\end{pmatrix}
+				\sim
+				\begin{pmatrix}
+					5 & 6 & 3 & 4\\
+					0 & 10 & 4 & 4
+				\end{pmatrix}		
+				\sim
+				\begin{pmatrix}
+					1 & 9 & 11 & 6\\
+					0 & 1 & 3 & 3
+				\end{pmatrix}
+				\sim
+				\begin{pmatrix}
+					1 & 0 & 10 & 5\\
+					0 & 1 & 3 & 3
+				\end{pmatrix}\\
+				\to 
+				\left\{\begin{array}{l}
+					x_1 = -10x_3 - 5x_4 = 3x_3 + 8x_4\\
+					x_2 = -3x_3 - 3x_4 = 10x_3 + 10x_4\\
+					x_3 = x_3\\
+					x_4 = x_4
+				\end{array}\right.
+				\to
+				\fbox{$
+				\begin{pmatrix}
+				x_1\\
+				x_2\\
+				x_3\\
+				x_4
+				\end{pmatrix}
+				=
+				x_3
+				\begin{pmatrix}
+					3\\
+					10\\
+					1\\
+					0
+				\end{pmatrix}
+				+ x_4
+				\begin{pmatrix}
+					8\\
+					10\\
+					0\\
+					1
+				\end{pmatrix}$}
+			\end{align*}
+			En remplaçant ces valeurs \big($x_1 = 3x_3 + 8x_4$ et $x_2 = 10x_3 + 10x_4$\big) dans nos 3 équations de base, nous trouvons toujours exactement 0.
+
+	\item	Pour un corps $F_{p^m}$, de dimension $dim(V)$, le cardinal $\varepsilon = p^{dim(V)}$. Comme notre base contient 2 vecteurs (donc est de dimension 2), et que nous sommes dans le corps $F_{13^1}$, nous avons que $\varepsilon = 13^2 =$ \fbox{$169$}
+\end{enumerate}
+
+\subsection{}
+\begin{enumerate}
+	\item	Comme il s'agit d'équations linéaires, nous pouvons placer les coefficients dans une matrice, et résoudre normalement. Rappelons nous que nous travaillons dans $F_{13}$, donc nous ne pouvons pas diviser ; pour "diviser par lui-même", afin de trouver un coefficient = 1, nous multiplions par l'élément inverse. De plus, nous ajoutons 13 aux nombres négatifs, afin qu'ils repassent en positif (p. ex. $-5\to 8$).
+	\begin{align*}
+		\left(\begin{array}{cc}
+			8 & 3 \\
+			5 & 2 
+		\end{array}\right)
+		\cdot
+		\combi{x}{y}
+		=
+		\combi{1}{0}
+		\longrightarrow
+		\left(\begin{array}{cc|c}
+			8 & 3 & 1\\
+			5 & 2 & 0
+		\end{array}\right)
+		\sim
+		\left(\begin{array}{cc|c}
+			8 & 3 & 1\\
+			0 & 1 & -5
+		\end{array}\right)
+		\sim
+		\left(\begin{array}{cc|c}
+			8 & 0 & 3\\
+			0 & 1 & 8
+		\end{array}\right)
+		\sim
+		\left(\begin{array}{cc|c}
+			1 & 0 & 2\\
+			0 & 1 & 8
+		\end{array}\right)
+	\end{align*}
+	Donc $x = [2]_{13}$ et $y = [8]_{13}$. Nous voyons clairement que ce système n'a qu'une seule solution.
+	\item	\begin{enumerate}
+				\item 	Nous mettons nos valeurs dans une matrice :
+						\[\begin{pmatrix}
+							2 & 5 & 6 & 3 & 0\\
+							3 & 1 & 2 & 1 & 2\\
+							1 & 0 & 4 & 5 & 1\\
+							4 & 3 & 2 & 1 & 6
+						\end{pmatrix}\]. Nous réduisons cette matrice afin de trouver le nombre de lignes indépendantes. Après une grande quantité de matrices intermédiaires (il serait trop fastidieux et tout autant inutile de les mettre ici), nous obtenons la matrice
+						\[\begin{pmatrix}
+							1 & 0 & 0 & 0 & 11\\
+							0 & 1 & 0 & 0 & 3\\
+							0 & 0 & 1 & 0 & 8\\
+							0 & 0 & 0 & 1 & 2
+						\end{pmatrix}\]
+						 Nous avons donc une matrice avec 4 pivots ; selon le théorème du rang, la matrice est de dimension 4. Le cardinal se calcule comme avant, à savoir $\varepsilon = 13^4 =$ \fbox{$28'561$}
+				\item	Nous devons chercher le noyau de la matrice ($Ker(V)$) et donc résoudre le système d'équation
+				\[\left\{\begin{array}{l}
+					2v_1 + 5v_2 + 6v_3 + 3v_4 + 0v_5 = 0\\
+					3v_1 + 1v_2 + 2v_3 + 1v_4 + 2v_5 = 0\\
+					1v_1 + 0v_2 + 4v_3 + 5v_4 + 1v_5 = 0\\
+					4v_1 + 3v_2 + 2v_3 + 1v_4 + 6v_5 = 0
+				\end{array}\right.\]
+				Nous plaçons ces valeurs dans une matrice, et réduisons la matrice. Nous avons vu précédemment la réduction de cette matrice est donc
+				\[\left(\begin{array}{ccccc|c}
+							1 & 0 & 0 & 0 & 11 & 0\\
+							0 & 1 & 0 & 0 & 3 & 0\\
+							0 & 0 & 1 & 0 & 8 & 0\\
+							0 & 0 & 0 & 1 & 2 & 0
+				\end{array}\right)\]
+				Ainsi,
+				\[\left\{\begin{array}{l}
+					v_1 = -11v_5 = 2v_5\\
+					v_2 = -3v_5 = 10v_5\\
+					v_3 = -8v_5 = 5v_5\\
+					v_4 = -2v_5 = 11v_5\\
+					v_5 = v_5
+				\end{array}\right. \to 
+				\begin{pmatrix}
+				v_+\\
+				v_2\\
+				v_3\\
+				v_4\\
+				v_5\\
+				\end{pmatrix}
+				= v_5\cdot
+				\begin{pmatrix}
+				2\\
+				10\\
+				5\\
+				11\\
+				1
+				\end{pmatrix}\]
+				Les vecteurs valides sont donc tous ceux de cette forme. Afin de normaliser, nous multiplions par l'inverse multiplicatif de $2 \to ([2]_{13})^{-1} = [7]_{13}$. Ainsi, notre (nos) équations doivent correspondre au vecteur
+				\[\begin{pmatrix}
+				1\\
+				5\\
+				9\\
+				12\\
+				7
+				\end{pmatrix}\]
+				Il n'y a donc qu'une seule équation à respecter :
+				\begin{equation*}
+					v_1 + 5v_2 + 9v_3 + 12v_4 + v_5 = 0
+				\end{equation*}
+			\end{enumerate}
+\end{enumerate}
+
+\subsection{}
+\begin{enumerate}
+	\item 	Nous travaillons dans $F_{4} = F_{2^2}$, donc dans la classe de congruence 2 (car $p=2$), avec 4 éléments. Comme $p=2$, nous savons que 1+1 = 2 = 0. Ainsi, $2x = (1+1)x = 0x = 0$. Avec $x=1$, nous venons de montrer que la caractéristique de $F_4$ est de 2.
+	\item	Commençons par la table d'addition. La première colonne et la première ligne se justifient de la même manière. $0+x = x$, quel que soit $x$. Donc $1+0 =0,\ a+0 = 0,...$. C'est donc assez logiquement que la première ligne et colonne se remplissent. Quand à la diagonale (une addition de 2 mêmes éléments) est aussi facile à faire : $x+x = x(1+1) = 0x = 0$. C'est pour ça que la diagonale est remplie de 0.
+	
+			Pour la table de multiplication c'est encore plus simple. Nous avons vu que $0x = 0$, donc la première ligne et colonne sont forcément uniquement des 0, car on multiplie un élément par 0. Quant à la seconde ligne et colonne, nous avons simplement $1x = x$, donc a $1a = a,\ 1\cdot 1 = 1,\ 1\cdot b = b$. Rien de plus simple.
+	\item	Par définition, un corps est une bijection, autrement dit chaque ligne et colonne comprend exactement une fois chaque élément, seul l'ordre change. Ainsi, la case $a+b$ (prenons l'avant dernière ligne de la dernière colonne, afin de mieux s'illustrer) peut valoir $0,1,a,b$. Elle ne peut pas valoir 0 car il y en a déjà un dans la ligne. De même elle ne peut valoir ni $a$ (car l'élément est déjà en début de ligne) ni $b$ (car déjà en haut de colonne). Il ne reste donc que l'élément 1.
+	\item	Prenons la même case que précédemment. Pour la même raison (bijection), cette case ne peut valoir ni $0$, ni $a$ ni $b$. Elle ne peut donc valoir que $1$.
+	\item	Nous complétons les tables ainsi :
+			\begin{center}
+				\begin{tabular}{c||c|c|c|c}
+					+ & 0 & 1 &$a$& $b$\\
+					\hline
+					\hline
+					0 & 0 & 1 &$a$& $b$\\
+					\hline
+					1 & 1 & 0 & $b$ & $a$\\
+					\hline
+					$a$ &$a$& $b$ & 0 & 1\\
+					\hline
+					$b$ & $b$ &$a$& 1 & 0
+				\end{tabular}
+				$\qquad \quad$
+				\begin{tabular}{c||c|c|c|c}
+					$\times $& 0 & 1 &$a$& $b$\\
+					\hline
+					\hline
+					0 & 0 & 0 & 0 & 0\\
+					\hline
+					1 & 0 & 1 &$a$& $b$\\
+					\hline
+					$a$ & 0 &$a$& $b$ & 1\\
+					\hline
+					$b$ & 0 & $b$ & 1 &$a$
+				\end{tabular}						
+			\end{center}
+	\item	De nouveau, nous n'avons qu'à mettre les éléments dans une matrice, et la réduire. Comme les calculs ne sont pas intuitifs, je noterai par $\begin{bmatrix} \star_1 \\ \star_2 \end{bmatrix}$, respectivement l'opération $\star_1$ sur la première ligne et $\star_2$ sur la seconde ligne, afin de passer à la matrice suivante ; $l_x$ est utilisé pour parler de la ligne $x$. Toutes les matrices sont bien entendu équivalentes. Nous nous aidons des tableaux complétés au-dessus pour ces opérations.
+			\[\left(\begin{array}{cc|c}
+				1 & 1 & a\\
+				a & b & b
+			\end{array}\right)
+			\begin{bmatrix}
+				\cdot a\\
+				\cdot 1
+			\end{bmatrix} \sim
+			\left(\begin{array}{cc|c}
+				a & a & b\\
+				a & b & b
+			\end{array}\right)
+			\begin{bmatrix}
+				\cdot b\\
+				+l_1
+			\end{bmatrix}\sim
+			\left(\begin{array}{cc|c}
+				1 & 1 & a\\
+				0 & 1 & 0
+			\end{array}\right)
+			\begin{bmatrix}
+				+l_2\\
+				\cdot 1
+			\end{bmatrix}
+			\left(\begin{array}{cc|c}
+				1 & 0 & a\\
+				0 & 1 & 0
+			\end{array}\right)\]
+			Donc \fbox{$x=a,\ y=0$}. Ce système a donc une unique solution.
+	\item	\begin{enumerate}
+				\item 	En plaçant les éléments dans une matrice, nous obtenons :
+						\begin{align*}
+							\begin{pmatrix}
+							1 & 0 & a & b\\
+							a & b & 1 & 1\\
+							0 & 1 & b & 0
+							\end{pmatrix}
+							\sim
+							\begin{pmatrix}
+							1 & 0 & a & b\\
+							0 & 1 & b & 0\\						
+							a & b & 1 & 1
+							\end{pmatrix}
+							\begin{bmatrix}
+							\cdot a\\
+							\cdot 1\\
+							\cdot 1
+							\end{bmatrix}
+							\sim
+							\begin{pmatrix}
+							a & 0 & b & 1\\
+							0 & 1 & b & 0\\
+							a & b & 1 & 1
+							\end{pmatrix}
+							\begin{bmatrix}
+								\cdot b\\
+								\cdot b\\
+								+ l_1
+							\end{bmatrix}
+							\sim
+							\begin{pmatrix}
+								1 & 0 & a & b\\
+								0 & b & a & 0\\
+								0 & b & a & 0\\
+							\end{pmatrix}
+							\begin{bmatrix}
+								\cdot 1\\
+								\cdot a\\
+								+ l_2
+							\end{bmatrix}
+							\\
+							\sim
+							\begin{pmatrix}
+								1 & 0 & a & b\\
+								0 & 1 & b & 0\\
+								0 & 0 & 0 & 0
+							\end{pmatrix}
+						\end{align*}
+						Comme nous avons 2 positions de pivot, la \fbox{dimension est de 2} ; comme nous travaillons avec un corps fini de 4 éléments ($F_4$) avec une dimension de 2, le cardinal est de $4^2$ = \fbox{$16 = \varepsilon$} 
+				\item 	Nous tentons de résoudre 
+						\begin{align*}
+							\left(\begin{tabular}{cccc|c}
+								1 & 0 & a & b & 0\\
+								a & b & 1 & 1 & 0\\
+								0 & 1 & b & a & 0
+							\end{tabular}\right)
+						\end{align*}
+						Nous avons vu précédemment la réduction de cette matrice. Ainsi, nous trouvons :
+						\begin{align*}
+							\left(\begin{tabular}{cccc|c}
+								1 & 0 & a & b & 0\\
+								a & b & 1 & 1 & 0\\
+								0 & 1 & b & a & 0
+							\end{tabular}\right)	
+							\sim 
+							\left(\begin{tabular}{cccc|c}
+								1 & 0 & a & b & 0\\
+								0 & 1 & b & 0 & 0\\
+								0 & 0 & 0 & 0 & 0
+							\end{tabular}\right)
+							\to 	
+							\left\{\begin{array}{lllll}
+								v_1 & & + av_3 &+ bv_4 &= 0\\
+								&v_2 &+ bv_3&  &= 0
+							\end{array}\right.
+							\\
+							\to 
+							\left\{\begin{array}{lllll}
+								v_1 = & - av_3 &- bv_4 &\\
+								v_2 = & - bv_3&  
+							\end{array}\right.
+							\to 
+							\left\{\begin{array}{lllll}
+								v_1 = &  av_3 &+ bv_4 &\\
+								v_2 = &  bv_3\\ 
+								v_3 = & v_3\\
+								v_4 = & v_4
+							\end{array}\right.
+							\\	
+							\to \begin{pmatrix}
+							v_1\\
+							v_2\\
+							v_3\\
+							v_4
+							\end{pmatrix}
+							=
+							\begin{pmatrix}
+							a\\
+							b\\
+							1\\
+							0
+							\end{pmatrix}
+							v_3 + 
+							\begin{pmatrix}
+							b\\
+							0\\
+							0\\
+							1
+							\end{pmatrix}
+							v_4
+							\to \fbox{$
+							\left\{\begin{array}{l}
+								av_1 + bv_2  + v_3 = 0\\
+								bv_1 + v_4 = 0  
+							\end{array}\right.$}
+				\end{align*}
+				À la seconde ligne, nous posé (entre autres) que $-av_3 = av_3$, donc que $-a = a$. Ce s'explique par le simple calcul suivant : nous savons que $a+a (=b+b) = 0$. Par une simple soustraction, nous voyons que $a = a$ et que $b=-b$
+				
+				Ces deux équations définissent bien $V$ (on peut voir qu'elles engendre $V$ avec quelques calculs simples), et on ne peut pas faire moins que 2 (car ces deux équations sont linéairement indépendantes). Les conditions sont donc bien respectées.
+			\end{enumerate}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

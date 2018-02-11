@@ -1,0 +1,244 @@
+%-------------------------------------------
+%---Packages--------------------------------
+%-------------------------------------------
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{txfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{blindtext}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{csquotes}	    %
+\usepackage{enumitem}	    %pour mieux bosser avec les listes. ajoute option label
+\usepackage[yyyymmdd]{datetime}        %pour définir date custom
+\usepackage{etaremune}    
+\usepackage{environ}
+\usepackage{fancybox}
+\usepackage{fancyhdr} 	    % Custom headers and footers
+\usepackage{fancyref}
+%\usepackage{float}
+\usepackage{floatrow}       %float and floatrow can't be together...
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=purple, citecolor=cyan]{hyperref}
+\usepackage{footnotebackref}
+\usepackage{lipsum}
+\usepackage{mathtools}
+\usepackage{multicol}	    %gérer plusieurs colonnes
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage{todonotes}	    %Bonne gestion des TODOs
+%TODO commenté pour tester l'utilité... à voir% \usepackage[tc]{titlepic}      %Permet de mettre une image en page de garde
+\usepackage{tikz}	    % Pour outil de dessin puissant 
+\usepackage{ulem}	    %underline sur plusieurs lignes (avec \uline{})
+\usepackage{vmargin} 	    %gestion des marges, avec dans l'ordre : gauche, haut, droit, bas, en-tête, entre en-tête et texte, bas de page, hauteur entre bas de page et texte 
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage{xparse}                    %Pour utiliser NewDocumentCommand et des arguments 'mmooo'
+%\usepackage{fullpage} 	    %supprime toutes les marges allouées aux notes, aussi en haut et en bas
+
+%\ExplSyntaxOn
+\pagestyle{fancyplain}	    %Makes all pages in the document conform to the custom headers and footers
+
+%-------------------------------------------
+%---Document Commands-----------------------
+%---------------------------{----------------
+\NewDocumentCommand{\framecolorbox}{oommm}
+ {% #1 = width (optional)
+  % #2 = inner alignment (optional)
+  % #3 = frame color
+  % #4 = background color
+  % #5 = text
+  \IfValueTF{#1}%
+   {\IfValueTF{#2}%
+    {\fcolorbox{#3}{#4}{\makebox[#1][#2]{#5}}}%
+    {\fcolorbox{#3}{#4}{\makebox[#1]{#5}}}%
+   }%
+   {\fcolorbox{#3}{#4}{#5}}%
+ }%
+%------------------------------------------------
+%------------------ENGLISH----------------------
+%----------------------------------------------
+
+\NewDocumentCommand{\epflTitle}{mO{Olivier Cloux}O{\today}O{Notes de Cours en}O{../../Common}}%Arguments : Matière, Auteur, Date, Titre du doc
+{
+\begin{titlepage}
+    \vspace*{\fill}
+    \begin{center}
+        \normalfont \normalsize 
+        \textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+        \textsc{#4} %Titre du doc
+        \\ [0.4 pt]
+        \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+        \huge #1 \\ % Matière
+        \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+        \includegraphics[width=8cm]{#5/EPFL_logo}
+        ~\\[0.5 cm]
+        \small\textsc{#2}\\[0.4cm]
+        \small\textsc{#3}\\
+        ~\\
+        ~\\
+        \includegraphics[scale=0.5]{#5/creativeCommons}
+    \end{center}
+    \vspace*{\fill}
+\end{titlepage}
+}
+
+
+%-------------------------------------------
+%-------------MATH NEW COMMANDS-------------
+%-------------------------------------------
+\newcommand{\somme}[2]{\ensuremath{\sum\limits_{#2}^{#1}}}
+\newcommand{\produit}[2]{\ensuremath{\prod\limits_{#2}^{#1}}}
+\newcommand{\limite}{\lim\limits_}
+\newcommand{\llimite}[3]{\limite{\substack{#1 \\ #2}}\left(#3\right)}	%limites à deux condiitons
+\newcommand{\et}{\mbox{ et }}
+\newcommand{\deriv}[1]{\ensuremath{\, \mathrm d #1}}	%sigle dx, dt,dy... des dérivées/intégrales
+%\newcommand{\fx}{\ensuremath{f'(\textbf{x}_0 + h}}
+\newcommand{\ninf}{\ensuremath{n \to \infty}}	       %pour les limites : n tend vers l'infini
+\newcommand{\xinf}{\ensuremath{x \to \infty}}	       %pour les limites : x tend vers l'infini
+\newcommand{\infint}{\ensuremath{\int_{-\infty}^{\infty}}}
+\newcommand{\xo}{\ensuremath{x \to 0}}									%x to 0
+\newcommand{\no}{\ensuremath{n \to 0}}									%n zéro
+\newcommand{\xx}{\ensuremath{x \to x}}									%x to x
+\newcommand{\Xo}{\ensuremath{x_0}}										%x zéro
+\newcommand{\X}{\ensuremath{\mathbf{X}} }
+\newcommand{\A}{\ensuremath{\mathbf{A}} }
+\newcommand{\R}{\ensuremath{\mathbb{R}} }								%ensemble de R
+\newcommand{\rn}{\ensuremath{\mathbb{R}^n} } 							%ensemble de R de taille n
+\newcommand{\Rm}{\ensuremath{\mathbb{R}^m} }  							%ensemble de R de taille m
+\newcommand{\C}{\ensuremath{\mathbb{C}} } 		
+\newcommand{\N}{\ensuremath{\mathbb{N}} }
+\newcommand{\Z}{\ensuremath{\mathbb{Z}} }
+\newcommand{\Q}{\ensuremath{\mathbb{Q}} }
+\newcommand{\rtor}{\ensuremath{\R \to \R} }
+\newcommand{\pour}{\mbox{ pour }}
+\newcommand{\coss}[1]{\ensuremath{\cos\(#1\)}}						%cosinus avec des parenthèses de bonne taille (genre frac)
+\newcommand{\sinn}[1]{\ensuremath{\sin\(#1\)}}					%sinus avec des parentèses de bonne taille (genre frac)
+\newcommand{\txtfrac}[2]{\ensuremath{\frac{\text{#1}}{\text{#2}}}}		%Fractions composées de texte
+\newcommand{\evalfrac}[3]{\ensuremath{\left.\frac{#1}{#2}\right|_{#3}}}
+\renewcommand{\(}{\left(}												%Parenthèse gauche de taille adaptive
+\renewcommand{\)}{\right)}
+\newcommand{\longeq}{=\joinrel=}												%Parenthèse droite de taille adaptive
+
+
+%-------------------------------------------------------
+%------------------MISC NEW COMMANDS--------------------
+%-------------------------------------------------------
+\newcommand{\degre}{\ensuremath{^\circ}}
+%\newdateformat{\eudate}{\THEYEAR-\twodigit{\THEMONTH}-\twodigit{\THEDAY}}
+
+
+
+%-------------------------------------------------------
+%------------------TEXT NEW COMMANDS--------------------
+%-------------------------------------------------------
+\newcommand{\ts}{\textsuperscript}
+\newcommand{\evid}[1]{\textbf{\uline{#1}}}        %mise en évidence (gras + souligné)
+
+
+
+%\newcommand{\Exemple}{\underline{Exemple}}
+\newcommand{\Theoreme}{\underline{Théorème}}
+\newcommand{\Remarque}{\underline{Remarque}}
+\newcommand{\Definition}{\underline{Définition} }
+\newcommand{\skinf}{\sum^{\infty}_{k=0}}
+\newcommand{\combi}[2]{\ensuremath{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}}	%combinaison parmi 1 de 2
+\newcommand{\intx}[3]{\ensuremath{\int_{#1}^{#2} #3 \deriv{x}}}				%intégrale dx
+\newcommand{\intt}[3]{\ensuremath{\int_{#1}^{#2} #3 \deriv{t}}}				%intégrale dy
+\newcommand{\misenforme}{\begin{center} Mis en forme jusqu'ici\\ \line(1,0){400}\\ normalement juste, mais à améliorer depuis ici\end{center}}	%raccourci pour mise en forme
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}			%pour entourer un chiffre
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 				% Create horizontal rule command with 1 argument of height
+
+\theoremstyle{definition}
+\newtheorem{exemp}{Exemple}
+\newtheorem{examp}{Example}
+
+
+%-------------------------------------------
+%---Environments----------------------------
+%-------------------------------------------
+\NewEnviron{boite}[1][0.9]{%
+	\begin{center}
+		\framecolorbox{red}{white}{%
+			\begin{minipage}{#1\textwidth}
+ 	 			\BODY
+			\end{minipage}
+		}
+	\end{center}
+}
+\NewEnviron{blackbox}[1][0.9]{%
+	\begin{center}
+		\framecolorbox{black}{white}{%
+			\begin{minipage}{#1\textwidth}
+ 	 			\BODY
+			\end{minipage}
+		}
+	\end{center}
+}
+\NewEnviron{exemple}[1][0.8]{%
+    \begin{center}
+        \framecolorbox{white}{gray!20}{%
+            \begin{minipage}{#1\textwidth}
+                \begin{exemp}
+                    \BODY
+                \end{exemp}
+            \end{minipage}
+        }
+    \end{center}
+}
+\NewEnviron{suiteExemple}[1][0.8]{%
+    \begin{center}
+        \framecolorbox{white}{gray!20}{%
+            \begin{minipage}{#1\textwidth}
+                \BODY
+            \end{minipage}
+        }
+    \end{center}
+}
+\NewEnviron{colExemple}[1][0.8]{%
+    \begin{center}
+        \framecolorbox{white}{gray!20}{%
+            \begin{minipage}{#1\columnwidth}
+                \begin{exemp}
+                    \BODY
+                \end{exemp}
+            \end{minipage}
+        }
+    \end{center}
+}
+\NewEnviron{example}[1][0.8]{%
+    \begin{center}
+        \framecolorbox{white}{gray!20}{%
+            \begin{minipage}{#1\textwidth}
+                \begin{examp}
+                    \BODY
+                \end{examp}
+            \end{minipage}
+	}
+    \end{center}
+}
+\NewEnviron{systeq}[1][l]{
+			\begin{center}
+				$\left\{\begin{array}{#1}
+					\BODY
+				\end{array}\right.$
+			\end{center}
+ }
+
+
+
+
+
+%-------------------------------------------
+%---General settings-----------------------
+%-------------------------------------------
+\renewcommand{\headrulewidth}{1pt}										%ligne au haut de chaque page
+\renewcommand{\footrulewidth}{1pt}										%ligne au pied de chaque page
+\setstretch{1.6}
+\author{Olivier Cloux}

@@ -1,0 +1,181 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+
+%opening
+\title{ICC}
+\author{Brunner Loïc}
+
+\begin{document}
+
+\maketitle
+
+
+\subsection{}
+http://moodle.epfl.ch/course/view.php?id=14006
+\newline
+http://lacal.epfl.ch/IC-ICC
+\newline
+akl@epfl.ch
+\newline
+attention, il y aura des tests en cours de semestre
+\section{introduction}
+this course contain all the computer science. it will show the adcances trigger changes in society:
+\begin{itemize}
+ \item transportation
+ \item computation
+ \item communication(telephone,arpanet,web)
+\end{itemize}
+the question is: what is the next trigger...
+\newline
+the conmputer has become inconceivable, we could predict it becouse we need:
+\begin{enumerate}
+ \item raw computing
+ \item storage capacity
+ \item reliability, low cost
+\end{enumerate}
+\subsection{calcul scientifique}
+l'utilisation dans des systèmes complexes et si on exige une grande puissance de calcul. La nouvelle tendance est à la grappe d'ordianteurs qui commencent à remplacer les super-calculateurs.
+\subsection{fondement du calcul}
+Les fondements du calcul viennent de besoin particuliers:
+\begin{itemize}
+ \item calcul algorithme(recherche, tri, plus court)
+ \item stratégie de calcul(itération, réccurtions,...)
+ \item théorie du calcul
+ \item représentation de l'information
+\end{itemize}
+\subsection{a savoir}
+\begin{equation}
+ 10^3 = 2^{10}\blacktriangleright 10^{18} = 2^{60}
+\end{equation}
+
+\subsection{computer}
+they are programmable automata
+\begin{description}
+ \item automation:\\{device that performs a fixed task}
+ \item programmable:\\{if the nature of the task can be changed as well by providing a different way}
+ \item stuff:\\{numbers, textual data}
+ \item operated on:\\{added, multiplied, managed, edited}
+ \item task:\\{sth that had to be done}
+ \end{description}
+
+ \subsection{algorithme}
+ given finite amount of data
+ \newline
+ some task T related to D
+ \newline
+ an algorithme is a finite sequence of precise operations, well-defined by D, that results in completion of T
+\paragraph{}
+algorithme have to be:
+ \begin{itemize}
+  \item sequential
+  \item parallel
+  \item distributed
+ \end{itemize}
+algorithme not the same as programm. It a conceptual, human-readable solution. Programme works on computers. Programms use algorithmes.
+
+\subsection{basic ingredient of algorithmes}
+
+\begin{description}
+ \item variables:\\{a piece of data}
+ \item assignment:\\{variable is changed using an assignment}
+ \item controle structure:\\{to allow instructions to be carried out in a data-dependent manner(conditional,count-controller loop,condition controller loop}
+\end{description}
+
+ideally, the algorithme terminate and performs the right task. Meticulous work with a serious reflexion.
+
+\subsection{common algorithme and tools}
+\begin{description}
+ \item searching:\\{searching x for a list of e elements}
+ \item big O:\\{used to compare the algorithmes}
+ \item optimisation:\\{shortest, cheapest, fastest, most profitable}
+\end{description}
+the complexity of the algorithme depends of the operations that are use $O(2^n)$ is the worse. The complexity of sorting things is $O(n^2)$.
+
+\subsection{the big O}
+ f is the O(g)   f,g R$\longrightarrow R$
+ \newline
+ $\exists x_0,c\forall x>=x_0$  $|f(x)| \leq c|g(x)|$
+ \newline
+ $\forall k>0\forall \varepsilon>0$ $(log(n))^k$ is $O(n^2)$
+ 
+ \section{common approache to solve problems}
+ To solve problems, ofter we hasad to separate them into pieces. Every problem came of a subproblem which is mayby wrong...
+ 
+ \paragraph{}
+ sur les diaporamas il y a tout alors fait pas chier
+ 
+ \paragraph{complexity}
+ \begin{enumerate}
+  \item O(i)
+  \item =O(log(n))
+  \item O(n)
+  \item O(nlog(n))
+  \item O(n$^2$)
+  \item $O(n^3)$
+ \end{enumerate}
+ 
+ regarde les diapos boulet...
+ \newline
+ Fais gaffe quand même parce que les additions binaires sont importantes ;)
+ \newline
+ Bon reprenons sérieusement:
+ \section{signals}
+ \begin{description}
+  \item signal:\\{just a function from $R^n\mapsto R^m$}
+ \end{description}
+Nous allons considérer a tord que tout signal est une somme de sinus
+\begin{description}
+\item fitre:\\{transform the function to reduce the "nose"}
+\end{description}
+Floyd d(i,j) distances between cities <i,j, $1\leq i,j\leq n$
+\newline
+first allow just city, as intermediate city. $\forall i,j d(i,j)=min(d(i,j),d(i,1)+d(1,j))$
+\newline
+now allow both cities 1 and 2 $\forall i,j:d(i,j)=min(d(i,j),d(i,2)+d(2,i))$
+\newline
+continue for all cities...
+\newline
+reconstruire un signal à partir de sa forme échantillonée(interpolation)polynome de Lagrange (oublie pas le colège, je me demande si tu en auras vraimetn besoin mais bon...;)
+\newline
+Mais on utilise d'autres techniques, cf le cours
+\section{partie II du cours}
+une sinusoide:X(t)=$asin(2f*pi+\delta)$
+\begin{itemize}
+ \item a=amplitude
+ \item f=fréquence
+ \item $\delta$= déphasage
+\end{itemize}
+\paragraph{signaux en général}
+Nous supposons que tout signal est une somme de sinusoides
+\begin{itemize}
+ \item période T($\frac{1}{f}$)
+\end{itemize}
+\subsection{les filtres passe-bas}
+suppression des hautes fréquences d'un signal. En gros tu supprime tous les sinus qui ont une fréquence plus gandes que la fréquence de coupure $f_c$, plus simple tu meurs
+\subsection{filtre à moyenne mobile}
+X'(t)=$\frac{1}{T_c}\int^t_{t-T_c}X(s)ds$
+\paragraph
+Avec un tel filtre nous voyons venir une borne supérieure:$\frac{1}{pi*f*T_c}$
+\subsection{échantillonage}
+Nous devons choisir la bonne période d'échantillonage sinon nous avons soit triop d'info à traiter, soit pas assez d'info pour recréer le signal
+\paragraph
+pour pouvoir reconstruire la sinisoide à partir de sa version échantillonée: $f_e>2f$
+\subsubsection{reconstruction d'un signal}
+Nous avons une  formule d'interpolation:$X_1(t)=\sum_{n\in Z}X(nT_e)sinc(\frac{1-nT_e}{T_e})$
+\subsection{compression de données}
+Nous voulons éliminer les redondances qui ne sont pas utiles pour faciliter le stockage et la transmission
+\subsection{entropie}
+est définie par:H(x)=$p_1log_2(\frac{1}{p_1})+...+p_nlog_2(\frac{1}{p_n})$
+\paragraph
+Pour deviner qu'une lettre apparaît avec une probabilité p, on a besoin de $log_2(\frac{1}{p})$ questions
+\begin{description}
+ \item entropie:\\{mesure la qté d'information contenue dans un signal}
+\end{description}
+
+
+
+
+\end{document}
+
+ 

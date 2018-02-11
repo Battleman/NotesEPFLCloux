@@ -1,0 +1,235 @@
+\documentclass[10p,a4paper]{scrartcl}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\setstretch{1}
+\fancyhead[L]{Sciences de l'information } % formatage en-tête - matière
+\fancyhead[C]{Série 12} 	% formatage en-tête - Série
+\fancyhead[R]{Olivier Cloux}	% formatage en-tête - Nom
+\setmarginsrb{20mm}{20mm}{20mm}{15mm}{-5pt}{15mm}{0pt}{8mm}
+\title{	
+	\normalfont \normalsize 
+	\textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+	\textsc{Sciences de l'information}\\ [0pt] %Name of the course
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Série 12 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+\date{}
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\begin{document}
+
+\maketitle
+\setcounter{section}{12}
+\subsection{}
+\begin{enumerate}
+	\item	$a_1 = (s \mod 9)+ 1 = 3 + 1 =$ \fbox{4}\\
+			$i = (s \mod 8) + 1 = 1+1 = 2$. $a_2$ est le second élément de $\{1,2,3,5,6,7,8,9\}$, qui est \fbox{2}\\
+			$j = (0s \mod 7) + 1 = 3+1 = 4$. $a_3$ est le quatrième élément de $\{1,3,5,6,7,8,9\}$, qui est \fbox{6}\\
+			$b_1 = (a_1^2) \mod 13 = 4^2 \mod 13 = 16\mod 13 =$ \fbox{3}\\
+			$b_2 = (a_2^2) \mod 13 = 2^2 \mod 13 = 4 \mod 13 =$ \fbox{4}\\
+			$b_3 = (a_3^2) \mod 13 = 6^2 \mod 13 = 36\mod 13 =$ \fbox{10}
+			
+	\item	Pour trouver $H$, nous devons d'abord passer $G$ en forme systématique :
+			\begin{align*}
+				\begin{pmatrix}
+					1 & 1 & 1 & 1 & 1\\
+					0 & 12 & 4 & 2 & 6\\
+					0 & 1 & 3 & 4 & 10
+				\end{pmatrix} \sim
+				\begin{pmatrix}
+					1 & 1 & 1 & 1 & 1\\
+					0 & 1 & 3 & 4 & 10\\
+					0 & 0 & 7 & 6 & 3
+				\end{pmatrix}\sim
+				\begin{pmatrix}
+					1 & 0 & 11 & 10 & 4\\
+					0 & 1 & 3 & 4 & 10\\
+					0 & 0 & 1 & 12 & 6
+				\end{pmatrix} \sim
+				\begin{pmatrix}
+					1 & 0 & 0 & 8 & 3\\
+					0 & 1 & 0 & 7 & 5\\
+					0 & 0 & 1 & 12 & 6
+				\end{pmatrix}\\
+				\to \left\{
+				\begin{array}{l}
+					x_1 = u_1\\
+					x_2 = u_2\\
+					x_3 = u_3\\
+					x_4 = 8u_1 + 7u_2 + 12u_3\\
+					x_5 = 3u_1 + 5u_2 + 6u_3
+				\end{array}\right.
+				\to\left\{
+				\begin{array}{l}
+				 	5x_1 + 6x_2 + x_3 + x_4 = 0\\
+				 	10x_1 + 8x_2 + 7x_5 + x_5 = 0
+				\end{array}\right.
+				\to H = 
+				\begin{pmatrix}
+					5 & 6 & 1 & 1 & 0\\
+					10 & 8 & 7 & 0 & 1
+				\end{pmatrix}
+			\end{align*}
+			\newpage
+	\item	\begin{algorithm}[!h]
+	\algrenewcommand{\algorithmiccomment}[1]{\hskip3em$\rightarrow$ #1}
+				\caption{Algorithme exo3.c}\label{distance}
+				\begin{algorithmic}
+					\State $G[5][3]$
+					\State $dmin \gets 5$
+					\State $dtemp \gets 0$
+					\State $motDeCode[3]$
+					\State $encode[5]$
+					\For{($i = 0;\, i< 12;\, i++$)}
+						\State $motDeCode[0] \gets i$
+						\For{($j= 0;\, j<12;\, j++$)}
+							\State $motdeCode[1] \gets j$
+							\For{($k = 0;\, k< 12;\, k++$)}
+								\State $motDeCode[2] \gets k$
+								\State $multimat(encode, motDeCode,\ G)$ \Comment{multimat est expliquée plus bas}
+								\For{$l = 0,\ l < 5,\ l++$}
+									\If{$encode[l] != 0$}
+										\State $dtemp++$
+									\EndIf
+								\EndFor
+								\If{$(dtemp < dmin) \wedge (dtemp != 0)$}
+									\State $dmin = dtemp$
+								\EndIf
+							\EndFor
+						\EndFor
+					\EndFor
+					\State \Return{$dmin$}
+				\end{algorithmic}
+			\end{algorithm}
+			La fonction multimat prend en argument 3 tableaux (matrices), multiplie les second et troisième et met le résultat de la multiplication dans le premier.
+	\item	Selon la théorie, notre code peut corriger tous les effacement de poids $p < d_{min}(C)$. Or, $d_{min}(C) = 3$, \fbox{donc il est possible de corriger toutes les erreurs de poids 2 maximum}
+	\item	Nous savons qu'il existe un mot $(x\ y\ z)$ tel que $(x\ y\ z)\cdot G = (u\ 5\ 3\ v\ 9)$. En considérant ce que nous savons pour sûr (les colonnes 2,3 et 5), nous pouvons affirmer que notre mot doit satisfaire :
+			\[\left\{
+			\begin{array}{l}
+			x+12y + z = 5\\
+			x+4y + 3z = 3\\
+			x + 6y + 10z = 9
+			\end{array}\right. \to 
+			\(\begin{tabular}{ccc|c}
+			1 & 12 & 1 & 5\\
+			1 & 4 & 3 & 3\\
+			1 & 6 & 10 & 9
+			\end{tabular}\)
+			\]
+			Nous réduisons cette matrice comme nous savons très bien le faire, car il ne s'agit que de la 80\ts{ème} fois. Je me sens las. Nous obtenons donc 
+			\[\(\begin{tabular}{ccc|c}
+				1 & 0 & 0 & 6\\
+				0 & 1 & 0 & 0\\
+				0 & 0 & 1 & 12
+			\end{tabular}\)\]
+			Ce qui nous donne que le seul mot qui donne un mot encodé similaire est le mot $(6\ 0\ 12)$. Nous le multiplions par G pour obtenir l'encodage complet, ce qui est \fbox{$(6\ 5\ 3\ 2\ 9)$} donc \fbox{$u = 6$ et $v = 2$}. Il est donc tout a fait possible de corriger cette erreur (car elle est de poids 2)
+	\item	\begin{enumerate}
+				\item 	Nous n'avons qu'à multiplier nos vecteurs par $H^T$, pour obtenir un vecteur de taille $1\times 2$ qui est le syndrome. Un vecteur est un mot de code si et seulement si le syndrome vaut $\vec{0}$. Ainsi : 
+						\[\begin{pmatrix}
+							\vec{A}\\
+							\vec{B}\\
+							\vec{C}
+						\end{pmatrix} \cdot H^T = 
+						\begin{pmatrix}
+							0 & 7 & 11 & 12 & 10\\
+							8 & 12 & 11 & 12 & 10\\
+							0 & 7 & 8 & 12 & 10
+						\end{pmatrix} \cdot
+						\begin{pmatrix}
+							5 & 10\\
+							6 & 8\\
+							1 & 7\\
+							1 & 0\\
+							0 & 1
+						\end{pmatrix} = 
+						\begin{pmatrix}
+							0 & 0\\
+							5 & 3\\
+							10 & 3
+						\end{pmatrix}
+						=
+						\begin{pmatrix}
+							\vec{s}_A\\
+							\vec{s}_B\\
+							\vec{s}_C\\
+						\end{pmatrix}\]
+						\fbox{Donc $\vec{A}$ est un mot de code, alors que $\vec{B}$ et $\vec{C}$ n'en sont pas}
+				\item	$\vec{e} \in F_{13}^5$ signifie toutes les vecteurs de dimension 5, dans la classe de congruence 13. De plus, $w(\vec{e}) = 1$ signifie que sa distance à 0 doit être de 1, donc avoir un et seulement un élément différent de 0. Soit l'ensemble des vecteurs 
+						\[\{(0,0,0,0,1),(0,0,0,0,2),(0,0,0,0,3),\ldots,(0,0,0,0,12), (0,0,0,1,0),(0,0,0,2,0,),\ldots(12,0,0,0,0)\]					
+						Nous voyons bien \fbox{qu'il ne s'agit pas d'un espace vectoriel}, car la somme de deux éléments n'est pas un élément de l'espace. Par exemple, (0,0,0,0,1) + (1,0,0,0,0) = (1,0,0,0,1), qui n'est pas un élément de $\epsilon_1$. 
+						
+						\fbox{Son cardinal est $12 \cdot 5 = 60$}, car chaque coordonnée du vecteur peut prendre 12 formes (de 1 à 12), mais indépendamment : le premier peut prendre 12 formes et les autres sont à 0, puis le second prend 12 formes avec les autres à 0 et ainsi de suite. Ainsi : $12\cdot 5 = 60$.
+						
+						Le code $C$ engendré par notre matrice génératrice est de distance minimale 3, ce qui signifie qu'aucun mot de code n'est de distance 1 ou 2 (et un seul mot, $\vec{0}$, est de distance 0) alors qu'au moins un mot de code est de poids 3.\\
+						Supposons, par l'absurde, qu'il existe deux mots distincts $\vec{a}$ et $\vec{b}$ tels que $\vec{a}H^T = \vec{b}H^T$. Par un simple calcul, nous voyons qu'il est nécessaire que $(\vec{a}-\vec{b})H^T = 0$, ce qui  signifie que, par définition de la matrice de contrôle, que ($\vec{a}-\vec{b}$) est un mot de code valide. Comme les deux mots sont différents, $w(\vec{a} - \vec{b}) = 2$ \big(ou 1, par exemple avec $(0,0,5,0,0)-(0,0,3,0,0)$\big)Par définition de notre code, cela est strictement impossible. Il est donc obligatoire que $\vec{a} = \vec{b}$. Donc $f$ est injectif. Par définition de l'injectivité, \fbox{le cardinal de $\textit{F}_1$ est le même que celui de} \\\fbox{$\epsilon_1$, soit 60.} \\
+						\fbox{L'application n'est donc pas bijective}, car $|F_{13}^2| = 13^2 = 169 \neq 60 = |\textit{F}_1$ 
+					
+				\item 	\begin{align*}
+								\vec{e} = \vec{y} - \vec{x}\\
+								 \iff \vec{y} = \vec{e} + \vec{x}
+						\end{align*}
+						Nous savons que $\vec{x}$ est un mot de code valide, donc que son syndrome vaut 0. Ainsi 
+						\begin{align*}
+							\vec{s} = \vec{y}H^T = (\vec{e} + \vec{x})H^T = \vec{e}H^T + \vec{x}H^T = \vec{e}H^T
+						\end{align*}
+						Puisque l'erreur est simple (de poids 1), nous pouvons conclure que $w(\vec{e}) = 1$ et donc (comme nous l'avons montré dans le point précédent), $\vec{e} \in \epsilon_1$. Ainsi
+						\[\vec{s} = \vec{e}H^T = f(\vec{e}) \in \textit{F}_1\] Comme nous venons aussi de le montrer.
+						\newpage
+				\item	\begin{algorithm}
+							\caption{Algorithme $6\_d$.c :}
+							\begin{algorithmic}
+								\State $S[2];$
+								\State $e[5];$
+								\State $H[2][5];$
+								\State $sol[2];$
+								\For{($i = 0; i<5; i++$)}
+									\State $setNull(e); \Comment{\text{Met tous les éléments de e à 0}}$
+									\For{($j = 1; j<13; j++$)}
+										\State $sol = multimat(e, G)$
+										\If{$((S[0] == sol[0])\ \wedge\ (S[1] == sol[1]))$}
+											\State \Return $e$
+										\EndIf
+									\EndFor 
+								\EndFor
+								\State \Return noSol;
+							\end{algorithmic}
+						\end{algorithm}
+						
+				\item	\begin{algorithm}[!h]
+							\caption{Algorithme decodeur.c :}
+							\begin{algorithmic}
+								\State $x[5];$
+								\State $y[5];$
+								\State $S[2];$
+								\State $e[5];$
+								\State $eSol[5];$
+								\State $H[2][5];$
+								\State $S = multimat(y,H);$
+								\State $sol[5]$
+								\State $boolean\ corrigible = false;$
+								\If{($S = 0$)}
+									\State \Return $y$;
+								\Else								 
+									\For{($all\ e$)}
+										\State $sol = multimat(e,H);$
+										\If{$((S[0] == sol[0])\ \wedge\ (S[1] == sol[1]))$}
+											\State  $eSol = e$
+										\EndIf 
+									\EndFor
+								\EndIf
+								\If{(corrigible)}
+									\State $x = y - eSol;$
+									\State \Return $x$;
+								\Else
+									\State \Return nosol;
+								\EndIf
+							\end{algorithmic}
+						\end{algorithm}
+						En appliquant notre algorithme à A,B et C, nous trouvons que A est vrai, que B ne peut pas être corrigé, et que C peut l'être, et que sa version corrigée est (0,7,8,12,0).
+				\item Cela est tout a fait possible. Pour cela, nous n'avons qu'à considérer $\vec{x}$ comme étant la somme de 3 éléments de $\epsilon_1$, $\vec{a}+\vec{b}+\vec{c}$. Donc $\vec{x}H^T = 0$ (par définition) $\iff (\vec{a} + \vec{b} + \vec{c})H^T = 0 \iff -(\vec{a}+\vec{b})H^T = \vec{c}H^T = \vec{s}$ (nous définissons $\vec{s}$ comme tel). $\vec{s}$ est forcément dans $\textit{F}_1$, car c est dans $\epsilon_1$. Mais $w(-\vec{a}-\vec{b}) = 2$ (car deux mots différents dans $\epsilon_1$, nous l'avons montré avant). Cela constitue une erreur double $\vec{e} = -\vec{a}-\vec{b}$ qui a pour syndrome un vecteur de $\textit{F}_1$. En effet, notre algorithme peut corriger des erreurs de poids simple (et nous pouvons même corriger des erreurs de poids 2). Mais en admettant qu'une erreur crée presque un mot valide, il est possible de confondre cette erreur pour une erreur simple, alors qu'il s'agissait d'une erreur de poids 4.
+			\end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,200 @@
+\documentclass[10p,a4paper]{scrartcl}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+
+\setstretch{1}
+\fancyhead[L]{Sciences de l'information } % formatage en-tête - matière
+\fancyhead[C]{Série 8} 	% formatage en-tête - Série
+\fancyhead[R]{Olivier Cloux}	% formatage en-tête - Nom
+\setmarginsrb{20mm}{20mm}{20mm}{15mm}{-5pt}{15mm}{0pt}{8mm}
+\title{	
+\normalfont \normalsize 
+\textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+\textsc{Sciences de l'information}\\ [0pt] %Name of the course
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Série 8 \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+\date{}
+\begin{document}
+
+\maketitle
+\setcounter{section}{8}
+\subsection{}
+\begin{enumerate}
+	\item	Ce groupe \uline{n'est pas commutatif}, car il n'existe pas d'élément symétrique pour les éléments différents de 0.
+	\item 	Ce groupe \uline{est commutatif}. En effet, il répond à tous les critères :
+			\begin{itemize}
+				\item 	L'addition est associative, aussi avec des entiers.
+				\item 	L'élément neutre est $e =0$ car $a+0 = a\ \forall a \in \Z$
+				\item 	Le symétrique est $-a$, car $a + (-a) = 0 = e\ \forall a \in \Z$
+				\item 	$a + b = b+a\ \forall a,b \in \Z$
+			\end{itemize}
+	\item 	Notre élément neutre est $e=1$, car $a \cdot 1 = a \ \forall a \in \Z$.\\
+			Malheureusement, il n'y a pas d'élément inverse pour 0. En effet, $0 \cdot a = 0 \neq 1 = e\ \forall a \in \Z$
+			Donc ce groupe \uline{n'est pas commutatif}
+	\item	Soient A et B deux angles de matrices de rotations.\\ 
+			\setstretch{1.5}
+			$\begin{array}{ll}
+				&\begin{pmatrix}
+					\cos(A) & -\sin(A)\\
+					\sin(A) & \cos(A)
+				\end{pmatrix}
+				\cdot
+				\begin{pmatrix}
+					\cos(B) & -\sin(B)\\
+					\sin(B) & \cos(B)
+				\end{pmatrix}\\ 
+				=& 
+				\begin{pmatrix}
+					\cos(A)\cos(B) - \sin(A)\sin(B) & -\cos(A)\sin(B) - \sin(A)\cos(B)\\
+					\sin(A)\cos(B) + \cos(A)\sin(B) & -\sin(A)\sin(B) + \cos(A)\cos(B)
+				\end{pmatrix}\\
+				= &
+				\begin{pmatrix}
+					\cos(A+B) & -\sin(A+B)\\
+					\sin(A+B) & \cos(A+B)
+				\end{pmatrix}
+			\end{array}						
+			$\\ (selon les lois d'addition trigonométriques).
+			\setstretch{1}
+			Nous voyons bien que cela correspond aussi à une matrice de rotation. Cela nous indique qu'appliquer deux matrices de rotation à la suite revient à additionner les angles de rotation. Regardons si cela correspond aux critères d'un groupe commutatif :
+			\begin{itemize}
+				\item 	Associativité : Appliquer trois matrices de rotations à la suite, respectivement $(A + (B + C))$ ou $(A + B) + C$ revient dans tous les cas à additionner les angles $A,B,C$ (nous savons que l'addition est associative). Donc l'associativité est respectée.
+				\item 	Notons $E=0$ l'élément (angle) neutre. Faire une rotation de $A + E$ degrés = $A + 0 = A$ degrés, pour tout A. D'ailleurs, prendre un angle de 0 donnera la matrice $I_{2}$, donc multiplier une matrice quelconque\footnote{de bonne taille} par la matrice identité ne changer pas notre matrice quelconque
+				\item 	L'élément symétrique à $A$ est $-A$. En effet, $A + (-A) = 0 = E$. Cela donnera par ailleurs la matrice $I_2$, donc aucune rotation.
+				\item Pour finir, faire une rotation de $A$ puis $B$ degrés ou $B$ puis $A$ degrés donne toujours $A+B = B+A$ degrés. Dons la commutativité est respectée. 
+			\end{itemize}
+			Tous ces éléments nous permettent de conclure que nous sommes en présence d'un magnifique groupe commutatif.
+\end{enumerate}
+
+\subsection{}
+\begin{enumerate}
+	\item	$\Z/mZ^*$ représente l'ensemble des éléments inversibles de $\Z/m\Z$. Les éléments inversibles sont ceux qui sont inférieurs à $m$ et premiers avec lui. Dans le cas de 15, \uline{il y a 8 éléments}, qui sont :
+			\begin{equation*}
+				[1]_{15},[2]_{15},[4]_{15},[7]_{15},[8]_{15},[11]_{15},[13]_{15},[14]_{15}
+			\end{equation*}
+	\item	\begin{tabular}{r|cccccccc}
+				$(\Z/15\Z^*,\cdot)$ & 1 & 2 & 4 & 7 & 8 & 11 & 13 & 14	\\			
+				\hline
+				1 & 1 & 2 & 4 & 7 & 8 & 11 & 13 & 14\\
+				2 & 2 & 4 & 8 & 14 & 1 & 7 & 11 & 13\\
+				4 & 4 & 8 & 1 & 13 & 2 & 14 & 7 & 11\\
+				7 & 7 & 14 & 13 & 4 & 11 & 2 & 1 & 8\\
+				8 & 8 & 1 & 2 & 11 & 4 & 13 & 14 & 7\\
+				11 & 11 & 7 & 14 & 2 & 13 & 1 & 8 & 4\\
+				13 & 13 & 11 & 7 & 1 & 14 & 8 & 4 & 2\\
+				14 & 14 & 13 & 11 & 8 & 7 & 4 & 2 & 1
+			\end{tabular}
+	\item 	Notons que dans ($\Z/15\Z^*,\cdot)$ l'élément neutre est $[1]_{15}$. Nous allons donc aller au cas par cas :
+			\begin{itemize}
+				\item 	$[1]_{15}$ : \uline{sa période est simplement 1}, car $([1]_{15})^1 = [1]_{15}$
+				\item 	$[2]_{15}$ : il est facile de voir que \uline{sa période est 4}, car $([2]_{15})^4 = [16]_{15} = [1]_{15}$
+				\item 	$[4]_{15}$ : dans la même idée que pour 2, \uline{sa période est 2}, car $([4]_{15})^2 = [16]_{15} = [1]_{15}$
+				\item	$[7]_{15}$ : il faut ici essayer différents $k$ : après quelques essais, nous trouvons \uline{$k = 4$}, car $([7]_{15})^4 = [2041]_{15} = [1]_{15}$ 
+				\item	$[8]_{15}$ : pareil ici : il faut simplement essayer différents $k$ ; après quelques essaie infructueux, nous trouvons finalement \uline{$k = 4$}, car $([8]_{15})^4 = [4096]_{15} = [1]_{15}$
+				\item	$[11]_{15}$ : nous avons vu dans le tableau de multiplication que $([11]_{15})^2 = [1]_{15}$, donc \uline{la période $k = 2$}.	
+				\item	$[13]_{15}$ : comme pour 7 et 8, nous essayons quelques chiffres. À nouveau, \uline{c'est 4 qui est la solution} ($13^4 = 28561,\ 13^4 \mod 15 = 1$)
+				\item	$[14]_{15}$ : ici nous regardons encore dans le tableau pour voir que $14^2 \mod 15 = 1$, donc \uline{la période $k = 2$}
+			\end{itemize}
+	\item	Pour qu'un isomorphisme soit possible, il faut que  les deux groupes aient la même cardinalité. Ainsi, le seul $k$ possible est 8, car alors le nombre d'éléments dans chaque ensemble sera le même (8)\\
+			Nous regardons donc s'il existe un isomorphisme entre $(\Z/15\Z^*,\cdot)$ et $(\Z/8\Z,+)$. Nous devons pour cela comparer la table de multiplication (vue au dessus, au point 2.) et la table d'addition, ci dessous :\\
+			\begin{tabular}{r|cccccccc}
+				$(\Z/8\Z,+)$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7	\\			
+				\hline
+				0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7\\
+				1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 0\\
+				2 & 2 & 3 & 4 & 5 & 6 & 7 & 0 & 1\\
+				3 & 3 & 4 & 5 & 6 & 7 & 0 & 1 & 2\\
+				4 & 4 & 5 & 6 & 7 & 0 & 1 & 2 & 3\\
+				5 & 5 & 6 & 7 & 0 & 1 & 2 & 3 & 4\\
+				6 & 6 & 7 & 0 & 1 & 2 & 3 & 4 & 5\\
+				7 & 7 & 0 & 1 & 2 & 3 & 4 & 5 & 6
+			\end{tabular}
+			\begin{tabular}{r|cccccccc}
+				$(\Z/15\Z^*,\cdot)$ & 1 & 2 & 4 & 7 & 8 & 11 & 13 & 14	\\			
+				\hline
+				1 & 1 & 2 & 4 & 7 & 8 & 11 & 13 & 14\\
+				2 & 2 & 4 & 8 & 14 & 1 & 7 & 11 & 13\\
+				4 & 4 & 8 & 1 & 13 & 2 & 14 & 7 & 11\\
+				7 & 7 & 14 & 13 & 4 & 11 & 2 & 1 & 8\\
+				8 & 8 & 1 & 2 & 11 & 4 & 13 & 14 & 7\\
+				11 & 11 & 7 & 14 & 2 & 13 & 1 & 8 & 4\\
+				13 & 13 & 11 & 7 & 1 & 14 & 8 & 4 & 2\\
+				14 & 14 & 13 & 11 & 8 & 7 & 4 & 2 & 1
+			\end{tabular}\\
+			Le but serait alors de réarranger les lignes et colonnes de la multiplication de manière à ce que, en renommant les éléments, nous obtenions les même que dans l'addition (ou inversement, évidemment).\\
+			Un gros problème se pose à nous ici. Nous voyons que dans la diagonale de l'addition, nous avons 4 éléments distincts (0,2,4,6). Or, dans la diagonale de la multiplication, nous n'avons que deux éléments (1 et 4). Comme déplacer les colonnes/lignes conservera les éléments dans la diagonale (ne fera que les \enquote{réarranger}), nous aurons toujours 2 éléments distincts. Il n'y a aucun renommage qui permette de changer cela.\\
+			\\
+			En conclusion : comme il n'y a qu'un seul $k$ possible, et que ce k ne permet aucun isomorphisme, alors il n'existe aucun k tel que ces deux groupes soient isomorphes.
+\end{enumerate}
+
+\subsection{}
+\begin{enumerate}
+	\item	Rappelons nous tout d'abord la table du xor :
+			\begin{tabular}{r|cc}
+				$\bigoplus$ & 0 & 1\\
+				\hline
+				0 & 0 & 1\\
+				1 & 1 & 0
+			\end{tabular}\\
+			Cela nous permet de comprendre la chose de manière instinctive. Donné un symbole binaire, le faire xor avec un 1 change le symbole, et le faire xor avec un 0 le laissera tel quel.
+			Examinons maintenant les critères :
+			\begin{itemize}
+				\item 	Associativité : Appliquer une séquence binaire sur une autre séquence binaire se fera comme dit au dessus : appliquer un 1 changera le symbole, appliquer un 0 le gardera intact. De plus, modifier ou non un symbole n'a aucun effet sur les autres symboles de la séquence. Prenons donc une chaîne $a$ de longueur 1 (nous pourrons par la suite généraliser, car nous savons que ce qui s'applique à un symbole s'applique à $n$). Si nous lui appliquons un symbole $b$ (qui le changera ou non) puis un autre $c$ (qui le re-modifiera ou non), nous aurons un symbole identique (ou non) à celui de départ. Si en revanche, nous prenons faisons $d = b\bigoplus c$, nous obtiendrons, en fonction des deux symboles, un $d$ qui modifiera ou pas $a$ (j'espère que vous me suivez). Puis $a \bigoplus d$ re-modifiera $a$, mais toujours en fonction de $b$ et $c$. Prenons une exemple concret : si $b = c = 1$, alors $d = 0$, donc $a \bigoplus d = a$. De même que $(a \bigoplus b) \bigoplus c = \overline{a} \bigoplus c = a$. Donc \uline{l'associativité est respectée}.
+				\item 	L'élément (la chaîne) neutre est $E = \{0\}^n$ (une chaîne de même longueur que A, composée uniquement de 0). En effet, comme $a \bigoplus 0 = a$, n'avoir que des 0 ne modifiera pas du tout la chaîne $A$.
+				\item 	L'élément symétrique de $A$ est... $A$ lui même. En effet, nous voyons dans le tableau que $a \bigoplus a = 0$ pour $a = \{1,0\}$. Donc faire une chaîne xor elle-même met tous les éléments à 0, donc nous auront une chaîne de longueur $n$ composée de 0 uniquement (ce qui est $E$).
+				\item Finalement, nous n'avons qu'à regarder le tableau pour comprendre que la commutativité est respectée. La diagonale est triviale (faire $1\bigoplus 1$ ou $1 \bigoplus 1$ ne change pour ainsi dire rien, et faire $1 \bigoplus 0$ ou $0 \bigoplus 1$ est également similaire (nous le voyons dans la table du xor.)
+			\end{itemize}
+	\item 	Notons tous nos tableaux, pour $n = 2$:\\
+			\begin{tabular}{r|cccc}
+				$(A,\bigoplus)$ & 00 & 01 & 10 & 11\\
+				\hline
+				00 & 00 & 01 & 10 & 11\\
+				01 & 01 & 00 & 11 & 10\\
+				10 & 10 & 11 & 00 & 01\\
+				11 & 11 & 10 & 01 & 00
+			\end{tabular}
+			\begin{tabular}{r|cccc}
+				$(\Z/4\Z)$ & 0 & 1 & 2 & 3\\
+				\hline
+				0 & 0 & 1 & 2 & 3\\
+				1 & 1 & 2 & 3 & 0\\
+				2 & 2 & 3 & 0 & 1\\
+				3 & 3 & 0 & 1 & 2
+			\end{tabular}
+			\begin{tabular}{r|cccc}
+				$(\Z/2\Z)^2$ & 00 & 01 & 10 & 11\\
+				\hline
+				00 & 00 & 01 & 10 & 11\\
+				01 & 01 & 00 & 11 & 10\\
+				10 & 10 & 11 & 00 & 01\\
+				11 & 11 & 10 & 01 & 00
+			\end{tabular}\\
+			Cela nous permet déjà d'affirmer que notre second tableau est tout à fait différent des autres, donc il ne peut pas exister d'isomorphisme avec les autres. En effet, sa diagonale contient 2 éléments (0 et 2) alors que les deux autres n'ont qu'un seul élément dans la diagonale. Nous avons montré précédemment que swapper des colonnes (donc des lignes aussi) gardera toujours la valeur des diagonales, en ne faisant que les déplacer sur cette même diagonale. Il n'y a donc pas de renommage possible, donc pas d'isomorphisme.
+			
+			Restent donc les cas 1 et 3. Il est intéressant de constater que les deux tableaux sont les mêmes. Même en prenant un $n$ plus grand, les tableaux resteraient identiques. Cela s'explique simplement, car les deux représentent la même opération. Il s'agit dans les deux cas d'une addition bit à bit sans retenue. A aura une longueur de $n$, et $(\Z/2\Z)^n$ représente $n$ symboles, soit 1 soit 0 (car plus petit que 2). Dans les deux cas, faire (1 et 1) ou (0 et 0) donne 0, alors que (1 et 0) ou (0 et 1) donne 1. Les opérations sur un symbole n'influences pas les autres ; tout cela mit ensemble démontre qu'il s'agit d'une simple réécriture du groupe. il existe donc un isomorphisme, qui renvoie un élément sur lui-même.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,228 @@
+\documentclass[10pt,a4paper]{article}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+\usepackage{tikz}
+
+\setlength{\leftmargin}{0pt}
+\setlength{\rightmargin}{0pt}
+\title{Série 4}
+\date{}
+\author{}
+\begin{document}
+
+\maketitle
+\evid{Problème 4.1}\\
+Notation : \underline{$S^n = (S_1,S_2,S_3,\ldots,s_n)$, P = pile, F = face}
+\begin{enumerate}
+	\item 	\fbox{$p_{S_0}(A) = 2\cdot\frac{1}{4} = \frac{1}{2}$}\\
+			\fbox{$p_{S_0}(B) = p_{S_0}(C) = \frac{1}{4}$}\\
+			$H(S_0) = \frac{1}{2}\log_2(2) + \frac{1}{4}\log_2(4)\cdot 2 =$ \fbox{$\frac{3}{2} = H(S_0)$}
+	
+	\item	Nous devons remarquer 3 cas distincts : \\
+			$S^n = (F,F,F,F,F,\ldots,F)\\
+			S^n = (P,P,P,P,P,\ldots,P)\\
+			S^n = (P,F,P,P,...)$ (tous les autres cas, qui mélangent P et F)
+			
+			Il y a deux manières d'obtenir le premier cas : tirer la pièce B (donc que des F seront engendrés après), ou tirer une pièce A et tirer, par hasard, que des F. Tirer A et que des F est difficile à avoir : à $n$ tirages, il y a $2^n$ cas (dont un seul nous intéresse), alors que avec B, la probabilité d'avoir F est de 1 (en fait $1^n$ au n\ts{ème} tirage). Nous trouvons donc que $p_{S^n}(FFF...) = \frac{1}{4}\cdot1^n +\frac{1}{2}\frac{1}{2^n} =$\fbox{ $p_{S^n}(FFF...) \frac{1}{4}+\frac{1}{2^{n+1}} = \alpha_n$}\\
+			En travaillant un peu $\alpha_n$, nous trouvons\\
+			$\alpha_n = \frac{1}{4} + \frac{1}{2^{n+1}} = \frac{2^{n-1}}{2^{n+1}} + \frac{1}{2^{n+1}} = \frac{2^{n-1}+1}{2^{n+1}}$
+			
+			Le cas \enquote{que des P} est le même que le premier cas (à la différence que l'on souhaite tirer la pièce C ou une A et que des P). La probabilité ne change pas, et \fbox{nous obtenons donc aussi $\alpha_n$ pour $p_{S^n}(PPP...)$}.
+			
+			Quant aux autres cas, la seule possibilité est de tirer une pièce A et d'ensuite tirer la séquence exacte. Donc \fbox{$p_{S^n}$(reste)$ = \frac{1}{2}\frac{1}{2^n} = \frac{1}{2^{n+1}} = \alpha_n - \frac{1}{4} = \beta_n$}
+			
+	\item 	Notre source $S^n$ produit une suite de n symboles venant chacun de l'alphabet $D = \{P,F\}$. L'alphabet de $S^n$ est $D^n$. Selon la définition, cette source est donc un \underline{bloc}. Et, comme nous ne précisons pas le nombre de tirages de la pièce (mais nous le supposons très grand, voire infini), le bloc est infini, donc la source est une \evid{Source étendue} \#
+	
+	\item	Une source est stationnaire si chaque bloc possible a la même probabilité d'apparition. Comme nous venons de le voir, deux blocs - par exemple (FFFFFF....) et (PFPFPFPF....) - n'ont pas du tout la même probabilité d'apparition. Notre source, donc, \underline{n'est pas stationnaire}.
+	
+	\item	A $n$ tirs, il y a $2^n$ issues possibles :		
+			\begin{itemize}
+				\item 2 cas (que P ou que F) à probabilité $\alpha_n$.
+				\item $2^n-2$ cas (les autres) à probabilité $\frac{1}{2^{n+1}}$
+			\end{itemize}
+			L'entropie est donc :\\
+			$\begin{array}{ll}
+				H(S^n) 	& = \alpha_n\log_2(\frac{1}{\alpha_n})\cdot 2 + \frac{1}{2^{n+1}}\log_2(2^{n+1})\cdot(2^n-2)\\
+						& = 2\alpha_n\log_2(\frac{1}{\alpha_n}) + \frac{(n+1)(2^n-2)}{2^{n+1}}\\
+						& = 2\alpha_n\log_2(\frac{1}{\alpha_n}) + (n+1)\frac{2^n-2}{2^{n+1}}\\
+						& = 2\alpha_n\log_2(\frac{1}{\alpha_n}) + (n+1)(\frac{2^n}{2^{n+1}} - \frac{2}{2^{n+1}})\\
+						& = 2\alpha_n\log_2(\frac{1}{\alpha_n}) + (n+1)(\frac{1}{2} - \frac{1}{2^n})\\
+						& = $\fbox{$2\alpha_n\log_2(\frac{1}{\alpha_n}) + \frac{n+1}{2} - \frac{n+1}{2^n} = H(S^n)$ =  entropie d'un symbole}$
+			\end{array}$
+			
+	\item 	Nous savons que $H(S_b|S_a) = H(S_a,S_b) - H(S_a)$. Si nous posons ensuite $S_n = S_b$ et $S^{n-1} = S_a$, nous pouvons poser :\\
+			$H(S_n|S_1,S_2,...,S_{n-1}) = H(S_1,S_2...,S_{n-1},S_n) - H(S_1,...,S_{n-2},S_{n-1})$\\
+			Calculer $H(S_n|S^{n-1})$ devient alors plus facile, car nous connaissons $H(S^n)$, et par extension $H(S^{n-1})$ (en remplaçant $n$ par $n-1$ dans notre calcul de l'entropie, précédemment)
+			
+			Ainsi\\
+			$\begin{array}{ll}
+				H(S_n|S^{n-1}) 	& = H(S^n) - H(S^{n-1})\\
+								& = 2\alpha_n\log_2(\frac{1}{\alpha_n}) + \frac{n+1}{2} - \frac{n+1}{2^n} -\Big( 2\alpha_{n-1}\log_2(\frac{1}{\alpha_{n-1}}) + \frac{(n-1)+1}{2} - \frac{(n-1)+1}{2^{n-1}} \Big)\\
+								& = 2\big(\alpha_n\log_2(\frac{1}{\alpha_n})-\alpha_{n-1}\log_2(\frac{1}{\alpha_{n-1}})\big) + \frac{n+1}{2} - \frac{n}{2} -\frac{n+1}{2^n} + \frac{n}{2^{n-1}}\\
+								& = 2\big(\alpha_n\log_2(\frac{1}{\alpha_n})-\alpha_{n-1}\log_2(\frac{1}{\alpha_{n-1}})\big) + \frac{1}{2} - \frac{n+1}{2^n} + \frac{2n}{2^{n}}\\
+								& = 2\big(\alpha_n\log_2(\frac{1}{\alpha_n})-\alpha_{n-1}\log_2(\frac{1}{\alpha_{n-1}})\big) + \frac{1}{2} + \frac{n-1}{2^n}
+			\end{array}$
+			Depuis là, nous pouvons commencer à analyser les  cas numériques :
+			\begin{itemize}
+				\item[n=10] $\alpha_n = \frac{2^9 +1}{2^{11}},\quad \alpha_{n-1} = \frac{2^8+1}{2^{10}}$\\
+							$\to H(S_n|S^{n-1}) = 2\big(\frac{2^9+1}{2^{11}}\log_2(\frac{2^{11}}{2^9+1}) - \frac{2^8+1}{2^{10}}\log_2(\frac{2^{10}}{2^8+1})\big) + \frac{1}{2} + \frac{10-1}{2^{10}}$\\
+							=\fbox{$ 0.50824$}
+				\item[n=15] $\alpha_n = \frac{2^{14} +1}{2^{16}},\quad \alpha_{n-1} = \frac{2^{13}+1}{2^{15}}$\\
+							$\to H(S_n|S^{n-1}) = 2\big(\frac{2^{14}+1}{2^{16}}\log_2(\frac{2^{16}}{2^{14}+1}) - \frac{2^{13}+1}{2^{15}}\log_2(\frac{2^{15}}{2^{13}+1})\big) + \frac{1}{2} + \frac{15-1}{2^{15}}$\\
+							=\fbox{$ 0.50041$}
+				\item[n=20] $\alpha_n = \frac{2^{19} +1}{2^{21}},\quad \alpha_{n-1} = \frac{2^{18}+1}{2^{20}}$\\
+							$\to H(S_n|S^{n-1}) = 2\big(\frac{2^{19}+1}{2^{21}}\log_2(\frac{2^{21}}{2^{19}+1}) - \frac{2^{18}+1}{2^{20}}\log_2(\frac{2^{20}}{2^{18}+1})\big) + \frac{1}{2} + \frac{20-1}{2^{20}}$\\
+							=\fbox{$ 0.50002$}	
+			\end{itemize}
+
+	\item	Rappelons, pour les ingénus qui auraient oublié une telle définition, ce qu'est une source régulière : \\
+			\textbf{Une source étendue S est dite \textit{régulière} si les deux limites
+			\begin{itemize}
+				\item $H(S) \overset{\text{def}}{=} \limite{\ninf}H(S^n)$ et
+				\item $H^*(S) \overset{\text{def}}{=} \limite{\ninf}H(S_n|S^{n-1})$
+			\end{itemize}
+			existent et sont finies.}
+			Nous pouvons donc calculer les limites. Commençons $H(S)$ :\\
+			$\begin{array}{ll}
+				\limite{\ninf}\alpha_n			& \simeq \limite{\ninf}\frac{2^{n-1}}{2^{n+1}} = \frac{1}{4}\\
+				\limite{\ninf}\alpha_{n-1}		& = \limite{\ninf}\alpha_n = \frac{1}{4}\\
+				\limite{\ninf}\frac{n+1}{2^n}	& \simeq \limite{\ninf}\frac{n}{2^n} = 0\\
+				\limite{\ninf}\log_2(\frac{1}{\alpha_n}) & = \log_2(\limite{\ninf}\frac{1}{\alpha_n}) = \log_2(4) = 2\\
+			\text{mais :}\\
+				\limite{\ninf} \frac{n+1}{2} 	& = \infty
+			\end{array}$
+			Donc $\limite{\ninf} H(S^n) = \infty$. Donc la source ne peut pas être régulière, car H(S) n'existe pas.
+			Calculons quand même l'entropie par symbole :\\
+			Nous pouvons reprendre les valeurs des limites calculées précédemment. Cela nous donne donc :\\
+			$\begin{array}{ll}\limite{\ninf}H(S_n|S^{n-1}) &= \limite{\ninf} 2\big(\alpha_n\log_2(\frac{1}{\alpha_n})-\alpha_{n-1}\log_2(\frac{1}{\alpha_{n-1}})\big) + \frac{1}{2} + \frac{n-1}{2^n} \\
+					&= 2\big(\frac{1}{4}\log_2(4) - \frac{1}{4}\log_2(4)\big) + \frac{1}{2} + 0 \\
+					&= 2\cdot(0) + \frac{1}{2} =$ \fbox{$\frac{1}{2}$} $\end{array}$
+			
+	\item Calculons cette limite :\\
+		$\begin{array}{ll}
+			\limite{\ninf} \frac{H(S^n)}{n} &= \limite{\ninf}\frac{2\alpha_n\log_2(\frac{1}{\alpha_n}) + \frac{n+1}{2} - \frac{n+1}{2^n}}{n}\\
+											&=\frac{\limite{\ninf} 2\alpha_n\log_2(\frac{1}{\alpha_n}) + \frac{n+1}{2} - \frac{n+1}{2^n}}{\limite{\ninf}}\\
+											&= \limite{\ninf}\frac{2\alpha_n\log_2(\frac{1}{\alpha_n}) - \frac{n+1}{2^n}}{n} + \limite{\ninf}\frac{\frac{n+1}{2}}{n}\\
+											& =  \text{c.f. plus haut } \text{\enquote{$\frac{2\frac{1}{4}\log_2(4) - 0}{\infty}$}} + \limite{\ninf} \frac{n+1}{2n}\\
+											&= 0 + \frac{1}{2}\\
+											&= $\fbox{$\frac{1}{2}$}$
+		\end{array}$
+		Nous remarquons que cette limite est la même que $H^*(S)$. En effet, $H^*(S)$ nous dira combien de d'information supplémentaire apportera le dernier tirage, en connaissant les précédents. La limite que nous venons de calculer nous donne le nombre de bits pour un tirage supplémentaire (entropie totale divisée par le nombre de tirages). Cela signifie que l'entropie supplémentaire d'un tirage connaissant les précédents est la même que l'entropie de chaque tirage (à l'infini). De plus, nous savons par le théorème 5.2 que cette égalité doit être respectée.
+			
+\end{enumerate}
+
+\evid{Problème 4.2}
+\begin{enumerate}
+	\item	\begin{itemize}
+				\item Probabilité de $PP$ et de $FF$ : $\frac{1}{4} + \frac{1}{2}\frac{1}{2^2} = \frac{3}{8}$
+				\item Probabilité de $PF$ et de $FP$ : $\frac{1}{2}\frac{1}{2^2} = \frac{1}{8}$
+			\end{itemize}
+			\begin{multicols}{2}
+				\begin{tikzpicture}[scale=0.9]
+					\tikzstyle{etiquette}=[midway, circle ,fill=white]
+					\node[draw, fill=black!20] (D) at (-2.25,-1){1};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (1) at (-1.5,-6){FF \\ 3/8};
+					\node[draw, fill=black!20] (0) at (-3.75,-2.5){5/8};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (01) at (-3,-6){PP \\ 3/8};
+					\node[draw, fill=black!20] (00) at (-5.25,-4){2/8};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (001) at (-4.5,-6){PF \\ 1/8};						
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (000) at (-6,-6){FP \\ 1/8};
+
+					\draw[->] (D) -- (1)node[etiquette]{1};
+					\draw[->] (D) -- (0)node[etiquette]{0};
+					\draw[->] (0) -- (00)node[etiquette]{0};
+					\draw[->] (0) -- (01)node[etiquette]{1};
+					\draw[->] (00) -- (001)node[etiquette]{1};
+					\draw[->] (00) -- (000)node[etiquette]{0};
+				\end{tikzpicture} \\
+				\columnbreak
+\\
+\\
+\\
+
+				\begin{tabular}{r|c|c|c|c}
+					Symbole de source & PF & FP & PP & FF \\
+					\hline
+					Probabilité& $\frac{1}{8}$ & $\frac{1}{8}$ & $\frac{3}{8}$ & $\frac{3}{8}$\\
+					\hline
+					$\Gamma_{H2}$& 000 & 001 & 01 & 1
+				\end{tabular}
+			\end{multicols}
+			$ L(\Gamma_{H2}) = 2\cdot\frac{1}{8}3 + \frac{3}{8}(1+2)= \frac{20}{8} =$ \fbox{$1.875 =L(\Gamma_{H2})$}\\
+			$H(S^2) = 2\cdot\frac{1}{8}\log_2(8) + 2\cdot\frac{3}{8}\log_2(\frac{8}{3}) =$ \fbox{$1.811 = H(S^2)$}\\
+			Comme nous nous y attendions, la longueur moyenne du code de Huffman est plus longue que l'entropie. De plus, nous pouvons voir que $\frac{L(\Gamma_{H2}}{2} = \frac{1.875}{2} = 0.9375 >  = H^*(S)$. En effet, $H^*(S)$ est un encodage par blocs, ce qui le rend plus efficace
+		
+	\item 		\begin{itemize}
+				\item Probabilité de $PPP$ et de $FFF$ : $\frac{1}{4} + \frac{1}{2}\frac{1}{2^4} = \frac{5}{16}$
+				\item Probabilité de $PPF,\ PFF,\ FFP,\ PFP,\ FPF,\ FPP$  : $\frac{1}{2}\frac{1}{2^3} = \frac{1}{16}$
+			\end{itemize}
+				\begin{tikzpicture}[scale=0.9]
+					\tikzstyle{etiquette}=[midway, circle ,fill=white]
+					\node[draw, fill=black!20] (D) at (0,0){1};
+					\node[draw, fill=black!20] (1) at (2, -2){10/16};
+					\node[draw, fill=black!20] (0) at (-4,-2){6/16};
+					\node[draw, fill=black!20] (01) at (-2, -4){2/16};
+					\node[draw, fill=black!20] (001) at (-6, -6){2/16};
+					\node[draw, fill=black!20] (000) at (-10, -6){2/16};
+					\node[draw, fill=black!20] (00) at (-8, -4){4/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (10) at (1,-8){PPP \ 5/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (11) at (3,-8){FFF \ 5/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (011) at (-1,-8){PPF \ 1/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (010) at (-3,-8){FPP \ 1/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (0011) at (-5,-8){PFP \ 1/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (0010) at (-7,-8){PFF \ 1/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (0001) at (-9,-8){FPF \ 1/16};
+					\node[draw, text width=0.7cm, text centered, fill = cyan!20] (0000) at (-11,-8){FFP \ 1/16};
+
+					\draw[->] (D) -- (1)node[etiquette]{1};
+					\draw[->] (D) -- (0)node[etiquette]{0};
+					\draw[->] (0) -- (00)node[etiquette]{0};
+					\draw[->] (0) -- (01)node[etiquette]{1};
+					\draw[->] (1) -- (11)node[etiquette]{1};
+					\draw[->] (1) -- (10)node[etiquette]{0};
+					\draw[->] (01) -- (011)node[etiquette]{1};
+					\draw[->] (01) -- (010)node[etiquette]{0};
+					\draw[->] (001) -- (0011)node[etiquette]{1};
+					\draw[->] (001) -- (0010)node[etiquette]{0};
+					\draw[->] (00) -- (001)node[etiquette]{1};
+					\draw[->] (00) -- (000)node[etiquette]{0};
+					\draw[->] (000) -- (0001)node[etiquette]{1};
+					\draw[->] (000) -- (0000)node[etiquette]{0};
+				\end{tikzpicture} \\
+				\begin{tabular}{r|c|c|c|c|c|c|c|c}
+					Symbole de source & FFP & FPF & PFF & PFP & FPP & PPF & PPP & FFF \\
+					\hline
+					Probabilité& $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{5}{16}$ & $\frac{5}{16}$\\
+					\hline
+					$\Gamma_{H3}$& 0000 & 0001 & 0010 & 0011 & 010 & 011 & 10 & 11\\
+				\end{tabular}\\
+				$L(\Gamma_{H3}) = 4\frac{1}{16}\times4  + 3\frac{1}{16}\times2 + 2\frac{5}{16}\times2 =$ \fbox{$2.625 = L(\Gamma_{H3})$}\\
+				$H(S^3) = \frac{1}{16}\log_2(16)\times 6 + \frac{5}{16}\log_2(\frac{16}{5}) \times 2 = $\fbox{$2.5488 =H(S^3)$}\\
+				La différence entre $L(\Gamma_{H3})$ et $H(S^3)$, avec l'entropie plus faible que la longueur moyenne, n'est pas surprenante (cf les 3 séries précédentes : \enquote{on ne peut pas faire mieux que l'entropie})\\
+				Cependant, $\frac{L(\Gamma_{H3})}{3} = \frac{2.625}{3} = 0.875 > 0.5 = H^*(S)$. En effet, $H^*(S)$ est un encodage par blocs, ce qui le rend plus efficace. Finalement, nous pouvons remarquer que, par rapport à $\Gamma_{H3}$, la longueur moyenne par bloc semble se rapprocher de $H^*(S)$ ; 
+	\item 	Comme nous l'avons montré et calculé précédemment, au 1000\ts{ème} tirage, 2 résultats ($PPP\ldots PP$ et $FFF\ldots FF$) auront une probabilité de\\
+			$\frac{1}{4}+\frac{1}{2^{1001}} = \frac{2^{999}+1}{2^{1001}} 0.25000000000000000000000000000000000000000000000000000000000000000000000\\
+			000000000000000000000000000000000000000000000000000000000000000000000000000000000\\
+			00000000000000000000000000000000000000000000000000000000000000000000000000000\\
+			00000000000000000000000000000000000000000000000000000000000000000000000046663\\
+			18092516094394950447723619085848085457231858540123108571698979834554878878172$ (donc environ 0.25)
+
+			Les $ 2^{1000}-2$ autres auront une probabilité de $\frac{1}{2^{1001}}$ (vous l'aurez compris, c'est très petit, je ne vais pas mettre le chiffre exact ici ;-) )\\
+			Il s'agit ensuite d'utiliser l'algorithme de Shannon pour cela : rappelons-nous que la longueur des mots de code, selon Shannon-Fano, est de $\lceil\log_2(\frac{1}{p_i})\rceil$\\
+			Pour cette majorité d'outcomes, chacun aura une longueur de mots de\\
+			$\lceil\log_2(2^{1001})\rceil = \lceil1001\rceil = 1001$\\
+			Pour les deux autres (uniquement pile et ou face), ils auront une longueur de\\
+			$\lceil\log_2(\frac{2^{1001}}{2^{999}+1})\rceil = \lceil 1.999[...]730 \rceil = 2$ ([...] représente une grande quantité (finie) de \enquote{9})\\
+			Cela nous donne une longueur moyenne de\\
+			$L(\Gamma_{SF}) =1001\frac{1}{2^{1001}}\times(2^{1000}-2) +  2(\frac{1}{4}+\frac{1}{2^{1001}})\times 2 \simeq 501.500000$\\
+			$H(S^{1000}) = 2 \frac{2^{999} + 1}{2^{1001}}\log_2(\frac{2^{1001}}{2^{999}+1}) + \frac{1000 + 1}{2} - \frac{1000 + 1}{2^{1000}} \simeq 501.500000$\\
+			\\
+			Longueur moyenne par symbole = $\frac{501.500000}{1000}	= 0.5015 > 0.5 = H^*(S) =$ entropie par symbole.\\
+			Avec un nombre de tirages très grand, la probabilité de \enquote{que pile} et de \enquote{que face} tend vers 1/4 (donc tirer une pièce truquée, car tirer 1000x de suite la même chose avec une pièce pas truquée est extrêmement faible), donc \enquote{que pile ou que face} tend vers $1/2$. De plus, l'entropie de Shannon va tendre vers $n/2$. Si nous cherchons la longueur moyenne par symbole, nous divisons encore cela par $n$, donc vers $\frac{1/2 + n/2}{n}$, donc vers $\frac{1}{2}$. A l'infini, tend donc vers l'efficacité de l'entropie.
+
+	\item	Pour les $2^{1000}-2$ cas banals, nous avons vu qu'ils auront une longueur encodée de 1001 bits. Avec $1000$ lancés, le bloc($S_1,S_2,...,S_{1000}$) est de longueur 1000. Il suffit donc de changer chaque résultat de chaque lancé en un chiffre (par exemple Pile devient 1, Face devient 0), et d'ajouter un 0 avant (pour respecter la longueur de Shannon, et éviter les préfixes avec les 2 cas particuliers). De cette manière, comme chaque bloc ($S_1,...,S_{1000}$) est unique, son encodage le sera aussi.\\
+			Les deux cas particuliers seront juste encodés sur 2 bits : le premier serait 1(pour éviter les préfixes avec les cas banals), et le second serait 1 pour Pile et 0 pour Face. \\
+			\\
+			La longueur moyenne de notre code est de 501.5. Transformer chaque tirage en 1 ou 0 selon la méthode proposée donnerait un code de longueur 1000. Le rapport de compression est donc $\frac{501.5}{1000} = 0.5015$, ce qui est notre rapport de compression. Notre méthode de codage nous permet donc de compresser considérablement le code.
+
+\end{enumerate}
+\end{document}

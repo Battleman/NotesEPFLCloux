@@ -1,0 +1,189 @@
+\documentclass[10p,a4paper]{scrartcl}
+\input{/home/battleman/Documents/LaTeX/preambule.tex}
+
+\setstretch{1}
+\fancyhead[L]{Sciences de l'information } % formatage en-tête - matière
+\fancyhead[C]{Série 6} 	% formatage en-tête - Série
+\fancyhead[R]{Olivier Cloux}	% formatage en-tête - Nom
+\setmarginsrb{20mm}{20mm}{20mm}{15mm}{-5pt}{15mm}{0pt}{8mm}
+\title{	
+\normalfont \normalsize 
+\textsc{Ecole Polytechnique Fédérale de Lausanne} \\ [25pt] % Your university, school and/or department name(s)
+\textsc{Sciences de l'information}\\ [0pt] %Name of the course
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Série 6 \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+\date{}
+\begin{document}
+
+\maketitle
+\setcounter{section}{6}
+\subsection{}
+\begin{enumerate}
+	\item 	\begin{itemize}
+				\item 	Décomposition de 68 :
+						\begin{tabular}{r|l}
+							68 & 2\\
+							34 & 2\\
+							17 & 17\\
+							1
+						\end{tabular}
+						$\to$ \fbox{$68 = 2^2\cdot 17$}
+					
+				\item 	Décomposition de 187 : 
+						\begin{tabular}{r|l}
+							187 & 11\\
+							17 & 17\\
+							1
+						\end{tabular}
+						$\to$ \fbox{$187 = 11\cdot 17$}
+			
+				\item 	Décomposition de 176 :
+						\begin{tabular}{r|l}
+							176 & 2\\
+							88 & 2\\
+							44 & 2\\
+							22 & 2\\
+							11 & 11\\
+							1
+						\end{tabular}
+						$\to$ \fbox{$176 = 2^4 \cdot 11$}
+			\end{itemize}
+			
+	\item 	Le $pgcd$ de deux nombres se calcul en multipliant tous les facteurs premiers en commun dans la décomposition de ces deux nombres, à leur plus faible puissance
+			\begin{itemize}
+				\item 	$pgcd(68,187) = 17 =$ \fbox{17}
+				\item 	$pgcd(68,176) = 2^2 =$ \fbox{4}
+				\item 	$pgcd(176,187) = 11=$ \fbox{11}
+			\end{itemize}
+			
+	\item 	Deux nombres sont premiers entre eux si leur $pgcd$ est de 1. Comme nous l'avons calculé, aucun des $pgcd$ n'est de 1, donc \textit{de facto}, ni \textit{a,b}, ni \textit{a,c} ni \textit{b,c} ne sont premiers entre eux.
+	
+	\item 	Nous savons que 
+			\begin{align*}
+				\begin{split} 
+					ab \mod p &=0\\
+					(a \mod p)(b\mod p)\mod p &= 0
+				\end{split}
+			\end{align*}
+			Par définition, pour tout entier $k,\ 0 \leq (k\mod p) < p$. \\
+			En supposons que \textit{p} ne divise ni \textit{a} ni \textit{b}, nous savons que:
+			\begin{equation*}
+				(a \mod p) \neq 0 \et (b \mod p) \neq 0
+			\end{equation*}
+			En sachant cela, il devient impossible que  $(a \mod p)(b\mod p) = 0$. De plus, comme \textit{p} est premier, il n'existe pas deux entiers (différents de 1 et \textit{p}) qui multipliés donnent \textit{p}. Cela fait que $(a\mod p)(b\mod p) \neq p$.\\
+			Avec ces deux affirmations, nous n'aurons jamais $(a \mod p)(b\mod p)\mod p = 0 $.
+			
+			En revanche, si uniquement \textit{a} est divisible par \textit{p}, alors $(a \mod p) \equiv 0 \mod p$, donc $0\cdot (b\mod p) = 0\ \forall b$. Nous pouvons généraliser notre postulat à \enquote{seulement \textit{b} est divisible par \textit{p}} (car $(a\mod p)\cdot 0 \equiv 0\mod p\ \forall a$) et à \enquote{\textit{a} \underline{et} \textit{b} sont divisibles par \textit{p}}(car $0\cdot 0 \equiv 0\mod p$).
+			
+			En d'autres mots, \uline{soit \textit{p} divise \textit{a}, soit \textit{p} divise \textit{b} (ou les deux)}.
+\end{enumerate}
+\subsection{}
+\begin{enumerate}
+	\item 	En appliquant les règles sur le modulo :\\
+			$\begin{array}{ll}
+					&12345678901234578901234567111 \mod 1000\\
+				 = 	&(123456789012345678901234567000 + 111) \mod 1000\\
+				 = 	&\big((123456789012345678901234567000 \mod  1000) + (111 \mod 1000)\big) \mod 1000\\
+				 =	&\big(0 + 111) \mod 1000\\
+				 = & $\fbox{111}$
+			\end{array}$
+			
+	\item 	Rappelons qu'un chiffre à une puissance paire devient positif, alors qu'à une puissance impaire il reste négatif.
+	
+			Rappelons également que $(a^x \mod p) = ((\overbrace{a\cdot a\cdot a\cdot...\cdot a}^{\times x}) \mod 7)\\
+			= (\overbrace{(a \mod p)\cdot (a \mod p) \cdot \ldots \cdot (a \mod p)}^{\times x}) \mod p = ((a\mod p)^x \mod p)$\\
+
+			Enfin, \textit{x} est multiple de \textit{p} $\iff x \equiv 0\mod p$.
+			\begin{itemize}
+				\item 	\textit{a} :\\
+				 		$\begin{array}{ll}
+					 			&(48^{12345678901234567890} + 69^{98765432109876543211} + 2) \mod 7\\
+							=	&((48^{12345678901234567890} \mod 7) + (69^{98765432109876543211} \mod 7) + (2\mod 7))\mod 7\\
+							=	&((-1)^{12345678901234567890} + (-1)^{98765432109876543211} + 2) \mod 7\\
+							= 	& (1-1 + 2)\mod 7 = 2\mod 7 =$ \fbox{2}$
+						\end{array}\\ \to$ \textit{a} n'est \underline{pas} un multiple de 7.
+						
+				\item 	\textit{b} : \\
+						$\begin{array}{ll}
+								&(34^{12345678901234567890} + 69^{9876543210} + 4)\mod 7\\
+							=	&((34^{2345678901234567890} \mod 7) + (69^{9876543210} \mod 7) + (4\mod 7))\mod 7\\
+							= 	&(1^{12345678901234567890}) + (-1)^{9876543210} + 4)\mod 7\\
+							=	&(1 + 1 + 4)\mod 7 = 6\mod 7 =$ \fbox{6}$
+						\end{array} \\ \to $ \textit{b} n'est \underline{pas} un multiple de 7.
+						
+				\item 	\textit{c} : \\
+						$\begin{array}{ll}
+								&37^{9876543} \mod 7\\
+							=	&2^{9876543} \mod 7\\
+							= 	&(2^3)^{\frac{9876543}{3}}\mod 7 = (2^3){3292181} \mod 7\\
+							=	&8^{3292181} \mod 7 = 1^{3292181} \mod 7 = 1\mod 7 =$ \fbox{1}$
+						\end{array} \\ \to$ \textit{c} n'est \underline{pas} (non plus) un multiple de 7.
+			\end{itemize}
+\end{enumerate}
+\newpage
+\subsection{}
+\begin{enumerate}
+	\item 	\begin{enumerate}[label=(\alph*)]
+				\item $x_{13} = -\big(9+8+4+9+1+9+3\cdot(5+1+3+8+9+2)\big)\mod 10 =$ \fbox{6}
+				\item $x_{13} = -\big(1+3+5+7+9+9+3\cdot(2+4+6+8+0+8)\big) \mod 10 =$ \fbox{2}
+			\end{enumerate}
+
+	\item 	Il faut s'assurer que 
+			\begin{equation*}
+				x_{13} = -\Big(x_1 + x_2 + x_3 + \ldots + x_{11} + 3\cdot(x_2 + x_4 + \ldots + x_{12})\Big) \mod 10
+			\end{equation*}			
+			Si le dernier chiffre ne correspond pas à cette équation, alors le numéro ISBN n'est pas valide.
+			
+			Notons que nous pouvons aussi vérifier, de manière équivalente, que
+			\begin{equation*}
+				x_1 + x_3 + .... + x_{11} + x_{13} + 3\cdot(x_2+x_4+x_6+...+x_{12}) \equiv 0 \mod 10
+			\end{equation*}
+		
+	\item 	\begin{enumerate}[label=(\alph*)]
+				\item $-\big(4+4+4+4+4+4+3\cdot(5+5+5+5+5+5)\big) \mod 10 \overset{?}{=} 1\ ?$ Non, car c'est égal à 6. Ce numéro ISBN n'est donc \underline{pas valide}
+				\item $-\big(1+3+8+1+3+8+3\cdot(2+7+9+2+7+9)\big) \mod 10 \overset{?}{=} 5\ ?$ Non, car c'est égal à 8. Ce numéro ISBN n'est donc \underline{pas valide} (non plus).
+			\end{enumerate}
+			
+	\item 	Comme nous inversons un chiffre de position paire avec un chiffre de position impaire, il est fort probable que les deux numéros de contrôle diffèrent. En effet, nous n'additionneront plus les mêmes chiffres (à la fois dans la partie paire et la partie impaire). Afin de nous en convaincre, nous n'avons qu'à vérifier par le calcul :\\
+			Dans le cas non-inversé : 
+			\begin{equation*}
+				x = -\big(9+8+4+9+4+9+3\cdot(7+1+3+8+9+2)\big)\mod 10 = 7
+			\end{equation*}			
+			Dans le cas inversé :
+			\begin{equation*}
+				x = -\big(9+8+\underline{3}+9+4+9+3\cdot(7+1+\underline{4}+8+9+2)\big)\mod 10 = 5
+			\end{equation*}
+			Cela vient confirmer nos hypothèses : il n'est pas évident pour une inversion de deux chiffres de parités différentes de changer le numéro de contrôle. Ainsi, cette inversion précise \uline{ne donne pas un numéro ISBN valide}
+			
+	\item	Il est évident que le ce numéro ISBN est valide : en effet, nous inversons deux chiffres de même parité. Dans notre équation, cela aura pour effet de changer $[...] + 4 + 9 +[...]$ en $[...] + 9 + 4 +[...]$, ce qui n'influe en rien la valeur du chiffre de contrôle, et donc la validité du numéro. Ce numéro ISBN \underline{est donc valide}.
+	
+	\item  	Afin de trouver un nombre possédant deux chiffres consécutifs tels qu'une fois inversés ne modifient pas le chiffre de contrôle, nous devons appliquer de l'arithmétique modulaire, en posant (pur faciliter la lecture), les variables suivantes:\\
+			Soit $k$ la somme des chiffres de positions impaires non inversés\\
+			Soit $m$ la somme des chiffres de positions paires non-inversés\\
+			Soit $x$ le premier chiffre (de position impaire) inversé\\
+			Soit $y$ le second chiffre (de position paire) inversé\\
+			Nous avons alors que \\
+			$\begin{array}{ll}
+				x_{13} 	&= -(x_1+x_3+...+x_{11} + 3\cdot(x_2+x_4+...+x_{12})) \mod 10\\
+						&= -(k+x+3\cdot(m+y)) \mod 10
+			\end{array}$\\
+			Nous cherchons un donc un \textit{x} et un \textit{y} tels que leurs $x_{13}$ respectifs ne diffèrent pas. Notons que tant que la parité est respectée, leur position initiale ne change pas ; autrement dit, \textit{x} pourrait aussi bien être $x_1$ que $x_3,x_5,...,x_{11}$, alors que \textit{y} pourrait être tant bien $x_2$ que $x_4,x_6,...,x_{12}$.\\
+			Ainsi, nous voulons que 
+			\begin{equation*}
+				(-k-x-3m-3y) \mod 10 = (-k-y-3m-3x)\mod 10
+			\end{equation*}
+			Nous pouvons appliquer sur cette équation les opérations standards, à l'exception de la division (ou de la multiplication par un réel non-entier). Nous trouvons donc :\\
+			$\begin{array}{rcl}
+			(-k-x-3m-3y) \mod 10 = (-k-y-3m-3x) \mod 10 &  & |+k+3m\\
+			(-x-3y) \mod 10 = (-y-3x)\mod 10 			&  & |+x+y\\
+			(-2x) \mod 10 = (-2y) \mod 10				&  & |\times (-1)\\
+			2x \mod 10 = 2y\mod 10
+			\end{array}$\\
+			Nous devons donc trouver deux chiffres tels qu'une fois multipliés par 2, leurs mod 10 s'égalent. Par nous pouvons par exemple prendre 3 et 8 (car $6 \mod 10 = 16\mod 10 = 6$). Les autre chiffres n'importent pas, comme nous l'avons montré il y a un instant. Nous pouvons donc choisir, par exemple, les numéros ISBN
+			\fbox{15274\underline{83}17238 et 15274\underline{38}17238}, dont les chiffres de contrôle sont les deux \enquote{7}.
+			
+			Comme nous l'avons dit plus haut, on ne peut détecter une erreur/inversion \textit{si et seulement si} le numéro ISBN n'est pas valide, donc si le chiffre de contrôle ne correspond pas à la formule donnée. Par déduction, comme nous avons créé une inversion telle qu'elle n'influence pas le chiffre de contrôle, le système de contrôle est \underline{incapable de détecter cette erreur}.
+\end{enumerate}
+\end{document}
