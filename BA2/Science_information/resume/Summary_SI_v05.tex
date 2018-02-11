@@ -1,30 +1,27 @@
 \documentclass[11pt,a4paper]{article}
-\renewcommand{\)}{\right)}
-\renewcommand{\(}{\left(}
 \newcommand{\m}[1]{\ensuremath{\mathcal{#1}}}
 \newcommand{\F}{\ensuremath{\mathbb{F}}}
-\input{/home/battleman/Documents/LaTeX/preambule}
-\date{Printemps 2015}
-\title{Résumé : Sciences de l'Information}
-\setstretch{1}
-%\setlength{indent}{0}
+\setlength{\marginparwidth}{5pt}
+\usepackage{vmargin}
 \setmarginsrb{15mm}{15mm}{15mm}{15mm}{-5pt}{15mm}{0pt}{8mm}
+\input{../../../Common/preambule.tex} %need to be after, to detect margins change
 \begin{document}
 %les choses à ajouter aux logs pour la prochaine version sont a trouver avec addlog
-\maketitle
+\epflTitle{Sciences de l'Information}[Olivier Cloux][Printemps 2015][Résumé en]<../../../Common>
+\setstretch{1}
 \begin{multicols}{2}
-\tableofcontents
+    \tableofcontents
 \end{multicols}
 \newpage
 \setstretch{1.2}
 \setcounter{section}{-1}
 \section{Introduction}
-\uline{Notes de sécurité}\\
-Ce document représente le résumé du cours de Sciences de l'Information écrit par Olivier Cloux (sciper 236079) dans l'année universitaire 2014-2015, tous droits réservés. 
+\evid{Disclaimer}\\
+Ce document représente le résumé du cours de Sciences de l'Information écrit par Olivier Cloux (sciper 236079) dans l'année universitaire 2014-2015.
 
 Le présent document n'est pas un résumé exhaustif ni officiel du cours, il ne donne pas de connaissances aussi précises que celles obtenues en suivant le cours. Je vous conseille très fortement d'utiliser le présent document comme un pense-bête, un aide mémoire, mais de s'appliquer à comprendre la matière avec le polycopié de référence, les slides et les séries d'exercices. Très peu de preuves sont présentées ici, et peuvent être testées dans un examen.
 
-Le document ne se veut pas non plus d'une exactitude irréprochable. Des fautes, coquilles et petites erreurs sont certainement présentes. Merci de m'en avertir d'une quelconque manière, afin que je puisse corriger le document et vous fournir une version mise à jour.
+Le document ne se veut pas non plus d'une exactitude irréprochable. Des fautes, coquilles et petites erreurs sont certainement présentes.
 
 \uline{À titre personnel}, je vous rappelle de :
 \setstretch{1}
@@ -33,22 +30,22 @@ Le document ne se veut pas non plus d'une exactitude irréprochable. Des fautes,
 	\item 	Lire et comprendre le cours (slides).
 	\item 	Lire et comprendre la plupart des preuves fournies.
 	\item 	Faire les séries d'exercice fournies, aussi de l'année précédente et les examens blancs fournis.
-	\item 	Si vous avez des questions, bien que je ne sois pas un assistant je crois comprendre la matière, donc c'est avec plaisir que je vous file un coup de main :)
 \end{itemize}
 \setstretch{1.2}
 
 \uline{Note quant à l'impression :} Le présent document comporte des hyper-références (en violet), c'est à dire des liens sur des mots ou des chiffres qui rapportent à une autre partie du document. Cliquer sur ces mots en violet vous amènera à la partie concernée. En imprimant vous perdez la possibilité de vous servir de ces références, mais le document reste tout à fait compréhensible
 
 \uline{Notes quant à la rédaction}
-Ce document a été rédigé en \LaTeX sur l'éditeur TexMaker pour Linux. Je l'ai écrit sur tout un semestre, j'ai donc changé mon style de rédaction, et j'ai appris plein de choses en \LaTeX depuis le début. Malgré que je me sois efforcé de rendre le document uniforme, des inhomogénéités peuvent frapper l'\oe il averti. Toutes les critiques sont bienvenues ! Et bien évidemment, bien que je ne sois pas un gourou du \LaTeX, je me débrouille assez pour donner quelques conseils. Si vous voulez une partie/l'intégralité de mon code source, n'hésitez pas à demander, on en discutera.\\
-
-
-Maintenant que tout cela est dit, j'espère que mon document vous plaira, et que vous le trouverez assez clair et précis. N'hésitez pas à m'envoyer un mot de remerciements si vous avez apprécié, ça fait toujours plaisir et ça me motive à garder le document à jour :)
+Ce document a été rédigé en \LaTeX\ durant tout un semestre, j'ai donc changé et amélioré mon style au fur et à mesure. Malgré que je me sois efforcé de rendre le document uniforme, des inhomogénéités peuvent frapper l'\oe il averti. Toutes les critiques sont bienvenues !
+\begin{blackbox}
+    Finalement, l'intégralité du code source \LaTeX\ est disponible sur ma page Github (username : Battleman) ; si vous voyez une faute, je vous invite à cloner le dépôt, le corriger, et effectuer une pull request. Pour des raisons évidentes de temps, je ne peux pas faire de corrections sur tous mes documents passés.
+\end{blackbox}
+Maintenant que tout cela est dit, j'espère que mon document vous plaira, et que vous le trouverez assez clair et précis !
 
 D'avance merci pour votre lecture, et bonne chance pour vos examens !!\\
 \\
 \evid{Olivier Cloux}\\
-\\
+\newpage
 \begin{boite}
 	Note pour tout le document: sauf mention contraire, tout ce qui s'applique à 2 marginales/sources/... s'applique aussi à \textit{n}
 \end{boite}
@@ -58,18 +55,18 @@ D'avance merci pour votre lecture, et bonne chance pour vos examens !!\\
 \end{exemple}
 \begin{figure}[!h]
 	\centering
-	\begin{minipage}[c]{.46\linewidth}
+	\begin{subfigure}{.46\linewidth}
 		\centering
 		\includegraphics[scale=0.4]{images/bart}
 		\caption{Les tirages de Bart}
 		\label{bart}
-	\end{minipage}
-	\begin{minipage}[c]{.46\linewidth}
+	\end{subfigure}
+	\begin{subfigure}{.46\linewidth}
 		\centering
 		\includegraphics[scale=0.4]{images/lisa}
 		\caption{Les tirages de Lisa}
 		\label{lisa}
-	\end{minipage}
+	\end{subfigure}
 \end{figure}
 
 \subsection{Probabilités}
@@ -162,18 +159,18 @@ Un code est à décodage instantané si aucun mot de code n'est le préfixe d'un
 \subsubsection{Arbres}
 On  construit un arbre en faisant descendre des branches d'un point, chaque branche étant un symbole (0,1 pour un code binaire, 0,1,2 ternaire, etc.) Sa profondeur est la longueur des mots de code (4 dans nos 2 exemples), et à la profondeur $n$ il y aura, pour un code D-aire, $D^n$ mots dans l'arbre complet. 
 \begin{figure}[!h]
-	\begin{minipage}[c]{0.46\linewidth}
+	\begin{subfigure}{0.46\linewidth}
 		\centering
 		\includegraphics[scale=0.65]{images/arbre_complet}
 		\caption{L'arbre complet de C}
 		\label{complet}
-	\end{minipage}
-	\begin{minipage}[c]{0.46\linewidth}
+	\end{subfigure}
+	\begin{subfigure}{0.46\linewidth}
 		\centering
 		\includegraphics[scale=0.75]{images/arbre_decodage}
 		\caption{L'arbre de décodage de B}
 		\label{decodage}
-	\end{minipage}
+	\end{subfigure}
 \end{figure}\\
 Un \evid{arbre complet} (Fig. \ref{complet}) se fait en créant tous les points et toutes les branches\\
 Un \evid{arbre de décodage} (Fig. \ref{decodage}) se fait en enlevant les branches en dessous d'un mot de code (\uline{uniquement pour code sans préfixe})
