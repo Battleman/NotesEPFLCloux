@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\input{/media/battleman/DATA/Documents/Programming/LaTeX/preambule.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%TODO : Supprimer quand plus de todo %%%%%%
+\marginparwidth = 75pt
+\textwidth = 400pt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{defin}{Definition}
+\NewEnviron{definition}[1][0.9]{%
+    \begin{center}
+        \framecolorbox{black}{white}{%
+            \begin{minipage}{#1\textwidth}
+                \begin{defin}
+                    \BODY
+                \end{defin}
+            \end{minipage}
+	}
+    \end{center}
+}
+\begin{document}
+\epflTitle{Introduction to Database Systems}[Olivier Cloux][Spring 2017]
+\tableofcontents
+
+\section{Introduction}
+Data is facts, a basis for reasoning. MIght be useful or redundant. Data in a database give information has a meaning and is relevant to the problem ; this leads to knowledge. Database are everywhere, from bank, to internet and science.
+
+Data worldwide is growing exponentially of exponentially. We estimate to 40 zetabytes of data in 2020. Giants like YouTube are on the scale of several petabytes per minutes.
+
+In the 2015 stackoverflow survey, SQL comes as the second most important technology (48\% of voters).
+\begin{definition}
+    \label{def_dbms}
+    A \evid{Database management System} is a software system designed to store, manage and facilitate access to database.
+\end{definition}
+A DBMS provides efficient, reliable, convenient and safe multi-user storage of and access to massive amounts of persistent data.
+
+\begin{definition}
+    A \evid{Database} is a large, integrated, structured collection of data. Usually intented to model some real-world enterprise.
+\end{definition}
+\begin{example}
+    Consider a University. We could have databases of courses, students, professors,... Those are \textbf{entities}. On the other hands, databases of enrolments, teaching,... are \textbf{relationships}.
+\end{example}
+
+In this course, we will see how to design and build a database application. Above a DBMS. We will also take a detailed look ``under the hood'' of a DBMS.
+
+\subsection{DBMS Design and Architecture}
+We first need to describe data. We begin by choosing a \textbf{data model}, that describes our data. \todo{rajouter}
+
+When describing our data, we have several levels of abstraction. \todo{rajouter}
+
+
+\end{document}
