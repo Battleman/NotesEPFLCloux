@@ -2,8 +2,8 @@
 \input{/media/battleman/DATA/Documents/Programming/LaTeX/preambule.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%TODO : Supprimer quand plus de todo %%%%%%
-\marginparwidth = 75pt
-\textwidth = 400pt
+\marginparwidth=75pt
+\textwidth=400pt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{titlesec}
 \numberwithin{equation}{section}
@@ -25,7 +25,7 @@
 \tableofcontents
 
 \section{Introduction}
-The first question we need to ask, is \textit{What is a signal ?} For our interest, it is a description of the evolution of a physical phenomenon.
+The first question we need to ask, is \textit{What is a signal?} For our interest, it is a description of the evolution of a physical phenomenon.
 \begin{example}
     Temperature is a signal, as well as pressure, magnetic deviation, grey level on paper (for a photograph, thus this is a two dimensional signal),...
 \end{example}
@@ -38,7 +38,7 @@ We can model a signal using classical electric circuits (with resistors, concent
 \begin{example}
     Instead of looking at the temperature continuously, it is much simpler to measure it at regular intervals.
 \end{example}
-But discretizing temperatures is appealing, because is does not change much. A cold day is a cold day. But when discretizing a voice, we need to change our model, especially time. What is time ? Philosophers have wondered so for many years. We remember the dichotomy paradox (an arrow going from A to B will first go through half, then quarter, the eighth, and so on infinitely, meaning the arrow never reaches B) ; this paradox is an example of why we need to be consistent mathematically. 
+But discretizing temperatures is appealing, because is does not change much. A cold day is a cold day. But when discretizing a voice, we need to change our model, especially time. What is time? Philosophers have wondered so for many years. We remember the dichotomy paradox (an arrow going from A to B will first go through half, then quarter, the eighth, and so on infinitely, meaning the arrow never reaches B) ; this paradox is an example of why we need to be consistent mathematically. 
 
 When computing a cannonball shooting, we can either measure the points or use calculus to find trajectory. This easy. But given any sample of data, finding the average with ``idealisation'' of the data is hard, as we need to find the perfectly fitting function and then compute the integral. Quite simpler to sum the points and divide by the number of points ! This is what signal processing is about.
 

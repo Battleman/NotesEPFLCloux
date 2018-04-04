@@ -41,10 +41,11 @@
     \item[Finite-length] Notation: $x[n], n=0,1,\ldots,N-1$. Vector: $\mathbf{x} = {[x_0,x_1,\ldots,x_{N-1}]}^T$. Good for practice.
     \item[Infinite-length] Notation: $x[n], n\in\Z$. Abstraction $\to$ good for theory.
     \item[Periodic] N-periodic sequence $\tilde{x}[n] = \tilde{x}[n+kN],\quad k,n,N \in\Z$
-    \item[Finite-support] $\overline{x}[n] = \left\{\begin{array}{ll}
-    x[n] & \text{if} 0 \leq n < N\\
-    0 & \text{otherwise}
-\end{array}\right.$
+    \item[Finite-support] $\overline{x}[n] = \left \{
+        \begin{array}{ll}
+            x[n] & \text{if} 0 \leq n < N\\
+            0 & \text{otherwise}
+        \end{array}\right.$
     \item[Operators] \uline{Scaling}: $<y[n] = \alpha{} x[n]$. \uline{Sum}: $y[n] = x[n] + z[n]$. \uline{Product}: $y[n] = x[n]\cdot z[n]$. \uline{Shift by $k$} (delay): $y[n] = x[n-k]$
     \item[Finite-length shift] We must chose either to use \textit{finite-support} (0's outside of the interval, shifting ``creates'' 0's) or \textit{periodic extension} (leaving on a sides makes entering on the other).
     \item[Energy] 
@@ -116,7 +117,7 @@
             \end{itemize}
         \end{multicols}
     \item[Dot Product]We also need something to measure and compare: \textbf{inner product} (or \textbf{dot product}). Notation: 
-        \[\langle\cdot,\cdot\rangle : V\times V \to \C\]
+        \[ \langle\cdot,\cdot\rangle : V\times V \to \C \]
         Measures similarity between vectors. If 0, then vectors are completely orthogonal.
     \item[Formal Properties]The dot product has several interesting properties. For $\mathbf{x},\mathbf{y},\mathbf{z} \in V$ and $\alpha\in\C$:
     \begin{multicols}{2}
@@ -143,7 +144,10 @@
 \begin{itemize}
     \item[Basis]Vectors can be linearly combined in vector space: $\mathbf{g} = \alpha \mathbf{x} + \beta \mathbf{y}$. A basis is a set of vectors $\{\mathbf{w}^{(k)}\}$ that lets us write any vector as a linear combination of those vectors. Alternatively, it is a set $\{\mathbf{w}^{(k)}\}$ such as there exists (unique) $\alpha_1,\alpha_2$ such as for any $\mathbf{x}$, we have \begin{equation}
         \begin{bmatrix}
-            x_1\\x_2\\\vdots\\x_N
+            x_1
+            \\x_2
+            \\\vdots
+            \\x_N
         \end{bmatrix} 
         =\alpha_1 \mathbf{w}^{(1)} + \alpha_2 \mathbf{w}^{(2)} + \ldots \alpha_k \mathbf{w}^{(k)}= \somme{N}{k=0}\alpha_k \mathbf{w}^{(k)},\quad \alpha_k \in \C%
         \label{equ_basis}
@@ -158,15 +162,15 @@
     x_2
     \begin{bmatrix}
     0\\1
-\end{bmatrix}$. But this is not the \textit{only} base of $\R^2$! For example $\left\{\begin{bmatrix}
+\end{bmatrix}$. But this is not the \textit{only} base of $\R^2$! For example $\left \{\begin{bmatrix}
     1\\0
 \end{bmatrix},\ \begin{bmatrix}
     1\\1
-\end{bmatrix}\right\}$ is another valid base. Oppositely, $\left\{\begin{bmatrix}
+\end{bmatrix}\right \}$ is another valid base. Oppositely, $\left \{ \begin{bmatrix}
     1\\0
 \end{bmatrix},\ \begin{bmatrix}
     -1\\0
-\end{bmatrix}\right\}$ is not a valid base as we can't express any vector $\mathbf{x}$ with them (e.g.\ no vector with $x_2 \neq 0$ can be expressed)
+\end{bmatrix}\right \}$ is not a valid base as we can't express any vector $\mathbf{x}$ with them (e.g.\ no vector with $x_2 \neq 0$ can be expressed)
     \item[Ortho* basis]Ortho\textbf{gonal} basis: All vectors are orthogonal with one another:
     \[\langle\mathbf{w}^{(k)},\mathbf{w}^{(n)}\rangle = 0,\ \text{for } k\neq n \]
     Ortho\textbf{normal} basis same as orthogonal, but vectors are normalized; thus all are orthogonal and vectors have unit length: 
@@ -184,11 +188,13 @@
     \beta_h  = \somme{K-1}{k=0}\alpha_k \langle\mathbf{v}^{(h)}, \mathbf{w}^{(k)}\rangle = \somme{K-1}{k=0}\alpha_k c_{hk} = 
     \begin{bmatrix}
         c_{00}  &\cdots& c_{0(K-1)}\\
-        & & \vdots\\
-        c_{(K-1)0} & \cdots & c_{(K-1)(K-1)}
+        & & \vdots
+        \\c_{(K-1)0} & \cdots & c_{(K-1)(K-1)}
     \end{bmatrix}
     \begin{bmatrix}
-        \alpha_0\\\vdots\\\alpha_{K-1}
+        \alpha_0
+        \\\vdots
+        \\\alpha_{K-1}
     \end{bmatrix}
     \label{equ_basis change}
 \end{equation}
@@ -263,14 +269,20 @@
         \end{equation}
     \item[Change of basis]We try to define the matrix of basis change (as in Equation~\ref{equ_basis change}). First we define $W_N = e^{-j\frac{2\pi}{n}}$ (or $W$ when $N$ is evident). Then the change of basis matrix $\mathbf{W}$ with $\mathbf{W}[n,m] = W_N^{nm}$: 
         \begin{equation}
-            W = 
+            \mathbf{W} = 
             \begin{bmatrix}
-                1 & 1 & 1 & 1 & \cdots & 1\\
-                1 & W^1 & W^2 & W^3 & \cdots & W^{N-1}\\
-                1 & W^2 & W^4 & W^6 & \cdots & W^{2(N-1)}\\
-                & & & \vdots\\
-                1 & W^{N-1} & W^{2(N-1)} & W^{3(N-1)} & \cdots & W^{(N-1)^2}
+                1 & 1 & 1 & 1 & \cdots & 1
+                \\1 & W^1 & W^2 & W^3 & \cdots & W^{N-1}
+                \\1 & W^2 & W^4 & W^6 & \cdots & W^{2(N-1)}
+                \\& & & \vdots
+                \\1 & W^{N-1} & W^{2(N-1)} & W^{3(N-1)} & \cdots & W^{(N-1)^2}
             \end{bmatrix}
         \end{equation}
+        This lets us redefine the analysis and synthesis formula:
+        \begin{equation}
+            \mathbf{X} = \mathbf{W}\mathbf{x} \qquad \mathbf{x} =\frac{1}{N}\mathbf{W}^H \mathbf{X}
+        \end{equation}
+    \item[DFT Matrix]We can simplify many elements in the above matrix, because $W_N^m = W_N^{(m \mod N)}$
+    \item 
 \end{itemize}
 \end{document}
