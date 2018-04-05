@@ -1,5 +1,6 @@
 \documentclass[11pt,a4paper]{article}
 \input{/media/battleman/DATA/Documents/Programming/LaTeX/preambule.tex}
+\overfullrule=2cm
 \begin{document}
 \epflTitle{Signal Processing for Communications}[Olivier Cloux][Spring 2017][Summary in]<../../../Common/>
 \setstretch{1.1}
@@ -15,84 +16,84 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \begin{itemize}
-    \setlength\itemsep{-0.2em}
+	\setlength\itemsep{-0.2em}
 
-    \item[Signals] Describe the evolution of a real life phenomenon.
+	\item[Signals] Describe the evolution of a real life phenomenon.
 
-    \item[Sampling] Instead of considering \textit{continuous} time signals (temperature,\ldots), it might be easier to \textbf{sample} them and consider it as \textit{discrete}
-    
-    \item[Sampling Theorem] See Figure~\ref{fig_sampling_theorem} and equation~\ref{equ_sampling_theorem}
-        \begin{equation}
-            x(t) = \somme{\infty}{n=-\infty} x[n] sinc\left(\frac{t-nT_s}{T_s}\right)%
-            \label{equ_sampling_theorem}
-        \end{equation}
-        \begin{figure}
-            \centering
-            \includegraphics[scale=0.2]{images/sampling_theorem}
-            \caption{Visualization of the sampling theorem}%
-            \label{fig_sampling_theorem}
-        \end{figure}    
-   
-    \item[Discrete signal] Sequence of \textbf{complex} numbers. Notation: $x[n]$. $n$ is ``a-dimensional''. Analysis $\sim$ periodic measurements and Synthesis $\sim$ stream of generated samples.
-    \item[Delta signal] $x[n] = \delta[n]$. 1 when $n=0$, 0 elsewhere.
-    \item[Unit step] $x[n] = u[n]$. 1 when $n \geq 0$, 0 elsewhere.
-    \item[Exponential decay] $x[n] = |a|^n u[n]$ with $|a| < 1$
-    \item[Signal classes] Finite-length, infinite-length, periodic, finite-support
-    \item[Finite-length] Notation: $x[n], n=0,1,\ldots,N-1$. Vector: $\mathbf{x} = {[x_0,x_1,\ldots,x_{N-1}]}^T$. Good for practice.
-    \item[Infinite-length] Notation: $x[n], n\in\Z$. Abstraction $\to$ good for theory.
-    \item[Periodic] N-periodic sequence $\tilde{x}[n] = \tilde{x}[n+kN],\quad k,n,N \in\Z$
-    \item[Finite-support] $\overline{x}[n] = \left \{
-        \begin{array}{ll}
-            x[n] & \text{if} 0 \leq n < N\\
-            0 & \text{otherwise}
-        \end{array}\right.$
-    \item[Operators] \uline{Scaling}: $<y[n] = \alpha{} x[n]$. \uline{Sum}: $y[n] = x[n] + z[n]$. \uline{Product}: $y[n] = x[n]\cdot z[n]$. \uline{Shift by $k$} (delay): $y[n] = x[n-k]$
-    \item[Finite-length shift] We must chose either to use \textit{finite-support} (0's outside of the interval, shifting ``creates'' 0's) or \textit{periodic extension} (leaving on a sides makes entering on the other).
-    \item[Energy] 
-        \begin{equation}
-            E_x = \somme{\infty}{n=-\infty}|x[n]|^2
-        \end{equation}
-        Infinite for periodic signals
-    \item[Power] For periodic signals: $P_{\tilde{x}} \equiv \frac{1}{N}\somme{N-1}{n=0}|\tilde{x}[n]|^2$
-        \begin{equation}
-            P_x = \limite{N\to\infty} \frac{1}{2N+1}\somme{N}{n=-N}|x[n]|^2
-        \end{equation}
-    \item[Legos] DPS is composed of fundamental building blocks. See figure~\ref{dsp_legos}.
-        \begin{figure}
-            \centering
-            \begin{subfigure}{0.45\textwidth}
-                \centering
-                \includegraphics[scale=0.3]{images/lego_adder}%
-                \label{subfig_adder}
-                \caption{Adder}
-            \end{subfigure}
-            \begin{subfigure}{0.45\textwidth}
-                \centering
-                \includegraphics[scale=0.3]{images/lego_multi}%
-                \label{subfig_multi}
-                \caption{Multiplier}
-            \end{subfigure}\\
-            \begin{subfigure}{0.4\textwidth}
-                \centering
-                \includegraphics[scale=0.3]{images/lego_delay}%
-                \label{subfig_delay}
-                \caption{N-delay}
-            \end{subfigure}
-            \begin{subfigure}{0.45\textwidth}
-                \includegraphics[scale=0.2]{images/loops}%
-                \caption{A looping system}%
-                \label{subfig_loop}
-            \end{subfigure}  
-            \caption{Fundamental building blocks}%          
-            \label{dsp_legos}
-        \end{figure}
-  
-    \item[Averages] Simple average: $m = \frac{a+b}{2}$. Moving average: take a ``local'' average 
-        \begin{equation}
-            y[n] = \frac{x[n] + x[n-1]}{2}
-        \end{equation}
-    \item[Loops]When feeding the output of a system to the input, we obtain a loop, of the type $y[n] = \alpha y[n-M] + x[n]$. This is a powerful concept! Figure~\ref{subfig_loop} shows an example. The parameters we can tweak: $M$ (size of delay), $\alpha$ (decay factor), $\overline{x}[n]$ (input signal)     
-    \item[Karplus-Strong]\todo{}
+	\item[Sampling] Instead of considering \textit{continuous} time signals (temperature,\ldots), it might be easier to \textbf{sample} them and consider it as \textit{discrete}
+
+	\item[Sampling Theorem] See Figure~\ref{fig_sampling_theorem} and equation~\ref{equ_sampling_theorem}
+	      \begin{equation}
+		      x(t) = \somme{\infty}{n=-\infty} x[n] sinc\left(\frac{t-nT_s}{T_s}\right)%
+		      \label{equ_sampling_theorem}
+	      \end{equation}
+	      \begin{figure}
+		      \centering
+		      \includegraphics[scale=0.2]{images/sampling_theorem}
+		      \caption{Visualization of the sampling theorem}%
+		      \label{fig_sampling_theorem}
+	      \end{figure}
+
+	\item[Discrete signal] Sequence of \textbf{complex} numbers. Notation: $x[n]$. $n$ is ``a-dimensional''. Analysis $\sim$ periodic measurements and Synthesis $\sim$ stream of generated samples.
+	\item[Delta signal] $x[n] = \delta[n]$. 1 when $n=0$, 0 elsewhere.
+	\item[Unit step] $x[n] = u[n]$. 1 when $n \geq 0$, 0 elsewhere.
+	\item[Exponential decay] $x[n] = |a|^n u[n]$ with $|a| < 1$
+	\item[Signal classes] Finite-length, infinite-length, periodic, finite-support
+	\item[Finite-length] Notation: $x[n], n=0,1,\ldots,N-1$. Vector: $\mathbf{x} = {[x_0,x_1,\ldots,x_{N-1}]}^T$. Good for practice.
+	\item[Infinite-length] Notation: $x[n], n\in\Z$. Abstraction $\to$ good for theory.
+	\item[Periodic] N-periodic sequence $\tilde{x}[n] = \tilde{x}[n+kN],\quad k,n,N \in\Z$
+	\item[Finite-support] $\overline{x}[n] = \left \{
+		      \begin{array}{ll}
+			      x[n] & \text{if} 0 \leq n < N \\
+			      0    & \text{otherwise}
+		      \end{array}\right.$
+	\item[Operators] \uline{Scaling}: $<y[n] = \alpha{} x[n]$. \uline{Sum}: $y[n] = x[n] + z[n]$. \uline{Product}: $y[n] = x[n]\cdot z[n]$. \uline{Shift by $k$} (delay): $y[n] = x[n-k]$
+	\item[Finite-length shift] We must chose either to use \textit{finite-support} (0's outside of the interval, shifting ``creates'' 0's) or \textit{periodic extension} (leaving on a sides makes entering on the other).
+	\item[Energy]
+	      \begin{equation}
+		      E_x = \somme{\infty}{n=-\infty}|x[n]|^2
+	      \end{equation}
+	      Infinite for periodic signals
+	\item[Power] For periodic signals: $P_{\tilde{x}} \equiv \frac{1}{N}\somme{N-1}{n=0}|\tilde{x}[n]|^2$
+	      \begin{equation}
+		      P_x = \limite{N\to\infty} \frac{1}{2N+1}\somme{N}{n=-N}|x[n]|^2
+	      \end{equation}
+	\item[Legos] DPS is composed of fundamental building blocks. See figure~\ref{dsp_legos}.
+	      \begin{figure}
+		      \centering
+		      \begin{subfigure}{0.45\textwidth}
+			      \centering
+			      \includegraphics[scale=0.3]{images/lego_adder}%
+			      \label{subfig_adder}
+			      \caption{Adder}
+		      \end{subfigure}
+		      \begin{subfigure}{0.45\textwidth}
+			      \centering
+			      \includegraphics[scale=0.3]{images/lego_multi}%
+			      \label{subfig_multi}
+			      \caption{Multiplier}
+		      \end{subfigure}\\
+		      \begin{subfigure}{0.4\textwidth}
+			      \centering
+			      \includegraphics[scale=0.3]{images/lego_delay}%
+			      \label{subfig_delay}
+			      \caption{N-delay}
+		      \end{subfigure}
+		      \begin{subfigure}{0.45\textwidth}
+			      \includegraphics[scale=0.2]{images/loops}%
+			      \caption{A looping system}%
+			      \label{subfig_loop}
+		      \end{subfigure}
+		      \caption{Fundamental building blocks}%          
+		      \label{dsp_legos}
+	      \end{figure}
+
+	\item[Averages] Simple average: $m = \frac{a+b}{2}$. Moving average: take a ``local'' average
+	      \begin{equation}
+		      y[n] = \frac{x[n] + x[n-1]}{2}
+	      \end{equation}
+	\item[Loops]When feeding the output of a system to the input, we obtain a loop, of the type $y[n] = \alpha y[n-M] + x[n]$. This is a powerful concept! Figure~\ref{subfig_loop} shows an example. The parameters we can tweak: $M$ (size of delay), $\alpha$ (decay factor), $\overline{x}[n]$ (input signal)
+	\item[Karplus-Strong]\todo{}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -100,127 +101,133 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Vector spaces}
 \begin{itemize}
-    \item[Signal model]We work in $\C^N$: vector space  of ordered tuples of $N$ complex values. $N$ can be $\infty$. We need more than a vector space, we need a \textit{Hilbert space}.
-    \item[Some spaces] $\ell_2(\Z)$: space of square-summable infinite sequences. $L_2([a,b])$: space of square-integrable functions over an interval
-    \item[Vector spaces]Ingredients: the set of vectors $V$, and a set of scalars (say \C). We need at least to be able to: resize vectors (multiply vector by scalar) and combine vectors together (sum them).
-    \item[Formal Properties]For $\mathbf{x},\mathbf{y},\mathbf{z} \in V$ and $\alpha,\beta \in \C$:
+	\item[Signal model]We work in $\C^N$: vector space  of ordered tuples of $N$ complex values. $N$ can be $\infty$. We need more than a vector space, we need a \textit{Hilbert space}.
+	\item[Some spaces] $\ell_2(\Z)$: space of square-summable infinite sequences. $L_2([a,b])$: space of square-integrable functions over an interval
+	\item[Vector spaces]Ingredients: the set of vectors $V$, and a set of scalars (say \C). We need at least to be able to: resize vectors (multiply vector by scalar) and combine vectors together (sum them).
+	\item[Formal Properties]For $\mathbf{x},\mathbf{y},\mathbf{z} \in V$ and $\alpha,\beta \in \C$:
 
-        \begin{multicols}{2}
-            \begin{itemize}[font=\normalfont, nolistsep]
-                \item $\mathbf{x}+\mathbf{y} = \mathbf{y}+\mathbf{x}$
-                \item $(\mathbf{x}+\mathbf{y}) + \mathbf{z} = \mathbf{x}+(\mathbf{x}+\mathbf{y})$
-                \item $\alpha(\mathbf{x}+\mathbf{y}) = \alpha\mathbf{x} + \alpha\mathbf{y}$
-                \item $(\alpha+ \beta)\mathbf{x} = \alpha\mathbf{x} + \beta\mathbf{x}$
-                \item $\alpha(\beta\mathbf{x}) = (\alpha\beta)\mathbf{x}$
-                \item $\exists 0 \in V | \mathbf{x} + 0 = 0+\mathbf{x} = \mathbf{x}$
-                \item $\forall \mathbf{x} \in V \exists(-\mathbf{x}) | x+(- \mathbf{x}) = 0$
-            \end{itemize}
-        \end{multicols}
-    \item[Dot Product]We also need something to measure and compare: \textbf{inner product} (or \textbf{dot product}). Notation: 
-        \[ \langle\cdot,\cdot\rangle : V\times V \to \C \]
-        Measures similarity between vectors. If 0, then vectors are completely orthogonal.
-    \item[Formal Properties]The dot product has several interesting properties. For $\mathbf{x},\mathbf{y},\mathbf{z} \in V$ and $\alpha\in\C$:
-    \begin{multicols}{2}
-        \begin{itemize}
-            \item $\langle\mathbf{x}+\mathbf{y},\mathbf{z}\rangle = \langle\mathbf{x},\mathbf{z}\rangle + \langle\mathbf{y},\mathbf{z}\rangle$
-            \item $\langle\mathbf{x},\mathbf{y}\rangle = \langle\mathbf{y},\mathbf{x}\rangle^*$
-            \item $\langle\alpha\mathbf{x},\mathbf{y}\rangle = \alpha^*\langle\mathbf{x},\mathbf{y}\rangle$\\
-            $\langle\mathbf{x},\alpha\mathbf{y}\rangle = \alpha\langle\mathbf{x},\mathbf{y}\rangle$
-            \item $\langle\mathbf{x},\mathbf{x}\rangle = ||\mathbf{x}||^2 \geq 0$
-            \item $\langle\mathbf{x},\mathbf{x}\rangle = 0 \iff \mathbf{x} = \mathbf{0}$
-            \item If $\langle\mathbf{x},\mathbf{y}\rangle = 0$ and $\mathbf{x,y} \neq \mathbf{0}$ then $\mathbf{x}$ and $\mathbf{y}$ are orthogonal
-        \end{itemize}
-    \end{multicols}
-    \item[Examples] In $\R^2$, the norm is simply $x_0y_0 + x_1y_1 = ||\mathbf{x}||\ ||\mathbf{y}|| \cos\alpha$. Another more interesting example, is $L_2[a,b]$ In this case, the inner product is defined as $\int_a^b x(t)y(t)\deriv{t}$
-    \item[Distance]Inner product defines a norm: $||\mathbf{x}|| = \sqrt{\langle\mathbf{x},\mathbf{x}\rangle}$ while norm defines a distance: $d(\mathbf{x},\mathbf{y}) = ||\mathbf{x}- \mathbf{y}||$. In $L_2$, the distance corresponds to the Mean Square Error
-    \item[For signals] the inner product is defined as following:
-    \begin{equation}
-        \langle\mathbf{x},\mathbf{y}\rangle = \somme{N-1}{n=0}x^*[n]y[n]
-    \end{equation}
-    It is well defined for all finite-length vectors in $\C^N$. Careful: if $N = \infty$, then the sum may explode! We require the sequences to be \textit{square-summable}, i.e. $\sum|x[n]| < \infty$. That is the space $\ell_2(\Z)$.
+	      \begin{multicols}{2}
+		      \begin{itemize}[font=\normalfont, nolistsep]
+			      \item $\mathbf{x}+\mathbf{y} = \mathbf{y}+\mathbf{x}$
+			      \item $(\mathbf{x}+\mathbf{y}) + \mathbf{z} = \mathbf{x}+(\mathbf{x}+\mathbf{y})$
+			      \item $\alpha(\mathbf{x}+\mathbf{y}) = \alpha\mathbf{x} + \alpha\mathbf{y}$
+			      \item $(\alpha+ \beta)\mathbf{x} = \alpha\mathbf{x} + \beta\mathbf{x}$
+			      \item $\alpha(\beta\mathbf{x}) = (\alpha\beta)\mathbf{x}$
+			      \item $\exists 0 \in V | \mathbf{x} + 0 = 0+\mathbf{x} = \mathbf{x}$
+			      \item $\forall \mathbf{x} \in V \exists(-\mathbf{x}) | x+(- \mathbf{x}) = 0$
+		      \end{itemize}
+	      \end{multicols}
+	\item[Dot Product]We also need something to measure and compare: \textbf{inner product} (or \textbf{dot product}). Notation:
+	      \[ \langle\cdot,\cdot\rangle : V\times V \to \C \]
+	      Measures similarity between vectors. If 0, then vectors are completely orthogonal.
+	\item[Formal Properties]The dot product has several interesting properties. For $\mathbf{x},\mathbf{y},\mathbf{z} \in V$ and $\alpha\in\C$:
+	      \begin{multicols}{2}
+		      \begin{itemize}
+			      \item $\langle\mathbf{x}+\mathbf{y},\mathbf{z}\rangle = \langle\mathbf{x},\mathbf{z}\rangle + \langle\mathbf{y},\mathbf{z}\rangle$
+			      \item $\langle\mathbf{x},\mathbf{y}\rangle = \langle\mathbf{y},\mathbf{x}\rangle^*$
+			      \item $\langle\alpha\mathbf{x},\mathbf{y}\rangle = \alpha^*\langle\mathbf{x},\mathbf{y}\rangle$\\
+			            $\langle\mathbf{x},\alpha\mathbf{y}\rangle = \alpha\langle\mathbf{x},\mathbf{y}\rangle$
+			      \item $\langle\mathbf{x},\mathbf{x}\rangle = ||\mathbf{x}||^2 \geq 0$
+			      \item $\langle\mathbf{x},\mathbf{x}\rangle = 0 \iff \mathbf{x} = \mathbf{0}$
+			      \item If $\langle\mathbf{x},\mathbf{y}\rangle = 0$ and $\mathbf{x,y} \neq \mathbf{0}$ then $\mathbf{x}$ and $\mathbf{y}$ are orthogonal
+		      \end{itemize}
+	      \end{multicols}
+	\item[Examples] In $\R^2$, the norm is simply $x_0y_0 + x_1y_1 = ||\mathbf{x}||\ ||\mathbf{y}|| \cos\alpha$. Another more interesting example, is $L_2[a,b]$ In this case, the inner product is defined as $\int_a^b x(t)y(t)\deriv{t}$
+	\item[Distance]Inner product defines a norm: $||\mathbf{x}|| = \sqrt{\langle\mathbf{x},\mathbf{x}\rangle}$ while norm defines a distance: $d(\mathbf{x},\mathbf{y}) = ||\mathbf{x}- \mathbf{y}||$. In $L_2$, the distance corresponds to the Mean Square Error
+	\item[For signals] the inner product is defined as following:
+	      \begin{equation}
+		      \langle\mathbf{x},\mathbf{y}\rangle = \somme{N-1}{n=0}x^*[n]y[n]
+	      \end{equation}
+	      It is well defined for all finite-length vectors in $\C^N$. Careful: if $N = \infty$, then the sum may explode! We require the sequences to be \textit{square-summable}, i.e. $\sum|x[n]| < \infty$. That is the space $\ell_2(\Z)$.
 \end{itemize}
 
 \subsection{Basis}
 \begin{itemize}
-    \item[Basis]Vectors can be linearly combined in vector space: $\mathbf{g} = \alpha \mathbf{x} + \beta \mathbf{y}$. A basis is a set of vectors $\{\mathbf{w}^{(k)}\}$ that lets us write any vector as a linear combination of those vectors. Alternatively, it is a set $\{\mathbf{w}^{(k)}\}$ such as there exists (unique) $\alpha_1,\alpha_2$ such as for any $\mathbf{x}$, we have \begin{equation}
-        \begin{bmatrix}
-            x_1
-            \\x_2
-            \\\vdots
-            \\x_N
-        \end{bmatrix} 
-        =\alpha_1 \mathbf{w}^{(1)} + \alpha_2 \mathbf{w}^{(2)} + \ldots \alpha_k \mathbf{w}^{(k)}= \somme{N}{k=0}\alpha_k \mathbf{w}^{(k)},\quad \alpha_k \in \C%
-        \label{equ_basis}
-\end{equation}
-    \item[Example]The canonical $\R^2$ basis is as follows: 
-    $\begin{bmatrix}
-        x_1\\x_2
-    \end{bmatrix} =
-    x_1 \begin{bmatrix}
-        1\\0
-    \end{bmatrix} + 
-    x_2
-    \begin{bmatrix}
-    0\\1
-\end{bmatrix}$. But this is not the \textit{only} base of $\R^2$! For example $\left \{\begin{bmatrix}
-    1\\0
-\end{bmatrix},\ \begin{bmatrix}
-    1\\1
-\end{bmatrix}\right \}$ is another valid base. Oppositely, $\left \{ \begin{bmatrix}
-    1\\0
-\end{bmatrix},\ \begin{bmatrix}
-    -1\\0
-\end{bmatrix}\right \}$ is not a valid base as we can't express any vector $\mathbf{x}$ with them (e.g.\ no vector with $x_2 \neq 0$ can be expressed)
-    \item[Ortho* basis]Ortho\textbf{gonal} basis: All vectors are orthogonal with one another:
-    \[\langle\mathbf{w}^{(k)},\mathbf{w}^{(n)}\rangle = 0,\ \text{for } k\neq n \]
-    Ortho\textbf{normal} basis same as orthogonal, but vectors are normalized; thus all are orthogonal and vectors have unit length: 
-    \[\langle\mathbf{w}^{(k)},\mathbf{w}^{(n)}\rangle = \delta[n-k]\]
-    \item[Basis expansion]Given a basis and a vector, finding the $\alpha_k$ might be hard. With orthonormal basis, it is easy: 
-        \begin{equation}
-            \alpha_k = \langle\mathbf{w}^{(k)}, \mathbf{x}\rangle
-            \label{equ_basis expansion}
-        \end{equation}
-    \item[Basis change]We want to easily change between our basis and a given other basis:
-    \[\mathbf{x} = \somme{K-1}{k=0}\alpha_k \mathbf{w}^{(k)} = \somme{K-1}{k=0}\beta_k \mathbf{v}^{(k)}\]
-    We look for the $\beta_k$ using $\alpha_k, \mathbf{v}^{(k)}, \mathbf{w}^{(k)}$. Simply:
+	\item[Basis]Vectors can be linearly combined in vector space: $\mathbf{g} = \alpha \mathbf{x} + \beta \mathbf{y}$. A basis is a set of vectors $\{\mathbf{w}^{(k)}\}$ that lets us write any vector as a linear combination of those vectors. Alternatively, it is a set $\{\mathbf{w}^{(k)}\}$ such as there exists (unique) $\alpha_1,\alpha_2$ such as for any $\mathbf{x}$, we have \begin{equation}
+		      \begin{bmatrix}
+			      x_1
+			      \\x_2
+			      \\\vdots
+			      \\x_N
+		      \end{bmatrix}
+		      =\alpha_1 \mathbf{w}^{(1)} + \alpha_2 \mathbf{w}^{(2)} + \ldots \alpha_k \mathbf{w}^{(k)}= \somme{N}{k=0}\alpha_k \mathbf{w}^{(k)},\quad \alpha_k \in \C%
+		      \label{equ_basis}
+	      \end{equation}
+	\item[Example]The canonical $\R^2$ basis is as follows:
+	      $\begin{bmatrix}
+			      x_1 \\x_2
+		      \end{bmatrix} =
+		      x_1 \begin{bmatrix}
+			      1 \\0
+		      \end{bmatrix} +
+		      x_2
+		      \begin{bmatrix}
+			      0 \\1
+		      \end{bmatrix}$. But this is not the \textit{only} base of $\R^2$! For example $\left \{\begin{bmatrix}
+			      1 \\0
+		      \end{bmatrix},\ \begin{bmatrix}
+			      1 \\1
+		      \end{bmatrix}\right \}$ is another valid base. Oppositely, $\left \{ \begin{bmatrix}
+			      1 \\0
+		      \end{bmatrix},\ \begin{bmatrix}
+			      -1 \\0
+		      \end{bmatrix}\right \}$ is not a valid base as we can't express any vector $\mathbf{x}$ with them (e.g.\ no vector with $x_2 \neq 0$ can be expressed)
+	\item[Ortho* basis]Ortho\textbf{gonal} basis: All vectors are orthogonal with one another:
+	      \[\langle\mathbf{w}^{(k)},\mathbf{w}^{(n)}\rangle = 0,\ \text{for } k\neq n \]
+	      Ortho\textbf{normal} basis same as orthogonal, but vectors are normalized; thus all are orthogonal and vectors have unit length:
+	      \[\langle\mathbf{w}^{(k)},\mathbf{w}^{(n)}\rangle = \delta[n-k]\]
+	\item[Basis expansion]Given a basis and a vector, finding the $\alpha_k$ might be hard. With orthonormal basis, it is easy:
+	      \begin{equation}
+		      \alpha_k = \langle\mathbf{w}^{(k)}, \mathbf{x}\rangle
+		      \label{equ_basis expansion}
+	      \end{equation}
+	\item[Basis change]We want to easily change between our basis and a given other basis:
+	      \[\mathbf{x} = \somme{K-1}{k=0}\alpha_k \mathbf{w}^{(k)} = \somme{K-1}{k=0}\beta_k \mathbf{v}^{(k)}\]
+	      We look for the $\beta_k$ using $\alpha_k, \mathbf{v}^{(k)}, \mathbf{w}^{(k)}$. Simply:
 \end{itemize}
 \begin{equation}
-    \beta_h  = \somme{K-1}{k=0}\alpha_k \langle\mathbf{v}^{(h)}, \mathbf{w}^{(k)}\rangle = \somme{K-1}{k=0}\alpha_k c_{hk} = 
-    \begin{bmatrix}
-        c_{00}  &\cdots& c_{0(K-1)}\\
-        & & \vdots
-        \\c_{(K-1)0} & \cdots & c_{(K-1)(K-1)}
-    \end{bmatrix}
-    \begin{bmatrix}
-        \alpha_0
-        \\\vdots
-        \\\alpha_{K-1}
-    \end{bmatrix}
-    \label{equ_basis change}
+	\beta_h  = \somme{K-1}{k=0}\alpha_k \langle\mathbf{v}^{(h)}, \mathbf{w}^{(k)}\rangle = \somme{K-1}{k=0}\alpha_k c_{hk} =
+	\begin{bmatrix}
+		c_{00} & \cdots & c_{0(K-1)} \\
+		       &        & \vdots
+		\\c_{(K-1)0} & \cdots & c_{(K-1)(K-1)}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\alpha_0
+		\\\vdots
+		\\\alpha_{K-1}
+	\end{bmatrix}
+	\label{equ_basis change}
 \end{equation}
 \begin{itemize}
 
 
-    \item[Energy]$||\mathbf{x}|| = \langle\mathbf{x},\mathbf{x}\rangle = \somme{K-1}{k=0}|x_k|^2$
-    \item[Parseval]``\textit{Energy is conserved across a change of basis}
+	\item[Energy]$||\mathbf{x}|| = \langle\mathbf{x},\mathbf{x}\rangle = \somme{K-1}{k=0}|x_k|^2$
+    \item[Parseval]``\textit{Energy is conserved across a change of basis}''
+        \begin{equation}
+            ||\mathbf{x}||^2 = \sum |\alpha_k|^2
+            \label{equ:parseval}
+        \end{equation}
+
 \end{itemize}
 \subsection{Subspaces and approximation}
 \begin{itemize}
-    \item[Subspace] A vector subspace is a subset of vectors \textit{closed} under addition and scalar multiplicat0ion. 
-    \item[Approximation]For a vector $\mathbf{x} \in V$ and a subspace $S \subseteq V$ then we can approximate $\mathbf{x}$ with $\hat{\mathbf{x}} \in S$.
-    \item[LS]Least-square approximation. Given an orthonormal basis for $S$: ${\{\mathbf{s}^{(k)}\}}_{k=0,1,\ldots,K-1}$. Then the orthogonal projection is the ``best'' approximation over $S$. Best because it has the minimum-norm error: $\arg\min\limits_{\mathbf{y} \in S} ||\mathbf{x}- \mathbf{y}|| = \hat{\mathbf{x}}$. Beside, the error is orthogonal to approximation: $\langle\mathbf{x}-\hat{\mathbf{x}},\mathbf{x}\rangle = 0$
-    \item[Gram-Schmidt]Used to build an orthonormal $\{\mathbf{u}^{(k)}\}$ set from any set $\{\mathbf{s}^{(k)}\}$. The algorithmic procedure: 
-        \begin{enumerate}
-            \item $\mathbf{p}^{(k)} = \mathbf{s}^{(k)} - \somme{k-1}{n=0}\langle\mathbf{u}^{(n)},\mathbf{s}^{(k)}\rangle\mathbf{u}^{(n)}$
-            \item $\mathbf{u}^{(k)} = \frac{\mathbf{p}^{(k)}}{||\mathbf{p}^{(k)}||}$
-        \end{enumerate}
-    \item[Legendre]Legendre polynomials are a better (orthonormal) base than classical polynomials base. When approximating sinusoid with polynomials, Legendre polynomials yield a smaller error than regular polynomials base.
+	\item[Subspace] A vector subspace is a subset of vectors \textit{closed} under addition and scalar multiplication.
+	\item[Approximation]For a vector $\mathbf{x} \in V$ and a subspace $S \subseteq V$ then we can approximate $\mathbf{x}$ with $\hat{\mathbf{x}} \in S$.
+	\item[LS]Least-square approximation. Given an orthonormal basis for the subspace $S$: ${\{\mathbf{s}^{(k)}\}}_{k=0,1,\ldots,K-1}$ Then the orthogonal projection is the ``best'' approximation over $S$. Best because it has the minimum-norm error: \[\arg\min\limits_{\mathbf{y} \in S} ||\mathbf{x}- \mathbf{y}|| = \hat{\mathbf{x}}\]Beside, the error is orthogonal to approximation: $\langle\mathbf{x}-\hat{\mathbf{x}},\mathbf{x}\rangle = 0$
+
+	\item[Gram-Schmidt]Used to build an orthonormal $\{\mathbf{u}^{(k)}\}$ set from any set $\{\mathbf{s}^{(k)}\}$. The algorithmic procedure:
+	      \begin{enumerate}
+		      \item $\mathbf{p}^{(k)} = \mathbf{s}^{(k)} - \somme{k-1}{n=0}\langle\mathbf{u}^{(n)},\mathbf{s}^{(k)}\rangle\mathbf{u}^{(n)}$
+		      \item $\mathbf{u}^{(k)} = \frac{\mathbf{p}^{(k)}}{||\mathbf{p}^{(k)}||}$
+	      \end{enumerate}
+	\item[Legendre]Legendre polynomials are a better (orthonormal) base than classical polynomials base. When approximating sinusoid with polynomials, Legendre polynomials yield a smaller error than regular polynomials base.
 \end{itemize}
 
 \subsection{Hilbert space}
 \begin{itemize}
-    \item[Ingredients]For a Hilbert space, we need a vector space $H(V,\C)$, an inner product $\langle\cdot,\cdot\rangle : V \times V \to \C$ and completeness
-    \item[Completeness]Limiting operations must yield elements in the vector space.
+	\item[Ingredients]For a Hilbert space, we need a vector space $H(V,\C)$, an inner product $\langle\cdot,\cdot\rangle : V \times V \to \C$ and completeness
+	\item[Completeness]Limiting operations must yield elements in the vector space.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -229,60 +236,165 @@
 \section{Fourier}
 \subsection{Introduction}
 \begin{itemize}
-    \item[Time domain]Discrete signals are expressed as linear combinations of ``atomic'' time units
-    \[x[n] = \somme{N-1}{k=0}x[k]\delta[n-k] \iff \mathbf{x} = \somme{N-1}{k=0}x_k \boldsymbol{\delta}^k\]
-    Where $\{\boldsymbol{\delta}\}$ is a canonical basis for $\C^N$, e.g. $\boldsymbol{\delta}^{(2)} = [0\ 0\ 1\ 0\ \cdots\ 0]$
-    \item[Frequency domain] \uline{Fourier analysis}: express a signal as combination of periodic oscillations:
-        \begin{equation}
-            \mathbf{x} = \somme{N-1}{k=0} X_k \mathbf{w}^{(k)}
-        \end{equation}
-        with $\mathbf{w}^{(k)}$ the Fourier basis. The \uline{Fourier transform} is a change of basis in the space of discrete time signals.
-    \item[Analysis/Synthesis] 
-        \textit{Fourier analysis}: time domain $\to$ frequency domain, to find contribution of different frequencies.\\
-        \textit{Fourier synthesis}: frequency domain $\to$ time domain, to create signals with known frequency content.
-    \item[Math reminders] $e^{j\alpha} = \cos\alpha + j\sin\alpha \simeq$ point on the unit circle, at angle $\alpha$. See Figure\ref{fig_trigo circle}.
-        \begin{figure}
-            \centering
-            \includegraphics[scale=0.4]{images/trigo_circle}
-            \caption{The trigonometric circle}%
-            \label{fig_trigo circle}
-        \end{figure}
-        Rotations of an angle $\beta$ (centre at origin) are made by multiplying by $e^{j\beta}$. To represent discrete-time oscillatory, we need a frequency $\omega$, an initial phase $\phi$ and an amplitude $A$:
-        \[x[n] = Ae^{j(\omega n + \phi)} = A[\cos(\omega n + \phi) + j\sin(\omega n+ \phi)]\]
-    \item[Periodicity] Consider the signal $x[n] = e^{j\omega n}$, then $x[n+1] = e^{j\omega n} x[n]$. In some cases, this is periodic. The condition for $e^{j\omega n}$ to be periodic in $n$, is to have $\omega = \frac{M}{N}2\pi$ with $M,N \in \Z$. So if the frequency is a (rational) multiple of 2$\pi$, the signal is periodic.
-    \item[Max Frequency]The higher we chose $\omega$, the `less points'' we will have between each loop. But once we reached $\omega = \pi$, we only have 2 points ($\pm 1$). Going at speed $\pi+\alpha$ is similar as going at speed $-(\pi-\alpha)$
-    \item[Digit./Physic.\ freq]In discrete time, $n$ is a-dimensional, just a counter. Periodicity is the number of samples before pattern repeats. But in real world, periodicity is the number of \textit{seconds} before pattern repeats; it's measured in $Hz\ (s^{-1})$. Now, set $T_s$ seconds between samples, and a periodicity of $M$ samples (that is a periodicity of $MT_s$ seconds). Then the real-world frequency is $\frac{1}{MT_s}$
+	\item[Time domain]Discrete signals are expressed as linear combinations of ``atomic'' time units
+	      \[x[n] = \somme{N-1}{k=0}x[k]\delta[n-k] \iff \mathbf{x} = \somme{N-1}{k=0}x_k \boldsymbol{\delta}^k\]
+	      Where $\{\boldsymbol{\delta}\}$ is a canonical basis for $\C^N$, e.g. $\boldsymbol{\delta}^{(2)} = [0\ 0\ 1\ 0\ \cdots\ 0]$
+	\item[Frequency domain] \uline{Fourier analysis}: express a signal as combination of periodic oscillations:
+	      \begin{equation}
+		      \mathbf{x} = \somme{N-1}{k=0} X_k \mathbf{w}^{(k)}
+	      \end{equation}
+	      with $\mathbf{w}^{(k)}$ the Fourier basis. The \uline{Fourier transform} is a change of basis in the space of discrete time signals.
+	\item[Analysis/Synthesis]
+	      \textit{Fourier analysis}: time domain $\to$ frequency domain, to find contribution of different frequencies.\\
+	      \textit{Fourier synthesis}: frequency domain $\to$ time domain, to create signals with known frequency content.
+	\item[Math reminders] $e^{j\alpha} = \cos\alpha + j\sin\alpha \simeq$ point on the unit circle, at angle $\alpha$. See Figure\ref{fig_trigo circle}.
+	      \begin{figure}
+		      \centering
+		      \includegraphics[scale=0.4]{images/trigo_circle}
+		      \caption{The trigonometric circle}%
+		      \label{fig_trigo circle}
+	      \end{figure}
+	      Rotations of an angle $\beta$ (centre at origin) are made by multiplying by $e^{j\beta}$. To represent discrete-time oscillatory, we need a frequency $\omega$, an initial phase $\phi$ and an amplitude $A$:
+	      \[x[n] = Ae^{j(\omega n + \phi)} = A[\cos(\omega n + \phi) + j\sin(\omega n+ \phi)]\]
+	\item[Periodicity] Consider the signal $x[n] = e^{j\omega n}$, then $x[n+1] = e^{j\omega n} x[n]$. In some cases, this is periodic. The condition for $e^{j\omega n}$ to be periodic in $n$, is to have $\omega = \frac{M}{N}2\pi$ with $M,N \in \Z$. So if the frequency is a (rational) multiple of 2$\pi$, the signal is periodic.
+	\item[Max Frequency]The higher we chose $\omega$, the `less points'' we will have between each loop. But once we reached $\omega = \pi$, we only have 2 points ($\pm 1$). Going at speed $\pi+\alpha$ is similar as going at speed $-(\pi-\alpha)$
+	\item[Digit./Physic.\ freq]In discrete time, $n$ is a-dimensional, just a counter. Periodicity is the number of samples before pattern repeats. But in real world, periodicity is the number of \textit{seconds} before pattern repeats; it's measured in $Hz\ (s^{-1})$. Now, set $T_s$ seconds between samples, and a periodicity of $M$ samples (that is a periodicity of $MT_s$ seconds). Then the real-world frequency is $\frac{1}{MT_s}$
 \end{itemize}
 \subsection{Fourier Basis}
 \begin{itemize}
-    \item[Basis]The set of $N$ signals in $\C^N$ represented in eq.~\ref{equ_fourier basis} is an orthogonal basis in $C^N$. The proof won't be presented here. Note that the vectors are \uline{not} orthonormal. The normalization factor would be $1/\sqrt{N}$
-\end{itemize}        
+	\item[Basis]The set of $N$ signals in $\C^N$ represented in eq.~\ref{equ_fourier basis} is an orthogonal basis in $C^N$. The proof won't be presented here. Note that the vectors are \uline{not} orthonormal. The normalization factor would be $1/\sqrt{N}$
+\end{itemize}
 \begin{equation}
-    w_k[n] = e^{j\frac{2\pi}{N}nk},\ n,k = 0,1,\ldots,N-1 \sim \{\mathbf{w}^{(k)}\}_{k=0,1,\ldots,N-1} \text{ with } w_n^{(k)} = e^{j\frac{2\pi}{N}nk}
-    \label{equ_fourier basis}
+	w_k[n] = e^{j\frac{2\pi}{N}nk},\ n,k = 0,1,\ldots,N-1 \sim \{\mathbf{w}^{(k)}\}_{k=0,1,\ldots,N-1} \text{ with } w_n^{(k)} = e^{j\frac{2\pi}{N}nk}
+	\label{equ_fourier basis}
 \end{equation}
 \subsection{Discrete Fourier Transform}
 \begin{itemize}
-    \item[Basis expansion]Following Equation~\ref{equ_basis expansion}, the \textit{analysis} formula (respectively the \textit{synthesis} formula) is
+	\item[Basis expansion]Following Equation~\ref{equ_basis expansion}, the \textit{analysis} formula (respectively the \textit{synthesis} formula) is
+	      \begin{equation}
+		      X_k = \langle\mathbf{w}^{(k)},\mathbf{x}\rangle \qquad \mathbf{x} = \frac{1}{N} \somme{N-1}{k=0}X_k \mathbf{w}^{(k)}
+	      \end{equation}
+	\item[Change of basis]We try to define the matrix of basis change (as in Equation~\ref{equ_basis change}). First we define $W_N = e^{-j\frac{2\pi}{n}}$ (or $W$ when $N$ is evident). Then the change of basis matrix $\mathbf{W}$ with $\mathbf{W}[n,m] = W_N^{nm}$:
+	      \begin{equation}
+		      \mathbf{W} =
+		      \begin{bmatrix}
+			      1 & 1 & 1 & 1 & \cdots & 1
+			      \\1 & W^1 & W^2 & W^3 & \cdots & W^{N-1}
+			      \\1 & W^2 & W^4 & W^6 & \cdots & W^{2(N-1)}
+			      \\& & & \vdots
+			      \\1 & W^{N-1} & W^{2(N-1)} & W^{3(N-1)} & \cdots & W^{(N-1)^2}
+		      \end{bmatrix}
+	      \end{equation}
+	      This lets us redefine the analysis and synthesis formula:
+	      \begin{equation}
+		      \mathbf{X} = \mathbf{W}\mathbf{x} \qquad \mathbf{x} =\frac{1}{N}\mathbf{W}^H \mathbf{X}
+	      \end{equation}
+	\item[DFT Matrix]We can simplify many elements in this matrix, because $W_N^m = W_N^{(m \mod N)}$. Thus, for example, $W^{11}_8 = W^3_8$. Furthermore, with $\mathbf{W}_6$, we should have elements up to $W^{25}$, but with this theorem we will only need to compute elements up to $W^5$
+	\item[Linearity]Obviously, DFT is linear:
+	      \begin{equation*}
+              DFT\{\alpha x[n] + \beta y[n]\} = \alpha DFT\{x[n]\} + \beta DFT\{y[n]\}
+          \end{equation*}
+    \item[Examples]
+            \begin{example}
+              Let's find the DFT of $x[n] = 3\cos(2\pi/16)$ in $\C^{64}$. We easily transform $x[n] = \frac{3}{2}\left[e^{j\frac{2\pi}{64}4n} + e^{j \frac{2\pi}{64}60n}\right] = \frac{3}{2}(w_4[n] + w_{60}[n])$. Then we just apply the dot product to change the basis, use linearity to obtain the result
+            \end{example}
+            \begin{example}
+                The above transformation was made easier because we could transform $2\pi/16$ into the form of $2\pi/N \cdot C$. So it was easy because 16 divides 64. But if it is not the case (that is, if the constant multiplying $2\pi$) does not divide $N$, we don't have a ``fast'' result and must use the formal definition (the sum) to obtain each element. 
+            \end{example}
+    \item[Phase wrapping]As the phase is an angle, we can make the result more appealing by adding multiples of $2\pi$ without changing the result.
+    \item[DFT plot]Once we plotted the DFT, it's important to know what to do with it. Mostly, interpret it. On figure\ \ref{fig_dft_interpret} we see an explanation of how to interpret the plot. Note that between 0 and $N/2$, we are dealing with frequencies $< \pi$ (counterclockwise), while between $N/2$ and $N-1$ are frequencies $> \pi$ (clockwise).
+        \begin{figure}
+            \centering%
+            \includegraphics[scale=0.5]{images/dft_interpret}%
+            \caption{Relation between frequencies and the plot}%
+            \label{fig_dft_interpret}%
+        \end{figure}
+    \item[Energy distribution]Recall Parseval's theorem (equation\ \ref{equ:parseval}). Then obviously:
         \begin{equation}
-            X_k = \langle\mathbf{w}^{(k)},\mathbf{x}\rangle \qquad \mathbf{x} = \frac{1}{N} \somme{N-1}{k=0}X_k \mathbf{w}^{(k)}
+            \somme{N-1}{n=0}|x[n]|^2 = \frac{1}{N}\somme{N-1}{k=0}|X[k]|^2
         \end{equation}
-    \item[Change of basis]We try to define the matrix of basis change (as in Equation~\ref{equ_basis change}). First we define $W_N = e^{-j\frac{2\pi}{n}}$ (or $W$ when $N$ is evident). Then the change of basis matrix $\mathbf{W}$ with $\mathbf{W}[n,m] = W_N^{nm}$: 
-        \begin{equation}
-            \mathbf{W} = 
-            \begin{bmatrix}
-                1 & 1 & 1 & 1 & \cdots & 1
-                \\1 & W^1 & W^2 & W^3 & \cdots & W^{N-1}
-                \\1 & W^2 & W^4 & W^6 & \cdots & W^{2(N-1)}
-                \\& & & \vdots
-                \\1 & W^{N-1} & W^{2(N-1)} & W^{3(N-1)} & \cdots & W^{(N-1)^2}
-            \end{bmatrix}
-        \end{equation}
-        This lets us redefine the analysis and synthesis formula:
-        \begin{equation}
-            \mathbf{X} = \mathbf{W}\mathbf{x} \qquad \mathbf{x} =\frac{1}{N}\mathbf{W}^H \mathbf{X}
-        \end{equation}
-    \item[DFT Matrix]We can simplify many elements in the above matrix, because $W_N^m = W_N^{(m \mod N)}$
-    \item 
+        The square magnitude of k\ts{th} DFT coefficient are proportional to the signal's energy at frequency $\omega = (2\pi/N)k$
+    \item[Symmetry]For real signals, the DFT is symmetric in magnitude: ${|X[k]|=|X[N-k]|}$ for $k = 1,2,\ldots,\lfloor N/2 \rfloor$. Thus, we magnitude plots need only $\lfloor N/2 \rfloor +1$ points
 \end{itemize}
+\subsection{DFT as an analysis tool}
+We will here use some examples to explain how to use DFT to analyse signals.
+\subsubsection{Solar spots}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{1\textwidth}
+        \centering%
+        \includegraphics[scale=0.5]{images/solarSpots}%
+        \caption{Solar spots throughout the years}%
+    \end{subfigure}\\
+    \begin{subfigure}{1\textwidth}%
+        \centering%
+        \includegraphics[scale=0.5]{images/solarSpots_dft}%
+        \caption{DFT of the signal}%
+    \end{subfigure}%
+    \caption{First example: solar spots}%
+    \label{figs:solar spots}%
+\end{figure}
+On the first example, presented in Figure\ \ref{figs:solar spots}, we see the sunspots throughout the years, and its DFT.\@ The DFT shows a clear peak at $k=22$. This means that the frequency is of 22 cycles. Our data is spread across 2904 months, and thus we have a period of $\frac{2904}{22} \simeq 11$ years.
+\subsubsection{Temperature}
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{1\textwidth}
+        \centering%
+        \includegraphics[scale=0.5]{images/temperature}%
+        \caption{Temperatures throughout the years}%
+    \end{subfigure}\\
+    \begin{subfigure}{1\textwidth}%
+        \centering%
+        \includegraphics[scale=0.5]{images/temperature_dft}%
+        \caption{DFT of the signal}%
+    \end{subfigure}%
+    \caption{First example: solar spots}%
+    \label{figs:temperature}%
+\end{figure}
+Here we need to observe 2 points: at $k=0$, we have the \textbf{average} temperature (12.3 {\degree}C). At $k=8$ there is a new peak. Same computation as before: we have 2920 days, and thus 8 cycles represent a period of $\frac{2920}{8} = 365$. The peak goes to $6.4 {\degree}C$, and thus the temperature ranges at $12.3 \pm 12.8 \degree C$
+
+About the $12.8\degree$: 
+\begin{equation}
+	DFT \left\{ A\coss{\frac{2\pi}{N}Mn} \right\}[k]=%
+		\left\{\begin{array}{ll}
+			\frac{A}{2}N & k=M,N-M\\
+			0 & \text{otherwise}
+		\end{array}\right.
+\end{equation}%
+\subsubsection{Labeling the frequency axis}
+We need to know the ``clock'' of the system $T_s$, or its frequency $F_s = 1/T_s$. Then, let's reason this way: the fastest frequency is $\omega = \pi$; it then takes 2 samples to do a full revolution. Then the real-world period for the fastest sinusoid is $2T_s$, or frequency $F_s/2 Hz$.
+
+This means that on our plot, the highest frequency (that is the middle of the plot, remember figure\ \ref{fig_dft_interpret}) corresponds to $F_s/2$. From here, we only apply a linear mapping to find the frequency corresponding to the sample numbers. 
+
+\subsection{DFT as a synthesis tool}
+\begin{itemize}
+	\item[Sinusoidal generator]Let's consider the signal $w_k[n] = A_k e^{j(\frac{2 \pi}{N} k n + \phi_k)}$ By choosing appropriate $A_k$ and $\phi_k$, we can generate any sinusoid by summing these elements. By initializing the machine with $A_k = |X[k]|/N$ and $\phi_k = \angle X[k]$ we can find back our original signal.
+	\item[Time?]If we run our algorithm for too long, we obtain the interesting result: $x[n+N]  =x[n]$, that is the output is $N-$periodic!
+	
+	\item[DFS]Therefore, if we remind our synthesis (respectively analysis) formula produces a N-point signal in the time (frequency) domain:
+	\begin{align}
+		x[n] = \frac{1}{N} \somme{N-1}{k=0}X[k] e^{j\frac{2\pi}{N}nk},\quad n=0,1,\ldots,N-1\\
+		X[k] = \somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}nk},\quad k=0,1,\ldots,N-1
+	\end{align}
+	Then we can extend this to the concept of \textbf{DFS}\footnote{Discrete Fourier Series} that produce a \textcolor{red}{N-periodic} signal in the time (frequency) domain:
+	\begin{align}
+		x[n] = \frac{1}{N} \somme{N-1}{k=0}X[k] e^{j\frac{2\pi}{N}nk},\quad \textcolor{red}{n\in\Z}\\
+		X[k] = \somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}nk},\quad \textcolor{red}{k\in\Z}
+	\end{align}
+	Basically, DFS is just DFT with periodicity explicit.
+	\item[Properties]The DFS maps N-periodic signal onto an N-periodic sequence of Fourier coefficients. The inverse DFS does exactly the opposite. And obviously the DFS is equivalent to the DFT of one period.
+
+	The DFS then 
+\end{itemize}
+
+
+\appendix
+\section{Fourier summary}
+\begin{description}
+	\item[(I)DFT] (Inverse) Discrete Fourier Transform
+	\item[(I)DFS] (Inverse) Discrete Fourier Series: DFT with explicit periodicity
+	\item
+\end{description}
+
+
 \end{document}
