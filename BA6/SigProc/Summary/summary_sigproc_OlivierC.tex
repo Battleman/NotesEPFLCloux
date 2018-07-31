@@ -1,5 +1,7 @@
 \documentclass[11pt,a4paper]{article}
-\input{/media/battleman/DATA/Documents/Programming/LaTeX/preambule.tex}
+\input{/storage/Documents/Programming/LaTeX/preambule.tex}
+\usepackage{booktabs}
+% \usepackage{mhchem}
 \overfullrule=2cm
 \begin{document}
 \epflTitle{Signal Processing for Communications}[Olivier Cloux][Spring 2017][Summary in]<../../../Common/>
@@ -203,11 +205,11 @@
 
 
 	\item[Energy]$||\mathbf{x}|| = \langle\mathbf{x},\mathbf{x}\rangle = \somme{K-1}{k=0}|x_k|^2$
-    \item[Parseval]``\textit{Energy is conserved across a change of basis}''
-        \begin{equation}
-            ||\mathbf{x}||^2 = \sum |\alpha_k|^2
-            \label{equ:parseval}
-        \end{equation}
+	\item[Parseval]``\textit{Energy is conserved across a change of basis}''
+	      \begin{equation}
+		      ||\mathbf{x}||^2 = \sum |\alpha_k|^2
+		      \label{equ:parseval}
+	      \end{equation}
 
 \end{itemize}
 \subsection{Subspaces and approximation}
@@ -292,99 +294,132 @@
 	\item[DFT Matrix]We can simplify many elements in this matrix, because $W_N^m = W_N^{(m \mod N)}$. Thus, for example, $W^{11}_8 = W^3_8$. Furthermore, with $\mathbf{W}_6$, we should have elements up to $W^{25}$, but with this theorem we will only need to compute elements up to $W^5$
 	\item[Linearity]Obviously, DFT is linear:
 	      \begin{equation*}
-              DFT\{\alpha x[n] + \beta y[n]\} = \alpha DFT\{x[n]\} + \beta DFT\{y[n]\}
-          \end{equation*}
-    \item[Examples]
-            \begin{example}
-              Let's find the DFT of $x[n] = 3\cos(2\pi/16)$ in $\C^{64}$. We easily transform $x[n] = \frac{3}{2}\left[e^{j\frac{2\pi}{64}4n} + e^{j \frac{2\pi}{64}60n}\right] = \frac{3}{2}(w_4[n] + w_{60}[n])$. Then we just apply the dot product to change the basis, use linearity to obtain the result
-            \end{example}
-            \begin{example}
-                The above transformation was made easier because we could transform $2\pi/16$ into the form of $2\pi/N \cdot C$. So it was easy because 16 divides 64. But if it is not the case (that is, if the constant multiplying $2\pi$) does not divide $N$, we don't have a ``fast'' result and must use the formal definition (the sum) to obtain each element. 
-            \end{example}
-    \item[Phase wrapping]As the phase is an angle, we can make the result more appealing by adding multiples of $2\pi$ without changing the result.
-    \item[DFT plot]Once we plotted the DFT, it's important to know what to do with it. Mostly, interpret it. On figure\ \ref{fig_dft_interpret} we see an explanation of how to interpret the plot. Note that between 0 and $N/2$, we are dealing with frequencies $< \pi$ (counterclockwise), while between $N/2$ and $N-1$ are frequencies $> \pi$ (clockwise).
-        \begin{figure}
-            \centering%
-            \includegraphics[scale=0.5]{images/dft_interpret}%
-            \caption{Relation between frequencies and the plot}%
-            \label{fig_dft_interpret}%
-        \end{figure}
-    \item[Energy distribution]Recall Parseval's theorem (equation\ \ref{equ:parseval}). Then obviously:
-        \begin{equation}
-            \somme{N-1}{n=0}|x[n]|^2 = \frac{1}{N}\somme{N-1}{k=0}|X[k]|^2
-        \end{equation}
-        The square magnitude of k\ts{th} DFT coefficient are proportional to the signal's energy at frequency $\omega = (2\pi/N)k$
-    \item[Symmetry]For real signals, the DFT is symmetric in magnitude: ${|X[k]|=|X[N-k]|}$ for $k = 1,2,\ldots,\lfloor N/2 \rfloor$. Thus, we magnitude plots need only $\lfloor N/2 \rfloor +1$ points
+		      DFT\{\alpha x[n] + \beta y[n]\} = \alpha DFT\{x[n]\} + \beta DFT\{y[n]\}
+	      \end{equation*}
+	\item[Examples]
+	      \begin{example}
+		      Let's find the DFT of $x[n] = 3\cos(2\pi/16)$ in $\C^{64}$. We easily transform $x[n] = \frac{3}{2}\left[e^{j\frac{2\pi}{64}4n} + e^{j \frac{2\pi}{64}60n}\right] = \frac{3}{2}(w_4[n] + w_{60}[n])$. Then we just apply the dot product to change the basis, use linearity to obtain the result
+	      \end{example}
+	      \begin{example}
+		      The above transformation was made easier because we could transform $2\pi/16$ into the form of $2\pi/N \cdot C$. So it was easy because 16 divides 64. But if it is not the case (that is, if the constant multiplying $2\pi$) does not divide $N$, we don't have a ``fast'' result and must use the formal definition (the sum) to obtain each element.
+	      \end{example}
+	\item[Phase wrapping]As the phase is an angle, we can make the result more appealing by adding multiples of $2\pi$ without changing the result.
+	\item[DFT plot]Once we plotted the DFT, it's important to know what to do with it. Mostly, interpret it. On figure\ \ref{fig_dft_interpret} we see an explanation of how to interpret the plot. Note that between 0 and $N/2$, we are dealing with frequencies $< \pi$ (counterclockwise), while between $N/2$ and $N-1$ are frequencies $> \pi$ (clockwise).
+	      \begin{figure}
+		      \centering%
+		      \includegraphics[scale=0.5]{images/dft_interpret}%
+		      \caption{Relation between frequencies and the plot}%
+		      \label{fig_dft_interpret}%
+	      \end{figure}
+	\item[Energy distribution]Recall Parseval's theorem (equation\ \ref{equ:parseval}). Then obviously:
+	      \begin{equation}
+		      \somme{N-1}{n=0}|x[n]|^2 = \frac{1}{N}\somme{N-1}{k=0}|X[k]|^2
+	      \end{equation}
+	      The square magnitude of k\ts{th} DFT coefficient are proportional to the signal's energy at frequency $\omega = (2\pi/N)k$
+	\item[Symmetry]For real signals, the DFT is symmetric in magnitude: ${|X[k]|=|X[N-k]|}$ for $k = 1,2,\ldots,\lfloor N/2 \rfloor$. Thus, we magnitude plots need only $\lfloor N/2 \rfloor +1$ points
 \end{itemize}
 \subsection{DFT as an analysis tool}
 We will here use some examples to explain how to use DFT to analyse signals.
 \subsubsection{Solar spots}
 \begin{figure}[h]
-    \centering
-    \begin{subfigure}{1\textwidth}
-        \centering%
-        \includegraphics[scale=0.5]{images/solarSpots}%
-        \caption{Solar spots throughout the years}%
-    \end{subfigure}\\
-    \begin{subfigure}{1\textwidth}%
-        \centering%
-        \includegraphics[scale=0.5]{images/solarSpots_dft}%
-        \caption{DFT of the signal}%
-    \end{subfigure}%
-    \caption{First example: solar spots}%
-    \label{figs:solar spots}%
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\centering%
+		\includegraphics[scale=0.5]{images/solarSpots}%
+		\caption{Solar spots throughout the years}%
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}%
+		\centering%
+		\includegraphics[scale=0.5]{images/solarSpots_dft}%
+		\caption{DFT of the signal}%
+	\end{subfigure}%
+	\caption{First example: solar spots}%
+	\label{figs:solar spots}%
 \end{figure}
 On the first example, presented in Figure\ \ref{figs:solar spots}, we see the sunspots throughout the years, and its DFT.\@ The DFT shows a clear peak at $k=22$. This means that the frequency is of 22 cycles. Our data is spread across 2904 months, and thus we have a period of $\frac{2904}{22} \simeq 11$ years.
 \subsubsection{Temperature}
 \begin{figure}[ht]
-    \centering
-    \begin{subfigure}{1\textwidth}
-        \centering%
-        \includegraphics[scale=0.5]{images/temperature}%
-        \caption{Temperatures throughout the years}%
-    \end{subfigure}\\
-    \begin{subfigure}{1\textwidth}%
-        \centering%
-        \includegraphics[scale=0.5]{images/temperature_dft}%
-        \caption{DFT of the signal}%
-    \end{subfigure}%
-    \caption{First example: solar spots}%
-    \label{figs:temperature}%
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\centering%
+		\includegraphics[scale=0.5]{images/temperature}%
+		\caption{Temperatures throughout the years}%
+	\end{subfigure}\\
+	\begin{subfigure}{1\textwidth}%
+		\centering%
+		\includegraphics[scale=0.5]{images/temperature_dft}%
+		\caption{DFT of the signal}%
+	\end{subfigure}%
+	\caption{First example: solar spots}%
+	\label{figs:temperature}%
 \end{figure}
 Here we need to observe 2 points: at $k=0$, we have the \textbf{average} temperature (12.3 {\degree}C). At $k=8$ there is a new peak. Same computation as before: we have 2920 days, and thus 8 cycles represent a period of $\frac{2920}{8} = 365$. The peak goes to $6.4 {\degree}C$, and thus the temperature ranges at $12.3 \pm 12.8 \degree C$
 
-About the $12.8\degree$: 
+About the $12.8\degree$:
 \begin{equation}
 	DFT \left\{ A\coss{\frac{2\pi}{N}Mn} \right\}[k]=%
-		\left\{\begin{array}{ll}
-			\frac{A}{2}N & k=M,N-M\\
-			0 & \text{otherwise}
-		\end{array}\right.
+	\left\{\begin{array}{ll}
+		\frac{A}{2}N & k=M,N-M          \\
+		0            & \text{otherwise}
+	\end{array}\right.
 \end{equation}%
 \subsubsection{Labeling the frequency axis}
 We need to know the ``clock'' of the system $T_s$, or its frequency $F_s = 1/T_s$. Then, let's reason this way: the fastest frequency is $\omega = \pi$; it then takes 2 samples to do a full revolution. Then the real-world period for the fastest sinusoid is $2T_s$, or frequency $F_s/2 Hz$.
 
-This means that on our plot, the highest frequency (that is the middle of the plot, remember figure\ \ref{fig_dft_interpret}) corresponds to $F_s/2$. From here, we only apply a linear mapping to find the frequency corresponding to the sample numbers. 
+This means that on our plot, the highest frequency (that is the middle of the plot, remember figure\ \ref{fig_dft_interpret}) corresponds to $F_s/2$. From here, we only apply a linear mapping to find the frequency corresponding to the sample numbers.
 
 \subsection{DFT as a synthesis tool}
 \begin{itemize}
 	\item[Sinusoidal generator]Let's consider the signal $w_k[n] = A_k e^{j(\frac{2 \pi}{N} k n + \phi_k)}$ By choosing appropriate $A_k$ and $\phi_k$, we can generate any sinusoid by summing these elements. By initializing the machine with $A_k = |X[k]|/N$ and $\phi_k = \angle X[k]$ we can find back our original signal.
 	\item[Time?]If we run our algorithm for too long, we obtain the interesting result: $x[n+N]  =x[n]$, that is the output is $N-$periodic!
-	
+
 	\item[DFS]Therefore, if we remind our synthesis (respectively analysis) formula produces a N-point signal in the time (frequency) domain:
-	\begin{align}
-		x[n] = \frac{1}{N} \somme{N-1}{k=0}X[k] e^{j\frac{2\pi}{N}nk},\quad n=0,1,\ldots,N-1\\
-		X[k] = \somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}nk},\quad k=0,1,\ldots,N-1
-	\end{align}
-	Then we can extend this to the concept of \textbf{DFS}\footnote{Discrete Fourier Series} that produce a \textcolor{red}{N-periodic} signal in the time (frequency) domain:
-	\begin{align}
-		x[n] = \frac{1}{N} \somme{N-1}{k=0}X[k] e^{j\frac{2\pi}{N}nk},\quad \textcolor{red}{n\in\Z}\\
-		X[k] = \somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}nk},\quad \textcolor{red}{k\in\Z}
-	\end{align}
-	Basically, DFS is just DFT with periodicity explicit.
+	      \begin{align}
+		      x[n] = \frac{1}{N} \somme{N-1}{k=0}X[k] e^{j\frac{2\pi}{N}nk},\quad n=0,1,\ldots,N-1 \\
+		      X[k] = \somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}nk},\quad k=0,1,\ldots,N-1
+	      \end{align}
+	      Then we can extend this to the concept of \textbf{DFS}\footnote{Discrete Fourier Series} that produce a \textcolor{red}{N-periodic} signal in the time (frequency) domain:
+	      \begin{align}
+		      x[n] = \frac{1}{N} \somme{N-1}{k=0}X[k] e^{j\frac{2\pi}{N}nk},\quad \textcolor{red}{n\in\Z} \\
+		      X[k] = \somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}nk},\quad \textcolor{red}{k\in\Z}
+	      \end{align}
+	      Basically, DFS is just DFT with periodicity explicit.
 	\item[Properties]The DFS maps N-periodic signal onto an N-periodic sequence of Fourier coefficients. The inverse DFS does exactly the opposite. And obviously the DFS is equivalent to the DFT of one period.
 
-	The DFS then 
+	      The DFS then lets us better understand shifts in finite-length time. Shifts for finite-length signals are ``naturally'' \textit{circular}\footnote{See the slides for proof}.
+\end{itemize}
+\subsection{Fourier Transform for periodic signals}
+Periodic sequences can be seen as a kind to infinite-length signals, as these signals are infinite but the necessary information is found in a finite sequence. For $N-$periodic sequence, we have $N$ degrees of freedom. Thanks to DFS, only $N$ Fourier coefficients capture all the information.
+
+If we take an arbitrary signal finite signal, and compute its DFT, we obtain a certain result. But if we append the original signal with a copy of itself (so it will be similar of 2 period of a periodic signal), we will obtain the same result but with 0s interleaved. Similarly, for 3 periods, 2 0s will be interleaved for each actual point. This is a general rule. A DFT of $L$ periods gives:
+\begin{equation}
+	X_L[k] = %
+	\left\{\begin{array}{ll}
+		LX[k/L] & \text{if } k \text{ multiple of }L \\
+		0       & \text{otherwise}
+	\end{array}\right.
+\end{equation}%
+
+\subsection{Fourier transform for infinite-length signal}
+When considering infinite signals, we look at what happens when $N\to\infty$. There, $\frac{2\pi}{N}k$ becomes denser in $[0,2\pi]$. In the limit, it tends to $\omega$:
+\[\somme{}{n}x[n]e^{-j\omega n}\quad \omega \in \R\]
+
+
+\begin{itemize}
+	\item[DTFT]Let $x[n] \in \ell_2(\Z)$. We define
+	      \begin{equation}
+		      F(\omega) = \somme{\infty}{n = -\infty} x[n]e^{-j\omega n}
+	      \end{equation}
+	      Which can be inverted (when $F(\omega)$ exists)
+	      \begin{equation}
+		      x[n] = \frac{1}{2\pi}\int_{-\pi}^\pi F(\omega)e^{j\omega n}\deriv{\omega}\quad n\in \Z
+	      \end{equation}
+	\item[Periodicity]$F(\omega)$ is $2\pi$-periodic: $e^{j\omega n} = e^{j(\omega + 2k\pi)n}\ \forall k \in \N$. To stress that, we write
+	      \begin{equation}
+		      X(e^{j\omega}) = \somme{\infty}{n=-\infty}x[n]e^{-j\omega n}
+	      \end{equation}
+	      Furthermore, by convention it is represented over $[-\pi,\pi]$.
+	\item[Existence]The DTFT exists only for absolutely summable sequences: $\somme{\infty}{n=-\infty}|x[n]| < \infty$
 \end{itemize}
 
 
@@ -393,8 +428,23 @@ This means that on our plot, the highest frequency (that is the middle of the pl
 \begin{description}
 	\item[(I)DFT] (Inverse) Discrete Fourier Transform
 	\item[(I)DFS] (Inverse) Discrete Fourier Series: DFT with explicit periodicity
-	\item
+	\item[DTFT] DDiscrete-Time Fourier Transform
 \end{description}
 
+{very big hole}
+
+\begin{table}
+	\begin{tabular}{cccc}
+		\toprule
+		DFT & DFS & DTFT & STFT\\
+		\hline\addlinespace
+		 $\somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}n}$ & $\somme{N-1}{n=0}x[n]e^{-j\frac{2\pi}{N}n}$ & $\somme{\infty}{n=-\infty}x[n]e^{-j\omega n}$\\
+		 $0 \leq n < N$ & $n \in \Z$ & $\limite{N \to \infty} \frac{2\pi}{N} = \omega \in \R$\\
+		 $N-$point & $N-$periodic & \\
+		\multicolumn{2}{c}{Change of basis in $\C^N$} & Change of basis in $\ell_2(\Z)$\\
+		\multicolumn{2}{c}{numerical algo} & mathematical tool
+	\end{tabular}
+\end{table}
+\section{Image Processing}
 
 \end{document}
