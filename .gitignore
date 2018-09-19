@@ -7,3 +7,5 @@
 *.idx
 *.code-workspace
 */.vscode*
+*.fls
+*.fdb*
