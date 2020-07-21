@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\input{/storage/Documents/Programming/LaTeX/preambule.tex}
+% \usepackage{booktabs}
+% \usepackage{mhchem}
+% \overfullrule=2cm
+\newcommand{\bz}{\ensuremath{\mathbf{Z}}}
+\setlength{\marginparwidth}{2cm}
+\begin{document}
+\epflTitle{Software Security}[Olivier Cloux][Spring 2019][Course Notes in]<../../Common/>
+\setstretch{1.1}
+% \setlist[itemize]{font=\bfseries\uline, leftmargin=2cm}
+% \setlength{\abovedisplayskip}{0.1cm}
+% \setlength{\belowdisplayskip}{0.1cm}
+% \setlength{\multicolsep}{0pt}
+% \setlength{\columnsep}{-80pt}
+\tableofcontents
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Introduction %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Basic Principles}
+Software security have a basic gold rule: allow intended use of software, prevent unintended use that may cause harm. The three main principles are: 
+\begin{itemize}
+    \item Confidentiality
+    \item Integrity
+    \item Availability
+\end{itemize}
+\subsection{Analysis}
+Given a software system, need to determine if it is secure. What is the attack surface? (remote attacker? known insider? physically local attacker?) What are the assets? (sensible data? gain code execution? bandwidth?) What are the goals?
+\end{document}
+
