@@ -6,6 +6,6 @@
 *.hidden
 *.idx
 *.code-workspace
-*/.vscode*
+.vscode
 *.fls
 *.fdb*
