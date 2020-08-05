@@ -76,6 +76,7 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\avg}{avg}
 \DeclareMathOperator{\prox}{prox}
 \DeclareMathOperator{\indic}{\mathbf{\iota}}
 
@@ -869,7 +870,23 @@ We now have an exponential decay. It's then faster at forgetting older weights. 
 \end{enumerate}
 With possible rescaling of $\gamma_t$ with $\|\mathbf{g}_t\|_1$. This is communication efficient, for distributed training. But we face convergence issues.
 
-\section{Otim for ML in practice}
+\section{Optim for ML in practice}
+\subsection{Parallelization}
+\defentry[Why] We need more power, and machines are not getting more powerful. So we distribute. But it's not obvious.
+\defentry[One-shot averaging] We distribute the dataset across machine, then average the weights at the end: \[
+	\mathbf{w} := \frac{1}{K} \sum_k \mathbf{w}^{(k)}
+\]	Sadly this doesn't work, because $\argmin_w \avg f_i( \mathbf{w}) \neq \avg \argmin_w f_i(\mathbf{w})$
+\defentry[Communication] So communicating once at the end, doesn't work. The opposite (communicate at each step) does work, but require a lot of communication. Take a minibatch of your share of the dataset (e.g. 1 sample), then compute the difference $\Delta \mathbf{w}^{(i)}$, and centralize, with the reduce function \[
+		\mathbf{w} := \mathbf{w} + \sum_k \Delta \mathbf{w}^{(k)}
+\] 
+Obviously, sending between machine is excruciatingly slow. We would rather do some computation locally and reduce the number of communications.
+\defentry[Batch size] Increasing batch size seems like a good idea. It is, but only up to a certain point. Figure \ref{fig:parallel-batch-size} shows the limits.
+\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\columnwidth]{figures/parallel_batch_size}
+		\caption{Increasing batch size.}
+		\label{fig:parallel-batch-size}
+\end{figure}	
 
 %%%%%%%%%%%%%%%%%%
 %%% APPENDIX %%%%%
