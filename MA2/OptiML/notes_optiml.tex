@@ -76,6 +76,7 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\avg}{avg}
 \DeclareMathOperator{\prox}{prox}
 \DeclareMathOperator{\indic}{\mathbf{\iota}}
 
@@ -676,143 +677,229 @@ For time steps $t = 0,1,\ldots,$ and stepsize $\gamma := \frac{2}{t+2}$. We also
 \]
 \defentry[Properties]
 \begin{itemize}
-		\item Always feasible (implies $\mathbf{x}_0, \mathbf{x}_1,\ldots,\mathbf{x}_t \in X$). Because $\mathbf{x}_{t+1}$ is on line segment $\left[ \mathbf{s}, \mathbf{x}_t \right] $ for $\gamma \in \left[ 0,1 \right] $.
-		\item Reduces non-linear to linear optimization.
-		\item Projection-free
-		\item Sparse iterates (in terms of corners $\mathbf{s}$ used). At most, one extreme point is added at each step!
+	\item Always feasible (implies $\mathbf{x}_0, \mathbf{x}_1,\ldots,\mathbf{x}_t \in X$). Because $\mathbf{x}_{t+1}$ is on line segment $\left[ \mathbf{s}, \mathbf{x}_t \right] $ for $\gamma \in \left[ 0,1 \right] $.
+	\item Reduces non-linear to linear optimization.
+	\item Projection-free
+	\item Sparse iterates (in terms of corners $\mathbf{s}$ used). At most, one extreme point is added at each step!
 \end{itemize}
 \defentry[Frank-Wolfe and Lasso] The each step has complexity $\O(d)$, much better than projected gradient descent.
 \defentry[Duality Gap] \[
-		g(\mathbf{x}) := \left< \mathbf{x}-\mathbf{s}, \nabla f(\mathbf{x})\right>
+	g(\mathbf{x}) := \left< \mathbf{x}-\mathbf{s}, \nabla f(\mathbf{x})\right>
 \] This gives a certificate for optimization quality: \[
-\begin{array}{ll}
-		g(\mathbf{x}) &= \max\limits_{\mathbf{s} \in X}\left<\mathbf{x}-\mathbf{s}, \nabla f(\mathbf{x}) \right>\\
-					  & \ge \left<\mathbf{x}-\mathbf{a}^\star, \nabla f(\mathbf{x}) \right>\\
-					  & \ge f(\mathbf{x}) - f(\mathbf{x}^\star)
-\end{array}
-\] 
+	\begin{array}{ll}
+		g(\mathbf{x}) & = \max\limits_{\mathbf{s} \in X}\left<\mathbf{x}-\mathbf{s}, \nabla f(\mathbf{x}) \right> \\
+		              & \ge \left<\mathbf{x}-\mathbf{a}^\star, \nabla f(\mathbf{x}) \right>                       \\
+		              & \ge f(\mathbf{x}) - f(\mathbf{x}^\star)
+	\end{array}
+\]
 \defentry[Stepsize variants] \[
-		\begin{array}{lllr}
-				\gamma & := & \frac{2}{t+2}\\
-				\gamma_t & := & \argmin\limits_{\gamma \in \left[ 0,1 \right]} f\big((1-\gamma)\mathbf{x}_t + \gamma \mathbf{s}\big) & \text{line search}\\
-						\gamma_t & := & \min \left\{ \frac{g(\mathbf{x}_t)}{L \|\mathbf{s} - \mathbf{x}\|^2}, 1 \right\} & \text{gap-based}
-\end{array}
-\] 
-\defentry[Convergence] 
+	\begin{array}{lllr}
+		\gamma   & := & \frac{2}{t+2}                                                                                                             \\
+		\gamma_t & := & \argmin\limits_{\gamma \in \left[ 0,1 \right]} f\big((1-\gamma)\mathbf{x}_t + \gamma \mathbf{s}\big) & \text{line search} \\
+		\gamma_t & := & \min \left\{ \frac{g(\mathbf{x}_t)}{L \|\mathbf{s} - \mathbf{x}\|^2}, 1 \right\}                     & \text{gap-based}
+	\end{array}
+\]
+\defentry[Convergence]
 \begin{theorem*}
-		Let $f: \R^d \to \R$ be convex and smooth with parameter L, and $\mathbf{x}_0 \in X$. Then choosing any of the above stepsizes, the Frank-Wolfe algorithm yields \[
-				f(\mathbf{x}_T) - f(\mathbf{x}^\star) \le \frac{2L\text{diam}(X)^2}{T+1}
-		\] 
-		Where $\text{diam}(X) := \max_{\mathbf{x},\mathbf{y} \in X} \|\mathbf{x}-\mathbf{y}\|$ is the diameter of $X$. 
+	Let $f: \R^d \to \R$ be convex and smooth with parameter L, and $\mathbf{x}_0 \in X$. Then choosing any of the above stepsizes, the Frank-Wolfe algorithm yields \[
+		f(\mathbf{x}_T) - f(\mathbf{x}^\star) \le \frac{2L\text{diam}(X)^2}{T+1}
+	\]
+	Where $\text{diam}(X) := \max_{\mathbf{x},\mathbf{y} \in X} \|\mathbf{x}-\mathbf{y}\|$ is the diameter of $X$.
 \end{theorem*}
 We then have a convergence of rate $\O(\frac{L}{T})$, which is the same as PGD. It's also suboptimal, compared to accelerated GD (with rate of $\O(\frac{L}{T^2})$. The proof uses the following lemma:
 \begin{lemma*}
-		For a step $\mathbf{x}_{t+1} := \mathbf{x}_t + \gamma(\mathbf{s}-\mathbf{x}_t)$ with an arbitrary step-size $\gamma \in \left[ 0,1 \right] $, it holds that \[
-				f(\mathbf{x}_{t+1} \le f(\mathbf{x}_t) - \gamma g(\mathbf{x}_t) + \frac{\gamma^2}{2}L\text{diam}(X)^2
-		\] if $\mathbf{s} = LMO(\nabla f(\mathbf{x}_t))$.
+	For a step $\mathbf{x}_{t+1} := \mathbf{x}_t + \gamma(\mathbf{s}-\mathbf{x}_t)$ with an arbitrary step-size $\gamma \in \left[ 0,1 \right] $, it holds that \[
+		f(\mathbf{x}_{t+1} \le f(\mathbf{x}_t) - \gamma g(\mathbf{x}_t) + \frac{\gamma^2}{2}L\text{diam}(X)^2
+	\] if $\mathbf{s} = LMO(\nabla f(\mathbf{x}_t))$.
 \end{lemma*}
 
 \defentry[Curvature constant] We define the constant $C_f$ as \[
-		\sup_{\substack{\mathbf{x},\mathbf{s} \in X, \gamma \in \left[ 0,1 \right] \\ \mathbf{y}=\mathbf{x}+\gamma(\mathbf{s}-\mathbf{x})}} \frac{2}{\gamma^2} (f(\mathbf{y}) - f(\mathbf{x}) - \left<\mathbf{y}-\mathbf{x},\nabla f(\mathbf{x}) \right>)
-\] 
+	\sup_{\substack{\mathbf{x},\mathbf{s} \in X, \gamma \in \left[ 0,1 \right] \\ \mathbf{y}=\mathbf{x}+\gamma(\mathbf{s}-\mathbf{x})}} \frac{2}{\gamma^2} (f(\mathbf{y}) - f(\mathbf{x}) - \left<\mathbf{y}-\mathbf{x},\nabla f(\mathbf{x}) \right>)
+\]
 \defentry[Affine invariance] The algorithm is invariant to scaling (affine transformations) of the input problem. And so is $C_f$.
-\defentry[Convergence in Duality Gap] 
+\defentry[Convergence in Duality Gap]
 \begin{theorem*}
-		Let $f: \R^d \to \R$ be convex and smooth with parameter L, and $\mathbf{x}_0 \in X$, $T \ge 2$. Then choosing any of the above stepsizes, the Fran-Wolfe algorithm yields a $t,\ 1 \le  t \le T$ such that \[
-				g(\mathbf{x}_t) \le \frac{27/4 C_f}{T+1}
-		\] 
+	Let $f: \R^d \to \R$ be convex and smooth with parameter L, and $\mathbf{x}_0 \in X$, $T \ge 2$. Then choosing any of the above stepsizes, the Fran-Wolfe algorithm yields a $t,\ 1 \le  t \le T$ such that \[
+		g(\mathbf{x}_t) \le \frac{27/4 C_f}{T+1}
+	\]
 \end{theorem*}
 
 \section{Coordinate Descent}
-\defentry[Idea] This is yet another first-order optimization method. As before, we look for $x^\star \in \R^d$, by minimizing $f(\mathbf{x})$. We do so by updating one coordinate at a time, while keeping the other fixed. By definition, the value will decrease at each step. 
+\defentry[Idea] This is yet another first-order optimization method. As before, we look for $x^\star \in \R^d$, by minimizing $f(\mathbf{x})$. We do so by updating one coordinate at a time, while keeping the other fixed. By definition, the value will decrease at each step.
 \defentry[Algorithm] At time $t$, select a coordinate $i_t \in \left[ d \right] $, then compute $\mathbf{x}_{t+1} := \mathbf{x}_t + \gamma \mathbf{e}_{i_t}$. From that, you have 2 variants: either a gradient-based step-size $\big(\mathbf{x}_{t+1} := \mathbf{x}_t - \frac{1}{L}\nabla_{i_t} f(\mathbf{x}_t) \mathbf{e}_{i_t}\big)$, or by exact coordinate minimization (solve the single-variable minimization $\argmin_{\gamma \in \R} f(\mathbf{x}_t + \gamma \mathbf{e}_{i_t})$ ). The latter is easy to solve, can be approximately solved, and has no hyperparameter to tune.
 \defentry[Randomized Coordinate Descent] We first select the index $i_t \in \left[ d \right] $ uniformly at random, then compute the next step  \[
-		\mathbf{x}_{t+1} := \mathbf{x}_t - \frac{1}{L} \nabla_{i_t} f(\mathbf{x}_t) \mathbf{e}_{i_t}
-\] 
+	\mathbf{x}_{t+1} := \mathbf{x}_t - \frac{1}{L} \nabla_{i_t} f(\mathbf{x}_t) \mathbf{e}_{i_t}
+\]
 \defentry[Convergence] We assume coordinate-wise smoothness. It is equivalent to coordinate-wise Lipschitz-gradient. Additionally, we assume strong convexity ($\mu > 0$).
 \begin{theorem*}
-		Let $f$ be coordinate-wise smooth with constant $L$, and strongly convex with parameter $\mu > 0$. Then, coordinate descent with a step-size of $\frac{1}{L}$ (as above) when choosing the active coordinate $i_t$ uniformly at random, has an expected linear convergence rate of \[
-				\E\left[f(\mathbf{x}_t) - f^\star\right] \le \left( 1- \frac{\mu}{dL} \right)^t \left[ f(\mathbf{x}_0) - f^\star \right] . 
-		\] 
+	Let $f$ be coordinate-wise smooth with constant $L$, and strongly convex with parameter $\mu > 0$. Then, coordinate descent with a step-size of $\frac{1}{L}$ (as above) when choosing the active coordinate $i_t$ uniformly at random, has an expected linear convergence rate of \[
+		\E\left[f(\mathbf{x}_t) - f^\star\right] \le \left( 1- \frac{\mu}{dL} \right)^t \left[ f(\mathbf{x}_0) - f^\star \right] .
+	\]
 \end{theorem*}
 \defentry[The Polyak-Lojasiewicz Condition]
 \begin{definition*}
-		$f$ satisfies the PL inequality if the following holds for some $\mu > 0$ : \[
+	$f$ satisfies the PL inequality if the following holds for some $\mu > 0$ : \[
 		\frac{1}{2} \|\nabla f(\mathbf{x})\} \|^2 \ge  \mu(f(\mathbf{x}) - f^\star),\ \forall \mathbf{x}
-		\] 
+	\]
 \end{definition*}
 \begin{lemma*}
-		Strong convexity $\to $ PL. Let $f$ be strongly convex, with parameter $\mu > 0$. Then $f$ satisfies PL for the same $\mu$.
+	Strong convexity $\to $ PL. Let $f$ be strongly convex, with parameter $\mu > 0$. Then $f$ satisfies PL for the same $\mu$.
 \end{lemma*}
 
 \defentry[Importance Sampling] Uniformly random selection is not always the best. For that, we define individual smoothness constants $L_i$ for each coordinate $i$ : \[
-		f(\mathbf{x} + \gamma \mathbf{e}_i) \le f(\mathbf{x}) + \gamma \nabla_i f(\mathbf{x}) + \frac{L_i}{2}\gamma^2
-\] 
+	f(\mathbf{x} + \gamma \mathbf{e}_i) \le f(\mathbf{x}) + \gamma \nabla_i f(\mathbf{x}) + \frac{L_i}{2}\gamma^2
+\]
 With these constants, we can define a biased sampling: $P\left[i_t = i\right] = \frac{L_i}{\sum_{i} L_i} $, and using a step-size of $\frac{1}{L_{i_t}}$, this converges with a faster rate of \[
-		\E\left[f(\mathbf{x}_t) - f^\star\right] \le \left( 1 - \frac{\mu}{d \bar{L}} \right)^t \left[ f(\mathbf{x}_0) - f^\star \right] 
-\] 
+	\E\left[f(\mathbf{x}_t) - f^\star\right] \le \left( 1 - \frac{\mu}{d \bar{L}} \right)^t \left[ f(\mathbf{x}_0) - f^\star \right]
+\]
 With $\overline{L}$ the mean of $L_i$
 
-\defentry[Steepest coordinate descent] Other coordinate selection rule:  $i_t := \argmax_{i \in \left[ d \right] } |\nabla_i f(\mathbf{x}_t)|$. This is a greedy algorithm. It now becomes deterministic, and not random anymore. Same convergence rate as for random coordinate descent.  
+\defentry[Steepest coordinate descent] Other coordinate selection rule:  $i_t := \argmax_{i \in \left[ d \right] } |\nabla_i f(\mathbf{x}_t)|$. This is a greedy algorithm. It now becomes deterministic, and not random anymore. Same convergence rate as for random coordinate descent.
 \defentry[Faster convergence with steepest] A faster convergence can be obtained when the strong convexity f $f$ is measured with respect to the $\ell_1$-norm instead of the normal Euclidean norm, i.e. \[
-		f(\mathbf{y}) \ge f(\mathbf{x}) + \left<\nabla f(\mathbf{x}), \mathbf{y}-\mathbf{x} \right> + \frac{\mu_1}{2} \|\mathbf{y}-\mathbf{x}\|^2_{1}.
+	f(\mathbf{y}) \ge f(\mathbf{x}) + \left<\nabla f(\mathbf{x}), \mathbf{y}-\mathbf{x} \right> + \frac{\mu_1}{2} \|\mathbf{y}-\mathbf{x}\|^2_{1}.
 \]
 If $f$ is coordinate-wise $L$-smooth, strongly convex w.r.t the $\ell_1$-norm with parameter $\mu_1$ > 0, and step-size of $\frac{1}{L}$, we have a linear convergence rate of  \[
-		\left[f(\mathbf{x}_t) - f^\star\right] \le \left( 1-\frac{\mu_1}{L} \right)^t \left[ f(\mathbf{x}_0) - f^\star \right] 
-\] 
+	\left[f(\mathbf{x}_t) - f^\star\right] \le \left( 1-\frac{\mu_1}{L} \right)^t \left[ f(\mathbf{x}_0) - f^\star \right]
+\]
 \defentry[Non-Smooth] For general non-smooth $f$, coordinate descent fails (gets permanently stuck). But if the non-smooth part is separable over the coordinates, we have global convergence. This means \[
-		f(\mathbf{x}) := g(\mathbf{x}) + h(\mathbf{x}),\ h(\mathbf{x}) = \sum_i h_i(x_i)
-\] 
+	f(\mathbf{x}) := g(\mathbf{x}) + h(\mathbf{x}),\ h(\mathbf{x}) = \sum_i h_i(x_i)
+\]
 (e.g. $f(\mathbf{x}) := \|\mathbf{x}\|^2 + \|\mathbf{x}\|_1$)
 
 \subsection{Duality}
 \defentry[Conjugate] Given a function $f: \R^d \to  \R^+$, the conjugate $f^*: \R^d \to \R^+$ is defined as  \[
-		f^*(\mathbf{y}) := \max_\mathbf{x}\ \mathbf{x}^\top \mathbf{y} - f(\mathbf{x})
-\] 
+	f^*(\mathbf{y}) := \max_\mathbf{x}\ \mathbf{x}^\top \mathbf{y} - f(\mathbf{x})
+\]
 Also called \textit{Legendre transform} or \textit{Fenchel conjugate function}. Note that $\R^+ := \R \cup \left\{ +\infty \right\} $.
 \begin{figure}[htpb]
-		\centering
-		\includegraphics[width=0.8\columnwidth]{figures/duality_gap}
-		\caption{Maximum gap}
-		\label{fig:duality_gap}
-\end{figure}	
+	\centering
+	\includegraphics[width=0.8\columnwidth]{figures/duality_gap}
+	\caption{Maximum gap}
+	\label{fig:duality_gap}
+\end{figure}
 Here is another way of looking at it: given $\mathbf{y}$, draw the slope line (green). Then look at the point of $f(\mathbf{x})$ that is the \textit{furthest below} (it's not an absolutes difference). This can also be achieved by taking the parallel to the slope, and evaluating at $\mathbf{x} = \mathbf{0}$.
-\defentry[Properties of conjugate] 
+\defentry[Properties of conjugate]
 \begin{itemize}
 	\item $f^*$ is always convex, even if $f$ is not.
 	\item \textit{Fenchel's inequality}: \[
-		f(\mathbf{x}) + f^*(\mathbf{y}) \ge \mathbf{x}^\top \mathbf{y},\ \forall \mathbf{x},\mathbf{y}
-	\]
-	\item Hence, the conjugate of the conjugate $f^{**}$ satisfies $f^{**} \le f$. The second conjugate is also convex, and can be interpreted as the ``envelope'' of the original function. 
+		      f(\mathbf{x}) + f^*(\mathbf{y}) \ge \mathbf{x}^\top \mathbf{y},\ \forall \mathbf{x},\mathbf{y}
+	      \]
+	\item Hence, the conjugate of the conjugate $f^{**}$ satisfies $f^{**} \le f$. The second conjugate is also convex, and can be interpreted as the ``envelope'' of the original function.
 	\item If $f$ is closed an convex, then $f^{**} = f$
 	\item if if closed and convex, then for any $\mathbf{x},\mathbf{y}$ : \[
-					\begin{array}{ll}
-							\mathbf{y} \in \partial f(\mathbf{x}) & \Leftrightarrow \mathbf{x}\in \partial f^*(\mathbf{y})\\
-																  & \Leftrightarrow f(\mathbf{x}) + f^*(\mathbf{y}) = \mathbf{x}^\top \mathbf{y}
-	\end{array}
-	\] 
+		      \begin{array}{ll}
+			      \mathbf{y} \in \partial f(\mathbf{x}) & \Leftrightarrow \mathbf{x}\in \partial f^*(\mathbf{y})                       \\
+			                                            & \Leftrightarrow f(\mathbf{x}) + f^*(\mathbf{y}) = \mathbf{x}^\top \mathbf{y}
+		      \end{array}
+	      \]
 	\item Separable functions: if $f(\mathbf{u},\mathbf{v}) = f_1(\mathbf{u}) + f_2(\mathbf{v})$, then $f^*(\mathbf{w},\mathbf{z}) = f^*_1(\mathbf{w}) + f^*_2(\mathbf{z})$
 \end{itemize}
 
 \defentry[Some known conjugates]
 \begin{itemize}
-		\item \textbf{Indicator function} of a set $C \subseteq \R^d$ \[
-						\indic_C(\mathbf{x}) := \left\{ 
-								\begin{array}{ll}
-										0 & \mathbf{x} \in C,\\
-										+\infty & \text{otherwise}.
-\end{array}
-						\right. 
-		\] 
-		If $f(\mathbf{x}) = \indic_C(\mathbf{x})$, then the conjugate is \[
-				f^*(\mathbf{y}) = \max_{\mathbf{x}\in C}\mathbf{y}^\top \mathbf{x}
-		\] 
-\item \textbf{Norm}: if $f(\mathbf{x}) = \|\mathbf{x}\|$, then its conjugate is \[
-				f^*(\mathbf{y}) = \indic_{\left\{ \mathbf{z}: \|\mathbf{z}\|_* \le 1 \right\} }(\mathbf{y})
-\] 
-Which corresponds to the indicator of the dual norm ball. Note: the dual norm of $\|\ldot\|$ is defined as $\|\mathbf{y}\|_* := \max_{\|\mathbf{x}\| \le 1} \mathbf{y}^\top - \mathbf{x}$. E.g. $\|.\|_1 \leftrightarrow \|.\|_{\infty}$
+	\item \textbf{Indicator function} of a set $C \subseteq \R^d$ \[
+		      \indic_C(\mathbf{x}) := \left\{
+		      \begin{array}{ll}
+			      0       & \mathbf{x} \in C, \\
+			      +\infty & \text{otherwise}.
+		      \end{array}
+		      \right.
+	      \]
+	      If $f(\mathbf{x}) = \indic_C(\mathbf{x})$, then the conjugate is \[
+		      f^*(\mathbf{y}) = \max_{\mathbf{x}\in C}\mathbf{y}^\top \mathbf{x}
+	      \]
+	\item \textbf{Norm}: if $f(\mathbf{x}) = \|\mathbf{x}\|$, then its conjugate is \[
+		      f^*(\mathbf{y}) = \indic_{\left\{ \mathbf{z}: \|\mathbf{z}\|_* \le 1 \right\} }(\mathbf{y})
+	      \]
+	      Which corresponds to the indicator of the dual norm ball. Note: the dual norm of $\|.\|$ is defined as $\|\mathbf{y}\|_* := \max_{\|\mathbf{x}\| \le 1} \mathbf{y}^\top - \mathbf{x}$. E.g. $\|.\|_1 \leftrightarrow \|.\|_{\infty}$
+  \item \textbf{Generalized linear models} $\min_{\mathbf{x}\in \R^d} f(A\mathbf{x}) + g(\mathbf{x})$. We reformulate as $\min_{\mathbf{x} \in \R^d, \mathbf{w} \in \R^n} f(\mathbf{w}) + g(\mathbf{x})$, such that $\mathbf{w} = A\mathbf{x}$. We define the Lagrange dual function: \[
+				  \begin{array}{ll}
+						  \mathcal{L}(\mathbf{u}) & := \min\limits_{\substack{\mathbf{x}\in \R^d\\ \mathbf{w}\in \R^n}}f(\mathbf{w}) + g(\mathbf{x}) + \mathbf{u}^\top(\mathbf{w} - A\mathbf{x}) \\
+				  &= -f^*(-\mathbf{u}) - g^*(A^\top\mathbf{u})
+				 \end{array}
+  \] 
+  And thus, gives rise to the \textbf{dual problem}: minimizing the above function is the same as maximizing the conjugate : \[
+		  \max\limits_{\mathbf{u}\in \R^n}\left[ \mathcal{L}(\mathbf{u}) = -f^*(-\mathbf{u}) - g^*(A^\top\mathbf{u}) \right] 
+  \] 
+  \item \textbf{Lasso} $\min\limits_{x \in \R^d} \frac{1}{2} \|A\mathbf{x} - \mathbf{b}\|^2 + \lambda \|\mathbf{x}\|_1$. We use separability to split the two as $f(\mathbf{w})$ and $g(\mathbf{x})$. This yields \[
+				  \begin{array}{l}
+						  f^*(\mathbf{u}) = \frac{1}{2} \|\mathbf{b}\|^2 - \frac{1}{2}\|\mathbf{b}- \mathbf{u}\|^2 \\
+						  g^*(\mathbf{v}) = \indic_{\mathbf{z}:\|\mathbf{z}\|_{\infty} \le  1}(\mathbf{v}/\lambda)
+  \end{array}
+  \] 
+  We then define the dual problem using the above function (GLM)
 
 \end{itemize}
+
+\defentry[Why duality] Duality gap gives a certificate of current optimization quality. The minimization of the former function is greater or equal to the maximization of the conjugate. The optimum value is then between those two. If they are close, we have a certificate of quality. You can then use the gap as a \textbf{stopping criterion}. And finally, in some cases, the dual can be easier to solve.
+
+\subsection{Zero-order Optimization}
+\defentry[Goal] Can we optimize without access to the gradient ?
+
+\defentry[Random search] Pick a random direction $\mathbf{d}_t \in \R^d$. Define $\gamma := \argmin_{\gamma \in \R} f(\mathbf{x}_t + \gamma \mathbf{d}_t)$ (line-search). Finally, do a step: $\mathbf{x}_{t+1} := \mathbf{x}_t + \gamma \mathbf{d}_t$. \textit{Convergence} is the same as gradient descent, up to a slow-down factor $d$. For convex functions, we get a rate  $\O(dL/\epsilon)$, and for strongly convex we have $\O\left(dL\log(\frac{1}{\epsilon})\right)$
+
+
+\defentry[Reinforcement Learning] State changes based on some inputs: $\mathbf{s}_{t+1} = f(\mathbf{s}_t, \mathbf{a}_t, \mathbf{e}_t)$, where $\mathbf{s}_t$ is the state of the system, $a_t$ is the control action and $\mathbf{e}_t$ is some random noise. We assume that $f$ is fixed, but unknown. We want to establish a policy based on previous actions and states: \[
+		\mathbf{a}_t := \pi(\mathbf{a}_1,\ldots,\mathbf{a}_{t-1}, \mathbf{s}_0, \ldots,\mathbf{s}_t)
+\] Which takes a trajectory of the dynamical system and outputs a new control action. The goal is to maximize the overall reward \[
+\max\limits_{\mathbf{a}_t} \E_{\mathbf{e}_t}\left[ \sum_{t=0}^{N}R_t(\mathbf{s}_t, \mathbf{a}_t)  \right] 
+\] using the definition of the next state ($\mathbf{s}_0$ given)
+
+\subsection{Other SGD Methods}
+\defentry[Adagrad] Adaptive variant of SGD:
+\begin{enumerate}
+		\item Pick a stochastic gradient $\mathbf{g}_t$ 
+		\item update $\left[ G_t \right]_i := \sum_{s=0}^{t} \left( \left[ \mathbf{g}_s \right]_i \right)^2 $ 
+		\item $\left[ \mathbf{x}_{t+1} \right]_i := [\mathbf{x}_t]_i - \frac{\gamma}{\sqrt{[G_t]_i} }[\mathbf{g}_t]_i$
+\end{enumerate}
+Standard choice for $\mathbf{g}_t := \nabla f_j(\mathbf{x}_t)$ four sum-structured objective functions $f = \sum_j f_j$. Normal SGD would skip step 2, and not divide $\gamma$ on step 3.
+
+\defentry[Adam] Adam is a momentum variant of Adagram:
+\begin{enumerate}
+		\item pick a stochastic gradient $\mathbf{g}_t$ 
+		\item $\mathbf{m}_t := \beta_1 \mathbf{m}_{t-1} + (1-\beta_1) \mathbf{g}_t$ (momentum term)
+		\item $[\mathbf{v}_t]_i := \beta_2 [\mathbf{v}_{t-1}]_i + (1-\beta_2)([\mathbf{g}_s]_i)^2$ $\forall i$ (2nd order statistics
+		\item $[\mathbf{x}_{t+1}]_i := [\mathbf{x}_t]_i - \frac{\gamma}{\sqrt{[\mathbf{v}_t]_i} } [\mathbf{m}_t]_i$ $\forall i$
+\end{enumerate}
+We now have an exponential decay. It's then faster at forgetting older weights. We have a momentum from previous gradients. There exists a simplified version without correction for initialization of $\mathbf{m}_0, \mathbf{v}_0$. In practice, we see strong performances e.g. for self-attention networks.
+
+\defentry[SignSGD] Only use the sign (one bit) of each gradient entry. This is a communication efficient variant:
+\begin{enumerate}
+		\item Pick a stochastic gradient $\mathbf{g}_t$ 
+		\item $[\mathbf{x}_{t+1}]_i := [\mathbf{x}_t]_i - \gamma_t sign([\mathbf{g}_t]_i)$ $\forall i$
+\end{enumerate}
+With possible rescaling of $\gamma_t$ with $\|\mathbf{g}_t\|_1$. This is communication efficient, for distributed training. But we face convergence issues.
+
+\section{Optim for ML in practice}
+\subsection{Parallelization}
+\defentry[Why] We need more power, and machines are not getting more powerful. So we distribute. But it's not obvious.
+\defentry[One-shot averaging] We distribute the dataset across machine, then average the weights at the end: \[
+	\mathbf{w} := \frac{1}{K} \sum_k \mathbf{w}^{(k)}
+\]	Sadly this doesn't work, because $\argmin_w \avg f_i( \mathbf{w}) \neq \avg \argmin_w f_i(\mathbf{w})$
+\defentry[Communication] So communicating once at the end, doesn't work. The opposite (communicate at each step) does work, but require a lot of communication. Take a minibatch of your share of the dataset (e.g. 1 sample), then compute the difference $\Delta \mathbf{w}^{(i)}$, and centralize, with the reduce function \[
+		\mathbf{w} := \mathbf{w} + \sum_k \Delta \mathbf{w}^{(k)}
+\] 
+Obviously, sending between machine is excruciatingly slow. We would rather do some computation locally and reduce the number of communications.
+\defentry[Batch size] Increasing batch size seems like a good idea. It is, but only up to a certain point. Figure \ref{fig:parallel-batch-size} shows the limits.
+\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\columnwidth]{figures/parallel_batch_size}
+		\caption{Increasing batch size.}
+		\label{fig:parallel-batch-size}
+\end{figure}	
+
+\defentry[Decentralized learning] An interesting alternative, where devices create some kind of mesh (not fully connected). Instead of sending everything (data or gradients) to a centralized point, just communicate between devices. Motivation: sensible data, not to be gathered at one place. Simplest consensus: share your vector with neighbours, and everyone compute means of their neighbours.
+\defentry[Compression] Still, sending data is often heavy. Idea: send compressed data (some bits per entry, or some top\% for each vector,\ldots Just sending the compressed data and taking average will systematically converge \textit{wrongly}. Other new methods (developed by MLO) work better
+\defentry[Decentralized algo] 
+\begin{enumerate}
+		\item SGD step:  $\mathbf{x}^i_{t + \frac{1}{2}} := \mathbf{x}^j_t - \gamma_t \nabla f^j_{i_t}(\mathbf{x}^j_t)$
+		\item Average step: $\mathbf{x}^i_{t+1}:= \frac{1}{\text{deg}_i} \sum\limits_{j:\text{neighbours}} \mathbf{x}^j_{t+ \frac{1}{2}}$
+\end{enumerate}
+\defentry[CHOCO-SGD] Same as before, but with compression. Use consensus with compression on the SGD step to compute the next iterate. Convergence is in \[
+		\frac{1}{T+1} \sum_{t=0}^{T}\|\nabla f(\overline{\mathbf{x}_t}\|^2 = \O\left( \frac{1}{\sqrt{nT} } + \frac{n}{\delta^2 \rho^{4}T} \right)  
+\] 
+With $n$ the number of workers, $\delta$ the compression rate $\in \left[ 0,1 \right] $ (1 for no compression), and $\rho$ the spectral gap of the graph topology. So we have a linear speedup in the number of workers. 
+
 %%%%%%%%%%%%%%%%%%
 %%% APPENDIX %%%%%
 %%%%%%%%%%%%%%%%%%
@@ -857,7 +944,7 @@ Which corresponds to the indicator of the dual norm ball. Note: the dual norm of
 \]
 Equivalent to the euclidean norm of $vec(A)$, the ``flattening'' of $A$.
 \defentry[Scalar product] \[
-\left< \mathbf{s},\mathbf{g} \right> = \sum_{i} s_i g_i 
-\] 
+	\left< \mathbf{s},\mathbf{g} \right> = \sum_{i} s_i g_i
+\]
 \end{document}
 
