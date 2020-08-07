@@ -8,6 +8,8 @@
 \usepackage{mathtools}
 \usepackage{thmtools}
 \usepackage{fancyhdr}
+\usepackage{makecell}
+
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE,RO]{Optimization for Machine Learning}
@@ -95,7 +97,7 @@
 \defentry[Jensen's inequality] The above definition is valid for any number of points in $\dom(f)$. Any ``middle point'' will be in-between them, and always above $f$. Formally: Let $f$ be convex, and $x_1,\ldots,x_m \in \dom(f),\ \lambda_1,\ldots,\lambda_m \in \R_+$ such that $\sum_{i=1}^{m}\lambda_i = 1 $. Then \[
 	f\left( \sum_{i=1}^{m} \lambda_i \mathbf{x}_i  \right) \leq \sum_{i=1}^{m} \lambda_i f(\mathbf{x}_i)
 	.\]
-\defentry[Convex is continuous] Let f be convex, and suppose that $\dom(f)$ is open. Then $f$ is continuous. is continuous.
+\defentry[Convex is continuous] Let f be convex, and suppose that $\dom(f)$ is open. Then $f$ is continuous.
 \defentry[Differentiable] Graph of the affine function $f(\mathbf{x}) + \nabla f(\mathbf{x})^\top(\mathbf{y}-\mathbf{x})$ is a tangent hyperplane to the graph of $f$ at $(\mathbf{x}, f(\mathbf{x})$
 \defentry[First-order characterization] Suppose $\dom(f)$ is open and $f(\mathbf{x})$ is differentiable, in particular the gradient exists at every point $\mathbf{x} \in \dom(f)$. Then $f$ is convex if and only if $\dom(f)$ is convex and \[
 	f(\mathbf{y}) \geq f(\mathbf{x}) + \nabla f(\mathbf{x})^\top (\mathbf{y}-\mathbf{x})
@@ -103,7 +105,7 @@
 This means that $f$ is above all its tangent hyperplanes.
 \defentry[Second-order Characterization] Suppose that $\dom(f)$ is open, and that the Hessian (double derivatives) of $f$ exists at every point $\mathbf{x} \in \dom(f)$ and is symmetric. Then $f$ is convex if and only if $\dom(f)$ is convex, and for all $\mathbf{x} \in \dom(f)$ we have
 \[
-	\nabla^2 f(\mathbf{x}) \succeq 0\footnote{positive semidefinite}
+	\nabla^2 f(\mathbf{x}) \succeq 0\footnote{Componentwise inequality}
 \]
 
 \defentry[Operations] Multiplication by real constant and addition between convex is convex (not everywhere, only on $\bigcap_{i=1}^m \dom(f_i)$). The composition works the following: Let $f$ be a convex function with $\dom(f) \subseteq \R^d,\ g: \R^m \to \R^d$ an affine function, meaning that $g(\mathbf{x}) = A\mathbf{x} + \mathbf{b}$, for some matrix $A \in \R^{d\times m}$ and some vector $\mathbf{b} \in  \R^d$. Then the function $f \circ g$ (that maps $\mathbf{x}$ to $f(A\mathbf{x} + \mathbf{b})$ is convex on $\dom(f \circ g) := \left\{ \mathbf{x} \in \R^m: g(\mathbf{x}) \in \dom(f) \right\} $
@@ -116,7 +118,7 @@ Similarly, for $f$ convex and differentiable over an open domain, then if $\nabl
 
 \defentry[Strictly convex] Same definition as the convexity, with a strict inequality. So the open segment connecting any two points of the graph will be \textit{strictly} above the graph. This leads to the following lemma:
 \begin{lemma*}
-	Suppose that $\dom(f)$ is open and that $f$ is twice continuously differentiable. If the Hessian $\nabla^2 f(\mathbf{x}) \succeq \mathbf{0}$ for every $\mathbf{x} \in \dom(f)$, then f is strictly convex.
+	Suppose that $\dom(f)$ is open and that $f$ is twice continuously differentiable. If the Hessian $\nabla^2 f(\mathbf{x}) \succ \mathbf{0}$ for every $\mathbf{x} \in \dom(f)$, then f is strictly convex.
 \end{lemma*}
 
 \defentry[Constrained] Let $f: \dom(f) \to \R$ be convex, and let $X \subseteq \dom(f)$ be a convex set. A point $\mathbf{x} \in X$ is a \textit{minimizer of $f$ over $X$} if $f(\mathbf{x}) \le f(\mathbf{y})\ \forall \mathbf{y} \in X$. It follows that for $f: \dom(f) \to  \R$ convex and differentiable oven an open domain $\dom(f) \subseteq \R^d$, and for $X \subseteq$ a convex set, then the point $\mathbf{x}^\star \in X$ is a minimizer of $f$ over $X$ iff \[
@@ -158,6 +160,18 @@ We obtain the upper bound for the \underline{average error}: \[
 		\|f(\mathbf{x}) - f(\mathbf{y})\| \leq B\|\mathbf{x}-\mathbf{y}\|
 	\] for all $\mathbf{x},\mathbf{y} \in \dom(f)$
 \end{theorem*}
+Alternative ways of looking at it: 
+\begin{itemize}
+		\item (suppose 2D for simplicity) For any pair of points, the absolute value of the slope can't be greater than $B$.
+		\item Take a cone, created by intersecting the slopes  $B$ and $-B$. Move this cone alongside the graph of $f$. If it is Lipschitz, the graph never crosses the cone. See Figure \ref{fig:lipschitz-cone} for reference; note how by moving the cone,  the graph never intersects the white cone.
+
+\end{itemize}
+\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\columnwidth]{figures/lipschitz_cone}
+		\caption{The cone moving alongside $f$}
+		\label{fig:lipschitz-cone}
+\end{figure}
 Assume all gradients of $f$ bounded in norm (not always cool, e.g. discards $x^2$). The following theorem holds:
 \begin{theorem*}
 	Let $f: \R^d \to  \R$ be convex and differentiable, and suppose $\|\mathbf{x}_0 - \mathbf{x}^\star\| \leq R$, and $\|\nabla f(\mathbf{x})\| \leq B$ for all $\mathbf{x}$. Choosing the step size \[
@@ -243,7 +257,6 @@ In other words: \textit{Squared distance to $\mathbf{x}^\star$ goes down by a co
 		      \]
 	\end{itemize}
 \end{theorem*}
-
 \section{Projected Gradient Descent}
 \defentry[Constrained Optimization] We want to minimize $f(\mathbf{x})$, but being subject to $\mathbf{x} \in X$. 2 ways of solving this: Either use projected gradient descent, or transform it into an \textit{unconstrained} problem.
 \defentry[Projected Gradient Descent] Idea: project onto $X$ after every step:
@@ -906,16 +919,32 @@ With $n$ the number of workers, $\delta$ the compression rate $\in \left[ 0,1 \r
 \newpage
 \onecolumn
 \appendix
+\section{Tricks and tips}
+\defentry[How to prove convex] There are many ways to prove convexity.
+\begin{itemize}
+		\item By definition: $f(\lambda \mathbf{x} + (1-\lambda)\mathbf{y}) \le \lambda f(\mathbf{x}) + (1-\lambda)f(\mathbf{y})$
+		\item By composition: Sum/composition of convex functions is convex, or multiplication by a real. Careful, may change the domain.
+		\item By first order characterization: graph must be above all its tangent hyperplanes $f(\mathbf{y}) \ge f(\mathbf{x}) + \nabla f(\mathbf{x})^\top (\mathbf{y}-\mathbf{x})$. Bidirectional relation.
+		\item By second order characterization: convex $\iff$ hessian (strictly) positive componentwise for all points in the domain (if open domain, hessian exists + symmetric). If the function is 1D, only check that the second derivative is positive for all points in the domain.
+\end{itemize}
+
+\defentry[How to prove continuity]
+\begin{itemize}
+		\item Convex + open domain $\to $ continuous
+		\item Differentiable on $\left[ a,b \right] \to $ continuous on $\left[ a,b \right] $. For particular points $a$, use definition: $\lim\limits_{x \to a} \frac{f(x) - f(a)}{x-a}$ (from both sides, ideally).
+\end{itemize}
 \section{Tables and summaries}
 \begin{table}[htpb]
 	\centering
-	\begin{tabular}{c|ccc}
-		                           & GD                           & SGD                      & Sub-GD                     \\
-		\hline
-		Lipschitz convex           & $\O(\frac{1}{\epsilon^2})$   &                          & $\O(\frac{1}{\epsilon^2})$ \\
-		Smooth \& convex           & $\O(\frac{1}{\epsilon})$                                                             \\
-		Strongly convex            &                              & $\O(\frac{1}{\epsilon})$                              \\
-		Smooth \& strongly  convex & $\O(\log\frac{1}{\epsilon})$
+	\begin{tabular}{c|c|c|c|c}
+			& \thead{Lipschitz\\convex} & \thead{Smooth\\convex} & \thead{Strongly\\convex} & \thead{Smooth \&\\ Strongly convex}\\
+			\hline
+			GD & $\O\left( 1/\epsilon^2 \right) $ & $\O(1/\epsilon)$ & & $\O(\log(1/\epsilon))$ \\
+			Accelerated& & $\O(1/\sqrt{\epsilon})$ &  \\
+			Projected & $\O(1/\epsilon^2)$ & $\O\left( 1/\epsilon \right) $ & & $\O\left( \log(1/\epsilon) \right) $ \\
+			Proximal & & $\O(1/\epsilon)$ & \\
+			Subgradient& $\O\left( 1/\epsilon^2 \right) $ & & $\O\left( 1/\epsilon \right) $ \\
+			SGD & $\O(1/\epsilon^2)$ & & $\O\left( 1/\epsilon \right) $
 	\end{tabular}
 	\caption{Convergence depending on function properties}
 	\label{tab:convergence_speed}
