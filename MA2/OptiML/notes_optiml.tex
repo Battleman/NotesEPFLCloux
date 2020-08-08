@@ -85,7 +85,7 @@
 \begin{document}
 \section{Convexity}
 
-\defentry[Cauchy-Schwarz] $\|\mathbf{u}^\top \mathbf{u}\| \le |\mathbf{u}\| |\mathbf{v}| \to \frac{\mathbf{u}^\top \mathbf{v}}{\| \mathbf{u} \| \| \mathbf{v} \|} \in [-1,1] \sim \cos\alpha$
+\defentry[Cauchy-Schwarz] $\|\mathbf{u}^\top \mathbf{v}\| \le |\mathbf{u}\| |\mathbf{v}| \to \frac{\mathbf{u}^\top \mathbf{v}}{\| \mathbf{u} \| \| \mathbf{v} \|} \in [-1,1] \sim \cos\alpha$
 \defentry[Definition of convexity] A function $f: \R^d \to \R$ is convex if (i) $\dom(f)$ is a convex set and (ii) $\forall \mathbf{x},\mathbf{y} \in \dom(f)$ and $\lambda\in \left[ 0,1 \right]$ we have \[\underbrace{f\left( \lambda x + (1-\lambda) y \right)}_{(1)} \leq \underbrace{\lambda f(x) + (1-\lambda)f(y)}_{(2)}\]
 \begin{figure}[htpb]
 	\centering
@@ -121,7 +121,7 @@ Similarly, for $f$ convex and differentiable over an open domain, then if $\nabl
 	Suppose that $\dom(f)$ is open and that $f$ is twice continuously differentiable. If the Hessian $\nabla^2 f(\mathbf{x}) \succ \mathbf{0}$ for every $\mathbf{x} \in \dom(f)$, then f is strictly convex.
 \end{lemma*}
 
-\defentry[Constrained] Let $f: \dom(f) \to \R$ be convex, and let $X \subseteq \dom(f)$ be a convex set. A point $\mathbf{x} \in X$ is a \textit{minimizer of $f$ over $X$} if $f(\mathbf{x}) \le f(\mathbf{y})\ \forall \mathbf{y} \in X$. It follows that for $f: \dom(f) \to  \R$ convex and differentiable oven an open domain $\dom(f) \subseteq \R^d$, and for $X \subseteq$ a convex set, then the point $\mathbf{x}^\star \in X$ is a minimizer of $f$ over $X$ iff \[
+\defentry[Constrained] Let $f: \dom(f) \to \R$ be convex, and let $X \subseteq \dom(f)$ be a convex set. A point $\mathbf{x} \in X$ is a \textit{minimizer of $f$ over $X$} if $f(\mathbf{x}) \le f(\mathbf{y})\ \forall \mathbf{y} \in X$. It follows that for $f: \dom(f) \to  \R$ convex and differentiable over an open domain $\dom(f) \subseteq \R^d$, and for $X \subseteq$ a convex set, then the point $\mathbf{x}^\star \in X$ is a minimizer of $f$ over $X$ iff \[
 	\nabla f(\mathbf{x}^\star)^\top(\mathbf{x}-\mathbf{x}^\star) \ge 0\ \forall \mathbf{x}\in X
 \]
 \defentry[$\alpha$-sublevel] $f^{\leq \alpha} := \{\mathbf{x} \in  \R^d : f(\mathbf{x}) \leq \alpha$. This represents the values of the domain of $f$ for which the value of $f$ is below a threshold
@@ -144,8 +144,9 @@ Similarly, for $f$ convex and differentiable over an open domain, then if $\nabl
 \]
 For time steps t=0,1,\ldots, and step size $\gamma \geq 0$
 
-\defentry[Bound to error (vanilla)] It's useful to bound the error ($f(\mathbf{x}_t) - f(\mathbf{x}^\star)$). Using the notation $\mathbf{g}_t := \nabla f(\mathbf{x}_t)$ (for gradient descent, $\mathbf{g}_t = \frac{\mathbf{x}_t - \mathbf{x}_{t+1}}{\gamma}$ ), and applying the following steps:
+\defentry[Bound to error (vanilla)] It's useful to bound the error ($f(\mathbf{x}_t) - f(\mathbf{x}^\star)$). Using the notation $\mathbf{g}_t := \nabla f(\mathbf{x}_t)$ (for gradient descent, $\mathbf{g}_t = (\mathbf{x}_t - \mathbf{x}_{t+1})/\gamma$ ), and applying the following steps:
 \begin{enumerate}
+		\item Do the analysis on the minimizer ($\mathbf{g}_t^\top (\mathbf{x}_t - \mathbf{x}^\star)$ )
 	\item Apply $2\mathbf{v}^\top \mathbf{w} = \|\mathbf{v}\|^2 + \|\mathbf{w}\|^2 - \|\mathbf{v}-\mathbf{w}\|^2$
 	\item Sum over for the first $T$ iterations
 	\item Use first-order characterization with $\mathbf{x} = \mathbf{x}_t,\mathbf{y}=\mathbf{x}^\star$.
@@ -198,7 +199,7 @@ Note: same for subgradient descent.
 \end{figure}
 
 (unsure) The smoothness of least squares ($f(x) = \frac{1}{2n} \|A\mathbf{x} + \mathbf{b}\|$ ) is given by $\max\frac{\|A^\top \cdot A\|}{n}$. That is the maximum of the eigenvalues of $A^\top \cdot A$ divided by the number of rows of $A$.
-\defentry[Operations on Smoothness]	Addition of smooth function is still smooth: $f_1, f_2,\ldots,f_m$ smooth with parameters $L_1,L_2,\ldots,L_m$ and let $\lambda_1, \lambda_2,\ldots,\lambda_m \in  \R_+$. Then $f := \sum_{i=1}^{m} \lambda_i L_i $ is smooth, with parameter $\sum_{i=1}^{m} \lambda_i L_i $.
+\defentry[Operations on Smoothness]	Addition of smooth function is still smooth: $f_1, f_2,\ldots,f_m$ smooth with parameters $L_1,L_2,\ldots,L_m$ and let $\lambda_1, \lambda_2,\ldots,\lambda_m \in  \R_+$. Then $f := \sum_{i=1}^{m} \lambda_i f_i $ is smooth, with parameter $\sum_{i=1}^{m} \lambda_i L_i $.
 
 Also, about composition: $f$ $L$-smooth, and let $g(\mathbf{x}) = A\mathbf{x} + \mathbf{b}$ for $A \in  \R^{d \times m},\ \mathbf{b} \in  \R^d$. Then $f \circ g$ is smooth with parameter $L\|A\|^2$ (where $\|A\|$ is the spectral norm of $A$).
 
@@ -242,7 +243,7 @@ This relates $T$ and $\epsilon$ ! \[
 and some rewriting to obtain the final bound:
 \begin{align*}
 	\|\mathbf{x}_{t+1} - \mathbf{x}^\star\|^2 \leq & 2\gamma\left( f(\mathbf{x}^\star) - f(\mathbf{x}_t) \right) \\
-	                                               & + \gamma^2 \|\nabla f(\mathbf{x}_t)\|                       \\
+	                                               & + \gamma^2 \|\nabla f(\mathbf{x}_t)\|^2  \\
 	                                               & + (1-\mu\gamma)\|\mathbf{x}_t - \mathbf{x}^\star\|^2
 \end{align*}
 In other words: \textit{Squared distance to $\mathbf{x}^\star$ goes down by a constant factor, up to some ``noise''}. This leads to the following theorem:
@@ -253,7 +254,7 @@ In other words: \textit{Squared distance to $\mathbf{x}^\star$ goes down by a co
 			      \|\mathbf{x}_{t+1} - \mathbf{x}^\star\|^2 \leq \left( 1-\frac{\mu}{L} \right) \|\mathbf{x}_t - \mathbf{x}^\star\|^2,\ t \geq 0
 		      \]
 		\item The absolute error after $T$ iterations is exponentially small in $T$ : \[
-			      f(\mathbf{x}_T) - f(\mathbf{x}^\star) \leq \frac{L}{2}\left( 1-\frac{\mu}{L})\right)^{T} \|\mathbf{x}_0 - \mathbf{x}^\star\|^2
+			      f(\mathbf{x}_T) - f(\mathbf{x}^\star) \leq \frac{L}{2}\left( 1-\frac{\mu}{L}\right)^{T} \|\mathbf{x}_0 - \mathbf{x}^\star\|^2
 		      \]
 	\end{itemize}
 \end{theorem*}
@@ -261,7 +262,7 @@ In other words: \textit{Squared distance to $\mathbf{x}^\star$ goes down by a co
 \defentry[Constrained Optimization] We want to minimize $f(\mathbf{x})$, but being subject to $\mathbf{x} \in X$. 2 ways of solving this: Either use projected gradient descent, or transform it into an \textit{unconstrained} problem.
 \defentry[Projected Gradient Descent] Idea: project onto $X$ after every step:
 \[
-	\Pi_X(\mathbf{y}) := \argmin_{\mathbf{x} \in  X} \|\mathbf{x}-\mathbf{y}\|
+	\Pi_X(\mathbf{y}) := \argmin_{\mathbf{x} \in  X} \|\mathbf{x}-\mathbf{y}\|^2
 \]
 Idea: compute first what would be your next step ($\mathbf{y}_{t+1}$) and then project it on your actual next step. \[
 	\begin{array}{lll}
@@ -269,10 +270,10 @@ Idea: compute first what would be your next step ($\mathbf{y}_{t+1}$) and then p
 		\mathbf{x}_{t+1} & := & \Pi_X(\mathbf{y}_{t+1}) := \argmin_{\mathbf{x} \in X} \|\mathbf{x}-\mathbf{y}_{t+1}\|^2
 	\end{array}
 \]
-\defentry[Properties] Let $X \in  \R^d$ be closed and convex, $\mathbf{x} \in  X, \mathbf{y} \in  \R^d$. Then
+\defentry[Properties] Let $X \subseteq  \R^d$ be closed and convex, $\mathbf{x} \in  X, \mathbf{y} \in  \R^d$. Then
 \begin{itemize}
-	\item  $\left(\mathbf{x} - \Pi_X(\mathbf{y})\right)^\top (\mathbf{y}-\Pi_X(\mathbf{y})) \leq 0$
-	\item $\|\mathbf{x} - \Pi_X(\mathbf{y})\|^2 + \|\mathbf{y}-\Pi_X(\mathbf{y})\|^2 \leq \|\mathbf{x}-\mathbf{y}\|^2$
+		\item  $\big(\mathbf{x} - \Pi_X(\mathbf{y})\big)^\top \big(\mathbf{y}-\Pi_X(\mathbf{y})\big) \leq 0$. This means that the angle $\alpha$ between $\mathbf{x}$ and $\mathbf{y}$ at the point of the projection is always $\ge 90^\circ$
+		\item $\|\mathbf{x} - \Pi_X(\mathbf{y})\|^2 + \|\mathbf{y}-\Pi_X(\mathbf{y})\|^2 \leq \|\mathbf{x}-\mathbf{y}\|^2$. The squared distance $\mathbf{x} \to \mathbf{y}$ is greater than the sum of the squared catheti. If we were to remove the squares, then inequality shifts (Pythagoras). If angle is a right angle, it becomes an equality. Use first property and  $2\mathbf{v}^\top \mathbf{w}$ to prove.
 \end{itemize}
 First property means that for any point $\mathbf{y}$, and any point $\mathbf{x}$ in the domain, then the angle formed at the projection of $\mathbf{y}$ (in $X$ ) is greater than $90^\circ$ (negative inner product).
 
@@ -312,11 +313,16 @@ Last cool property: The expected number of steps in various scenarios (Lipschitz
 \section{Proximal and Subgradient Descent}
 \defentry[Composite optimization problems] Consider $f(\mathbf{x}) := g(\mathbf{x}) + h(\mathbf{x})$, where $g$ is ``nice'' and $h$ is a ``simple'' additional term (but not nice). Important case when $h$ is not differentiable.
 \defentry[Proximal gradient] Classical gradient step: \[
-	\mathbf{x}_{t+1} = \argmin_\mathbf{y} g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t) + \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2
+		\begin{array}{ll}
+		\mathbf{x}_{t+1} = 	\argmin\limits_\mathbf{y} & g(\mathbf{x}_t) + \nabla g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t)\\
+								   &+ \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2
+		\end{array}
 \] For $f = g+h$ keep the same for $g$ and add $h$ unmodified:\[
-	\begin{array}{ll}
-		\mathbf{x}_{t+1} & = \overbrace{\argmin\limits_\mathbf{y} g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t) + \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2}^{\text{Quadratic upperbound from smooth }g} + \overbrace{h(\mathbf{y})}^{\text{Non smooth}} \\
-		                 & = \argmin\limits_{\mathbf{y}} \frac{1}{2\gamma} \|\mathbf{y}-(\mathbf{x}_t - \gamma \nabla g(\mathbf{x}_t))\|^2 + h(\mathbf{y})
+	\begin{array}{lll}
+			\mathbf{x}_{t+1} & = & \argmin\limits_\mathbf{y} \overbrace{g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t) + \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2}^{\text{Quadratic upperbound from smooth }g} \\
+							 & &+ \underbrace{h(\mathbf{y})}_{\text{Non smooth}} \\
+							 & = & \argmin\limits_{\mathbf{y}} \frac{1}{2\gamma} \|\mathbf{y}-(\mathbf{x}_t - \gamma \nabla g(\mathbf{x}_t))\|^2 \\ 
+							 & & + h(\mathbf{y})
 	\end{array}
 \]
 The name comes because you can rewrite it using the \textit{proximal} operator.
