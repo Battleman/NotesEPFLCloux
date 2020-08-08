@@ -281,7 +281,7 @@ Second property is the triangle inequality: distance $x$-projection plus project
 
 Last cool property: The expected number of steps in various scenarios (Lipschitz,\ldots), as listed in appendix Table \ref{tab:convergence_speed}, remains unchanged!
 
-\defentry[Equivalent proofs of projected] The last property abode needs to be proved (not here). However, here are some insights: We now only need the function to be continuous over $X$, and not anymore $\R^d$. Then, in the proofs we replace $\mathbf{x}_{_t+1}$ by  $\mathbf{y}_{t+1}$, and massage it with the facts above.
+\defentry[Equivalent proofs of projected] The last property above needs to be proved (not here). However, here are some insights: We now only need the function to be continuous over $X$, and not anymore $\R^d$. Then, in the proofs we replace $\mathbf{x}_{_t+1}$ by  $\mathbf{y}_{t+1}$, and massage it with the facts above.
 
 \defentry[Smooth and strongly convex over $X$]
 \begin{theorem*}
@@ -313,21 +313,22 @@ Last cool property: The expected number of steps in various scenarios (Lipschitz
 \section{Proximal and Subgradient Descent}
 \defentry[Composite optimization problems] Consider $f(\mathbf{x}) := g(\mathbf{x}) + h(\mathbf{x})$, where $g$ is ``nice'' and $h$ is a ``simple'' additional term (but not nice). Important case when $h$ is not differentiable.
 \defentry[Proximal gradient] Classical gradient step: \[
-		\begin{array}{ll}
-		\mathbf{x}_{t+1} = 	\argmin\limits_\mathbf{y} & g(\mathbf{x}_t) + \nabla g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t)\\
-								   &+ \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2
+		\begin{array}{lll}
+				\mathbf{x}_{t+1} &= &\argmin\limits_\mathbf{y} g(\mathbf{x}_t) + \nabla g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t)\\
+						  &  &+ \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2\\
+						  &= &\argmin\limits_{\mathbf{y} \in \R^d} \frac{1}{2\gamma} \|\mathbf{y} - (\mathbf{x}_t - \gamma \nabla g(\mathbf{x}_t))\|^2
 		\end{array}
 \] For $f = g+h$ keep the same for $g$ and add $h$ unmodified:\[
-	\begin{array}{lll}
-			\mathbf{x}_{t+1} & = & \argmin\limits_\mathbf{y} \overbrace{g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t) + \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2}^{\text{Quadratic upperbound from smooth }g} \\
-							 & &+ \underbrace{h(\mathbf{y})}_{\text{Non smooth}} \\
-							 & = & \argmin\limits_{\mathbf{y}} \frac{1}{2\gamma} \|\mathbf{y}-(\mathbf{x}_t - \gamma \nabla g(\mathbf{x}_t))\|^2 \\ 
-							 & & + h(\mathbf{y})
+	\begin{array}{l}
+			\mathbf{x}_{t+1} =\\ 
+			\argmin\limits_\mathbf{y}  \overbrace{g(\mathbf{x}_t) + \nabla g(\mathbf{x}_t)^\top (\mathbf{y}-\mathbf{x}_t) + \frac{1}{2\gamma}\|\mathbf{y}-\mathbf{x}_t\|^2}^{\text{Quadratic upperbound from smooth }g} \\
+									   + \underbrace{h(\mathbf{y})}_{\text{Non smooth}} \\
+			= \argmin\limits_{\mathbf{y}}  \frac{1}{2\gamma} \|\mathbf{y}-(\mathbf{x}_t - \gamma \nabla g(\mathbf{x}_t))\|^2 +  h(\mathbf{y})
 	\end{array}
 \]
 The name comes because you can rewrite it using the \textit{proximal} operator.
 \defentry[Proximal mapping] We define the proximal mapping as follow: for a given $h$ and a $\gamma > 0$ : \[
-	\prox_{h,\gamma}(\mathbf{z}) := \argmin_\mathbf{y} \left\{ \frac{1}{2\gamma} \|\mathbf{y}-\mathbf{z}^2 + h(\mathbf{y}\| \right\}
+		\prox_{h,\gamma}(\mathbf{z}) := \argmin_\mathbf{y} \left\{ \frac{1}{2\gamma} \|\mathbf{y}-\mathbf{z}\| ^2 + h(\mathbf{y})\right\}
 \]
 Using the above definition, one iteration of proximal gradient descent can be rewritten as \[
 	\mathbf{x}_{t+1} := \prox_{h,\gamma}(\mathbf{x} - \gamma \nabla g(\mathbf{x}_t))
