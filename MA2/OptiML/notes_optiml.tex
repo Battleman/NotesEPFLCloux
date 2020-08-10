@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,11pt,twocolumn]{article}
+\documentclass[a4paper,11pt,twocolumn]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -9,7 +9,7 @@
 \usepackage{thmtools}
 \usepackage{fancyhdr}
 \usepackage{makecell}
-
+\usepackage[left=1cm,right=1cm,top=2cm,bottom=2cm]{geometry}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE,RO]{Optimization for Machine Learning}
@@ -413,7 +413,6 @@ $\forall \mathbf{x},\mathbf{y} \in \dom(f), \forall \mathbf{g} \in \partial f(\m
 		\underbrace{f\left( \frac{2}{T(T+1)}\sum_{t=1}^{T} t\cdot \mathbf{x}_t  \right)}_{\text{convex combination of iterates}} - f(\mathbf{x}^\star) \leq \frac{2B^2}{\mu(T+1)}
 	\] where $B = \max_{t=1}^{T} \|\mathbf{g}_t\|$
 \end{theorem*}
-\defentry[Strong convexity]
 \section{Stochastic Gradient Descent}
 \defentry[Idea] Many objective functions are sum structured \[
 	f(\mathbf{x}) = \frac{1}{n}\sum_{i=1}^{n}f_i(\mathbf{x})
@@ -445,7 +444,7 @@ So the convexity inequality holds in expectation.
 \end{theorem*}
 Note that in this theorem, the step size is constant.
 \defentry[Convergence rate: SGD vs GD]
-For GD: we assumed $\|\nabla \frac{f}{\mathbf{x})}\|^2 \leq B^2_{GD}$, leading to \[
+For GD: we assumed $\|\nabla f(\mathbf{x})\|^2 \leq B^2_{GD}$, leading to \[
 	\|\frac{1}{n}\sum_{i}^{}\nabla f_i(\mathbf{x}) \|^2 \leq B_{GD}^2
 \]
 As for SGD, assuming the same for the expected squared norms of our stochastic gradients, now called $B_{SGD}^2$ : \[
@@ -472,7 +471,7 @@ At the extremes ($m=1$ or $m=n$ ), we fall back to full gradient descent or SGD.
 \]
 \defentry[Stochastic Subgradient Descent] For problems not necessarily differentiable. Quite the same, but we use a subgradient for one sample. We have $\mathbf{g}_t \in \partial f_i(\mathbf{x}_t)$. The rest is as before. This yields an unbiased estimate of the subgradient. We have a convergence in $\O(\frac{1}{\epsilon^2})$ by using the subgradient property.
 
-\defentry[Constrained optimization] By slapping a projection back to $X$ onto every step, we obtain projected SGD, with the same convergence rate as above., we obtain projected SGD, with the same convergence rate as above.
+\defentry[Constrained optimization] By slapping a projection back to $X$ onto every step, we obtain projected SGD, with the same convergence rate as above.
 
 \section{Non-convex Optimization}
 \defentry[Gradient descent]
@@ -521,7 +520,7 @@ This makes equivalent to compute \[
 \]
 This is cool for us: this argmin is a linear transformation $f(W)$. With that, the optimal is when the gradient is 0: $\nabla f(W^\star) = \mathbf{0}$. Equivalent to training a linear neural network with one layer under LS error.
 
-\defentry[Deep Linear NN] Even with several layers ($W_1, W_2, W_3$), as long as the composition is linear, we can concatenate to $\mathbf{y}= W\mathbf{x},\ W := W_3W_2w_1$.
+\defentry[Deep Linear NN] Even with several layers ($W_1, W_2, W_3$), as long as the composition is linear, we can concatenate to $\mathbf{y}= W\mathbf{x},\ W := W_3W_2W_1$.
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=0.9\columnwidth]{figures/linear_nn}
@@ -536,13 +535,13 @@ From here, we use a toy example: all matrices are $1 \times 1$, $W_i = x_i, X=1,
 	f(\mathbf{x}) := \frac{1}{2} \left( \prod_{k=1}^{d} x_k -1 \right)^2
 \]
 \defentry[Gradient] With this toy $f$, the gradient is the following: \[
-	\nabla f(\mathbf{x} = \left( \prod_k x_k -1 \right) \left( \prod_{k \neq 1}^{} ,\ldots,\prod_{k\neq d}^{} x_k   \right) .
+		\nabla f(\mathbf{x}) = \left( \prod_k x_k -1 \right) \left( \prod_{k \neq 1} x_k,\ldots,\prod_{k\neq d}^{} x_k   \right) .
 \]
 
 \defentry[Convergence analysis] We want to show that for any  $d > 1$ and from anywhere in $X : \left\{ \mathbf{x}: \mathbf{x} > \mathbf{0},  \prod_{k} \mathbf{x}_k \le 1 \right\}$, gradient descent will converge to a global minimum. $f$ is not smooth over $X$, but we can show that it is smooth along the trajectory of the gradient for suitable $L$, so that we get sufficient decrease \[
 	f(\mathbf{x}_{t+1}) \le  f(\mathbf{x}_t) - \frac{1}{2L}\|\nabla f(\mathbf{x}_t)\|^2,\ t \ge  0
 \]
-So we can't converge to a saddle point. For $\mathbf{x} > \mathbf{0}, \prod_k \mathbf{x}_k \ge 1$, we also get convergence. But there are also starting points from which gradient descent will not converge to a global minimum.
+So we can't converge to a saddle point. For $\mathbf{x} > \mathbf{0},\ \prod_k \mathbf{x}_k \ge 1$, we also get convergence. But there are also starting points from which gradient descent will not converge to a global minimum.
 
 \defentry[Balanced iterates] Let $\mathbf{x} > \mathbf{0}$ (component wise) and let $c \geq 1$ be a real number. $\mathbf{x}$ is called $c-balanced$ if $x_i \leq cx_j$ for all $1\leq i,j \leq d$.
 \begin{lemma*}
@@ -559,7 +558,9 @@ So we can't converge to a saddle point. For $\mathbf{x} > \mathbf{0}, \prod_k \m
 \]
 \begin{lemma*}
 	Suppose that $\mathbf{x} > \mathbf{0}$ is c-balanced. Then for any $I \subseteq \{1,\ldots,d\}$, we have \[
-		\left( \frac{1}{c} \right)^{|I|} \left( \prod\limits_k x_k \right)^{1- \frac{|I|}{d} } \leq  \prod\limits_{k \not\in I} x_k \leq  c^{|I|} \left( \prod\limits_k x_k \right)^{1-\frac{|I|}{d}}
+		\left( \frac{1}{c} \right)^{|I|} \left( \prod\limits_k x_k \right)^{1- \frac{|I|}{d} }
+					\leq \prod\limits_{k \not\in I} x_k
+					\leq c^{|I|} \left( \prod\limits_k x_k \right)^{1-\frac{|I|}{d}}
 	\]
 \end{lemma*}
 
@@ -580,7 +581,7 @@ So we can't converge to a saddle point. For $\mathbf{x} > \mathbf{0}, \prod_k \m
 
 \defentry[Convergence]
 \begin{theorem*}
-	Let $c \ge 1$ and $\delta > 0$ such that $\mathbf{x}_0 > \mathbf{0}$ is c-balanced with $delta \leq \prod_k(\mathbf{x}_0)_k < 1$. Choosing stepsize $\gamma = \frac{1}{3dc^2}$, gradient descent satisfies \[
+	Let $c \ge 1$ and $\delta > 0$ such that $\mathbf{x}_0 > \mathbf{0}$ is c-balanced with $\delta \leq \prod_k(\mathbf{x}_0)_k < 1$. Choosing stepsize $\gamma = \frac{1}{3dc^2}$, gradient descent satisfies \[
 		f(\mathbf{x}_T) \le \left( 1- \frac{\delta^2}{3c^{4}} \right)^{T} f(\mathbf{x}_0),\ T \ge 0
 	\]
 \end{theorem*}
@@ -588,14 +589,14 @@ So we can't converge to a saddle point. For $\mathbf{x} > \mathbf{0}, \prod_k \m
 \section{Accelerated Gradient Descent}
 \defentry[Idea] On smooth functions, gradient descent is good but perhaps not as fast as it could be. Don't forget it's just some algorithm that uses gradient information, perhaps there is a better first-order method for smooth convex functions with a smaller upper-bound on the number of gradients computed.
 \begin{theorem*}
-	Every first-order method needs in the worst case $\Gamma/\sqrt{\epsilon}$ steps (gradients evaluations) in order to achieve an additive error of $\epsilon$ on smooth functions.
+		Every first-order method needs in the worst case $\Omega(1/\sqrt{\epsilon})$ steps (gradients evaluations) in order to achieve an additive error of $\epsilon$ on smooth functions.
 \end{theorem*}
 There is a gap between $\O(1/\epsilon)$ (gradient descent) and the lower bound!
 
 \defentry[Nesterov's accelerated GD] Let $f: \R^d \to \R$ be convex, differentiable and smooth with parameter $L$, Choose $\mathbf{z}_z = \mathbf{y}_0 = \mathbf{x}_0$ arbitrary. For $t \ge 0$, set \[
 	\begin{array}{lll}
 		\mathbf{y}_{t+1} & := & \mathbf{x}_t - \frac{1}{L}\nabla f(\mathbf{x}_t)                \\
-		\mathbf{z}_{t+}  & := & \mathbf{z}_z - \frac{t+1}{2L} \nabla f(\mathbf{x}_t)            \\
+		\mathbf{z}_{t+1}  & := & \mathbf{z}_t - \frac{t+1}{2L} \nabla f(\mathbf{x}_t)            \\
 		\mathbf{x}_{t+1} & := & \frac{t+1}{t+3}\mathbf{y}_{t+1} + \frac{2}{t+3}\mathbf{z}_{t+1}
 	\end{array}
 \]
@@ -617,11 +618,11 @@ If we can show that the potential always decrease, we get $\Phi(T) \le  \Phi(0)$
 
 \section{Newton's Method}
 \defentry[1D Case] Also called the \textit{Newton-Raphson Method}. The goal is to find a zero of a differentiable $f: \R \to \R$. Method: \[
-	\begin{array}{l}
-		x_{t+1} := x_t - \frac{f(x_t)}{f'(x_t)}, t \ge 0 \\
-		f(x_t) + f'(x_t)(x-x_t) = 0
-	\end{array}
+		x_{t+1} := x_t - \frac{f(x_t)}{f'(x_t)}, t \ge 0
 \]
+$x_{t+1}$ solves \[
+		f(x_t) + f'(x_t)(x-x_t) = 0
+\] 
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=0.8\columnwidth]{figures/newton_1d}
@@ -683,7 +684,8 @@ This is nice, because this is a derivative-free version of the Newton-Raphson me
 
 \defentry[Secant in high dim] Possible if we match the \textbf{the secant condition} %TODO
 \defentry[Quasi-newton methods] %TODO
-
+\defentry[Constructing a quasi-newton method] %TODO
+\defentry[Greenstadt's family of QN methods] %TODO 
 \section{Frank-Wolfe}
 \defentry[Intro] An alternative algorithm to optimize smooth convex function over compact set. The main difference with the projected gradient descent is that it doesn't require a projection step, which can be quite costly.
 \defentry[Algorithm] \[
@@ -785,7 +787,7 @@ If $f$ is coordinate-wise $L$-smooth, strongly convex w.r.t the $\ell_1$-norm wi
 	f(\mathbf{x}) := g(\mathbf{x}) + h(\mathbf{x}),\ h(\mathbf{x}) = \sum_i h_i(x_i)
 \]
 (e.g. $f(\mathbf{x}) := \|\mathbf{x}\|^2 + \|\mathbf{x}\|_1$)
-
+\section{Additional subjects}
 \subsection{Duality}
 \defentry[Conjugate] Given a function $f: \R^d \to  \R^+$, the conjugate $f^*: \R^d \to \R^+$ is defined as  \[
 	f^*(\mathbf{y}) := \max_\mathbf{x}\ \mathbf{x}^\top \mathbf{y} - f(\mathbf{x})
@@ -832,7 +834,7 @@ Here is another way of looking at it: given $\mathbf{y}$, draw the slope line (g
 		      f^*(\mathbf{y}) = \indic_{\left\{ \mathbf{z}: \|\mathbf{z}\|_* \le 1 \right\} }(\mathbf{y})
 	      \]
 	      Which corresponds to the indicator of the dual norm ball. Note: the dual norm of $\|.\|$ is defined as $\|\mathbf{y}\|_* := \max_{\|\mathbf{x}\| \le 1} \mathbf{y}^\top - \mathbf{x}$. E.g. $\|.\|_1 \leftrightarrow \|.\|_{\infty}$
-  \item \textbf{Generalized linear models} $\min_{\mathbf{x}\in \R^d} f(A\mathbf{x}) + g(\mathbf{x})$. We reformulate as $\min_{\mathbf{x} \in \R^d, \mathbf{w} \in \R^n} f(\mathbf{w}) + g(\mathbf{x})$, such that $\mathbf{w} = A\mathbf{x}$. We define the Lagrange dual function: \[
+  \item \textbf{Generalized linear models} $\min\limits_{\mathbf{x}\in \R^d} f(A\mathbf{x}) + g(\mathbf{x})$. We reformulate as $\min\limits_{\mathbf{x} \in \R^d, \mathbf{w} \in \R^n} f(\mathbf{w}) + g(\mathbf{x})$, such that $\mathbf{w} = A\mathbf{x}$. We define the Lagrange dual function: \[
 				  \begin{array}{ll}
 						  \mathcal{L}(\mathbf{u}) & := \min\limits_{\substack{\mathbf{x}\in \R^d\\ \mathbf{w}\in \R^n}}f(\mathbf{w}) + g(\mathbf{x}) + \mathbf{u}^\top(\mathbf{w} - A\mathbf{x}) \\
 				  &= -f^*(-\mathbf{u}) - g^*(A^\top\mathbf{u})
